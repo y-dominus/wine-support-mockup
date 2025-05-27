@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>売上入力 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/pages/my_cellar.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/my_cellar_interactions.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>売上入力</h1>
+                <div class="page-actions">
+                    <a href="../reports/sales_history.html" class="btn btn-outline-secondary">過去の売上を見る</a>
+                    <a href="my_cellar.html" class="btn btn-outline-primary">在庫一覧に戻る</a>
+                </div>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <!-- AIメッセージがここに表示されます -->
+                    <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                    <span class="ai-text">今日の売上ですね、ありがとうございます！どのワインがたくさん笑顔を届けましたか？</span>
+                </div>
+            </div>
+            
+            <div class="sales-input-form">
+                <form id="sales-input-form">
+                    <div class="form-row">
+                        <div class="form-col-6">
+                            <div class="form-group">
+                                <label for="sales-date" class="form-label">売上日 <span class="required">*</span></label>
+                                <input type="date" id="sales-date" name="sales-date" class="form-input" required value="2025-05-22">
+                            </div>
+                        </div>
+                        <div class="form-col-6">
+                            <div class="form-group">
+                                <label for="sales-note" class="form-label">メモ</label>
+                                <input type="text" id="sales-note" name="sales-note" class="form-input" placeholder="例：週末の特別コース">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">ワイン売上</h3>
+                    
+                    <div class="sales-list">
+                        <!-- 売上アイテム1 -->
+                        <div class="sales-item">
+                            <div class="sales-wine-info">
+                                <div class="sales-wine-name">
+                                    <div class="wine-color red"></div>
+                                    キャンティ クラシコ リゼルヴァ
+                                </div>
+                                <div class="sales-wine-details">
+                                    赤ワイン | イタリア | ¥8,000/本
+                                </div>
+                            </div>
+                            <div class="sales-quantity">
+                                <input type="number" class="form-input wine-quantity" data-wine-id="1" data-price="8000" min="0" value="0">
+                            </div>
+                            <div class="sales-actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary decrement-btn">-</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary increment-btn">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 売上アイテム2 -->
+                        <div class="sales-item">
+                            <div class="sales-wine-info">
+                                <div class="sales-wine-name">
+                                    <div class="wine-color white"></div>
+                                    ソーヴィニヨン・ブラン
+                                </div>
+                                <div class="sales-wine-details">
+                                    白ワイン | ニュージーランド | ¥7,000/本
+                                </div>
+                            </div>
+                            <div class="sales-quantity">
+                                <input type="number" class="form-input wine-quantity" data-wine-id="2" data-price="7000" min="0" value="0">
+                            </div>
+                            <div class="sales-actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary decrement-btn">-</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary increment-btn">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 売上アイテム3 -->
+                        <div class="sales-item">
+                            <div class="sales-wine-info">
+                                <div class="sales-wine-name">
+                                    <div class="wine-color sparkling"></div>
+                                    プロセッコ
+                                </div>
+                                <div class="sales-wine-details">
+                                    スパークリング | イタリア | ¥6,000/本
+                                </div>
+                            </div>
+                            <div class="sales-quantity">
+                                <input type="number" class="form-input wine-quantity" data-wine-id="3" data-price="6000" min="0" value="0">
+                            </div>
+                            <div class="sales-actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary decrement-btn">-</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary increment-btn">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 売上アイテム4 -->
+                        <div class="sales-item">
+                            <div class="sales-wine-info">
+                                <div class="sales-wine-name">
+                                    <div class="wine-color red"></div>
+                                    メルロー
+                                </div>
+                                <div class="sales-wine-details">
+                                    赤ワイン | チリ | ¥6,000/本
+                                </div>
+                            </div>
+                            <div class="sales-quantity">
+                                <input type="number" class="form-input wine-quantity" data-wine-id="4" data-price="6000" min="0" value="0">
+                            </div>
+                            <div class="sales-actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary decrement-btn">-</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary increment-btn">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 売上アイテム5 -->
+                        <div class="sales-item">
+                            <div class="sales-wine-info">
+                                <div class="sales-wine-name">
+                                    <div class="wine-color white"></div>
+                                    シャルドネ
+                                </div>
+                                <div class="sales-wine-details">
+                                    白ワイン | カリフォルニア | ¥7,000/本
+                                </div>
+                            </div>
+                            <div class="sales-quantity">
+                                <input type="number" class="form-input wine-quantity" data-wine-id="5" data-price="7000" min="0" value="0">
+                            </div>
+                            <div class="sales-actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary decrement-btn">-</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary increment-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sales-summary">
+                        <div class="sales-total">
+                            合計金額: <span id="total-amount">¥0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a href="my_cellar.html" class="btn btn-light">キャンセル</a>
+                        <button type="submit" class="btn btn-primary">売上を登録する</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="ai-prompt-box">
+                <div class="ai-prompt-title">
+                    <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                    Sommiaからのアドバイス
+                </div>
+                <div class="ai-prompt-content">
+                    売上データを入力すると、お客様の好みや売れ筋商品の傾向がわかります。この情報をもとに、最適なワインのご提案やレポートを作成いたします。売上入力は日々行うことをおすすめします！
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 売上登録完了モーダル -->
+    <div class="modal" id="sales-complete-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>売上登録完了</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-confirm-icon success">✓</div>
+                <div class="modal-confirm-message">
+                    売上データが正常に登録されました！
+                </div>
+                <p class="text-center">
+                    登録された内容は在庫に反映され、レポートにも集計されます。
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="../reports/sales_history.html" class="btn btn-outline-primary">履歴を確認</a>
+                <a href="my_cellar.html" class="btn btn-primary">在庫一覧に戻る</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 数量増減ボタンの処理
+            const decrementButtons = document.querySelectorAll('.decrement-btn');
+            const incrementButtons = document.querySelectorAll('.increment-btn');
+            const quantityInputs = document.querySelectorAll('.wine-quantity');
+            const totalAmountElement = document.getElementById('total-amount');
+            
+            // 合計金額の計算
+            function calculateTotal() {
+                let total = 0;
+                quantityInputs.forEach(input => {
+                    const quantity = parseInt(input.value) || 0;
+                    const price = parseInt(input.getAttribute('data-price')) || 0;
+                    total += quantity * price;
+                });
+                
+                // 合計金額を表示
+                totalAmountElement.textContent = formatCurrency(total);
+            }
+            
+            // 通貨フォーマット
+            function formatCurrency(amount) {
+                return '¥' + amount.toLocaleString();
+            }
+            
+            // 数量減少ボタン
+            decrementButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.closest('.sales-item').querySelector('.wine-quantity');
+                    let value = parseInt(input.value) || 0;
+                    if (value > 0) {
+                        value--;
+                        input.value = value;
+                        calculateTotal();
+                    }
+                });
+            });
+            
+            // 数量増加ボタン
+            incrementButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.closest('.sales-item').querySelector('.wine-quantity');
+                    let value = parseInt(input.value) || 0;
+                    value++;
+                    input.value = value;
+                    calculateTotal();
+                });
+            });
+            
+            // 数量入力の変更イベント
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    let value = parseInt(this.value) || 0;
+                    if (value < 0) {
+                        value = 0;
+                    }
+                    this.value = value;
+                    calculateTotal();
+                });
+            });
+            
+            // フォーム送信処理
+            const salesForm = document.getElementById('sales-input-form');
+            salesForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // 少なくとも1つのワインが入力されているかチェック
+                let hasWineSales = false;
+                quantityInputs.forEach(input => {
+                    if (parseInt(input.value) > 0) {
+                        hasWineSales = true;
+                    }
+                });
+                
+                if (!hasWineSales) {
+                    alert('少なくとも1つのワインの売上を入力してください。');
+                    return;
+                }
+                
+                // 売上データを保存
+                saveSalesData();
+                
+                // 完了モーダル表示
+                const modal = document.getElementById('sales-complete-modal');
+                modal.classList.add('active');
+            });
+            
+            // モーダルを閉じる処理
+            const modalCloseButton = document.querySelector('#sales-complete-modal .modal-close');
+            modalCloseButton.addEventListener('click', function() {
+                const modal = document.getElementById('sales-complete-modal');
+                modal.classList.remove('active');
+            });
+            
+            // 売上データ保存関数
+            function saveSalesData() {
+                const salesDate = document.getElementById('sales-date').value;
+                const salesNote = document.getElementById('sales-note').value;
+                
+                const wineData = [
+                    { id: 1, name: 'キャンティ クラシコ リゼルヴァ', type: 'red', price: 8000 },
+                    { id: 2, name: 'ソーヴィニヨン・ブラン', type: 'white', price: 7000 },
+                    { id: 3, name: 'プロセッコ', type: 'sparkling', price: 6000 },
+                    { id: 4, name: 'メルロー', type: 'red', price: 6000 },
+                    { id: 5, name: 'シャルドネ', type: 'white', price: 7000 }
+                ];
+                
+                const salesItems = [];
+                let totalAmount = 0;
+                
+                quantityInputs.forEach(input => {
+                    const quantity = parseInt(input.value) || 0;
+                    if (quantity > 0) {
+                        const wineId = parseInt(input.getAttribute('data-wine-id'));
+                        const price = parseInt(input.getAttribute('data-price'));
+                        const wine = wineData.find(w => w.id === wineId);
+                        
+                        const subtotal = quantity * price;
+                        totalAmount += subtotal;
+                        
+                        salesItems.push({
+                            wineId: wineId,
+                            wineName: wine.name,
+                            wineType: wine.type,
+                            quantity: quantity,
+                            price: price,
+                            subtotal: subtotal
+                        });
+                    }
+                });
+                
+                if (salesItems.length > 0) {
+                    const salesRecord = {
+                        id: `sales_${Date.now()}`,
+                        date: salesDate,
+                        items: salesItems,
+                        totalAmount: totalAmount,
+                        note: salesNote
+                    };
+                    
+                    // localStorageに保存
+                    const salesHistory = JSON.parse(localStorage.getItem('salesHistory') || '[]');
+                    salesHistory.unshift(salesRecord);
+                    localStorage.setItem('salesHistory', JSON.stringify(salesHistory));
+                    
+                    console.log('売上データを保存しました:', salesRecord);
+                }
+            }
+            
+            // 初期合計計算
+            calculateTotal();
+        });
+    </script>
+</body>
+</html>

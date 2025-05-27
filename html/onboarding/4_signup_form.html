@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント登録 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">6</div>
+                        <div class="step-label">レポート確認</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">7</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">8</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                            <span class="ai-text">そのリスト、きっとお店を輝かせますね！最後に、ワイサポを利用するためのアカウント情報を登録してください。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-form">
+                        <form id="signup-form" action="5_initial_order_confirmation.html">
+                            <div class="form-row">
+                                <div class="form-col-6">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">お名前 <span class="required">*</span></label>
+                                        <input type="text" id="name" name="name" class="form-input" required placeholder="例：山田 太郎">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-col-6">
+                                    <div class="form-group">
+                                        <label for="position" class="form-label">役職 <span class="required">*</span></label>
+                                        <select id="position" name="position" class="form-select" required>
+                                            <option value="">選択してください</option>
+                                            <option value="owner">オーナー</option>
+                                            <option value="manager">店長</option>
+                                            <option value="sommelier">ソムリエ</option>
+                                            <option value="chef">シェフ</option>
+                                            <option value="staff">スタッフ</option>
+                                            <option value="other">その他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">メールアドレス <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" class="form-input" required placeholder="例：your-email@example.com">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col-6">
+                                    <div class="form-group">
+                                        <label for="password" class="form-label">パスワード <span class="required">*</span></label>
+                                        <input type="password" id="password" name="password" class="form-input" required placeholder="8文字以上で入力">
+                                        <div class="form-hint">8文字以上、英数字を含む組み合わせで設定してください</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-col-6">
+                                    <div class="form-group">
+                                        <label for="password-confirm" class="form-label">パスワード（確認） <span class="required">*</span></label>
+                                        <input type="password" id="password-confirm" name="password-confirm" class="form-input" required placeholder="同じパスワードを入力">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">電話番号</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="例：03-1234-5678">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">お知らせ・通知設定</label>
+                                <div class="form-checkbox-group">
+                                    <label class="form-checkbox">
+                                        <input type="checkbox" name="notification-email" checked>
+                                        <span>メールでのお知らせを受け取る（発注状況、ワイン情報など）</span>
+                                    </label>
+                                    <label class="form-checkbox">
+                                        <input type="checkbox" name="notification-recommendation" checked>
+                                        <span>AIからのワインレコメンデーションを受け取る</span>
+                                    </label>
+                                    <label class="form-checkbox">
+                                        <input type="checkbox" name="notification-promotion">
+                                        <span>プロモーション情報を受け取る</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="terms" required>
+                                    <span><a href="#" target="_blank">利用規約</a>と<a href="#" target="_blank">プライバシーポリシー</a>に同意します</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <a href="3_wine_report.html" class="btn btn-outline-primary">戻る</a>
+                                <button type="submit" class="btn btn-primary">登録して利用開始</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // パスワード確認の検証
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.getElementById('signup-form');
+            const password = document.getElementById('password');
+            const passwordConfirm = document.getElementById('password-confirm');
+            
+            signupForm.addEventListener('submit', function(event) {
+                // パスワードの一致チェック
+                if (password.value !== passwordConfirm.value) {
+                    event.preventDefault();
+                    
+                    // エラーメッセージ表示
+                    let errorElement = passwordConfirm.nextElementSibling;
+                    if (!errorElement || !errorElement.classList.contains('error-message')) {
+                        errorElement = document.createElement('div');
+                        errorElement.className = 'error-message';
+                        passwordConfirm.parentNode.insertBefore(errorElement, passwordConfirm.nextSibling);
+                    }
+                    
+                    errorElement.textContent = 'パスワードが一致しません';
+                    errorElement.style.display = 'block';
+                    
+                    passwordConfirm.classList.add('error');
+                    password.classList.add('error');
+                }
+            });
+            
+            // パスワード入力時のリアルタイム検証
+            passwordConfirm.addEventListener('input', function() {
+                if (password.value && passwordConfirm.value) {
+                    if (password.value !== passwordConfirm.value) {
+                        passwordConfirm.classList.add('error');
+                    } else {
+                        passwordConfirm.classList.remove('error');
+                        
+                        // エラーメッセージがあれば非表示
+                        const errorElement = passwordConfirm.nextElementSibling;
+                        if (errorElement && errorElement.classList.contains('error-message')) {
+                            errorElement.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

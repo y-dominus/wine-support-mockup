@@ -1,0 +1,462 @@
+/* 売上履歴ページのスタイル */
+
+/* フィルターセクション */
+.filter-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.filter-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.filter-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+    min-width: 60px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.custom-date-range {
+    align-items: center;
+}
+
+.custom-date-range span {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* サマリーセクション */
+.summary-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.summary-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.summary-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-light);
+    border-radius: 50%;
+}
+
+.summary-content {
+    flex: 1;
+}
+
+.summary-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.summary-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+/* AI分析セクション */
+.ai-analysis-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.ai-analysis-card {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+    border: 1px solid #d1e7ff;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+}
+
+.ai-analysis-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.ai-analysis-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+}
+
+.ai-analysis-content {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.ai-analysis-content p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.ai-analysis-content .highlight {
+    background: rgba(255, 77, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-color);
+}
+
+/* 履歴セクション */
+.history-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.history-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-header h3 {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.history-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.history-table-container {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    background: var(--background-light);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.history-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.history-table tbody tr:hover {
+    background: var(--background-light);
+}
+
+.wine-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.wine-color-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.wine-color-indicator.red {
+    background: #8B0000;
+}
+
+.wine-color-indicator.white {
+    background: #F5F5DC;
+    border: 1px solid #DDD;
+}
+
+.wine-color-indicator.sparkling {
+    background: linear-gradient(45deg, #FFD700, #FFF);
+    border: 1px solid #DDD;
+}
+
+.wine-color-indicator.rose {
+    background: #FF69B4;
+}
+
+.quantity-cell {
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+}
+
+.price-cell, .subtotal-cell {
+    text-align: right;
+    font-weight: var(--font-weight-medium);
+}
+
+.note-cell {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.action-cell {
+    text-align: center;
+}
+
+/* データなしメッセージ */
+.no-data {
+    background: transparent !important;
+}
+
+.no-data-message {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.no-data-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.no-data-text {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.no-data-subtext {
+    color: var(--text-color-light);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ページネーション */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    background: var(--background-light);
+}
+
+.pagination-info {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.pagination-number {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    background: white;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: var(--font-size-sm);
+    transition: all 0.2s;
+}
+
+.pagination-number:hover {
+    background: var(--background-light);
+}
+
+.pagination-number.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* モーダル内のスタイル */
+.sales-detail-info {
+    margin-bottom: var(--spacing-lg);
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: var(--spacing-sm);
+}
+
+.detail-label {
+    min-width: 80px;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+}
+
+.detail-value {
+    color: var(--text-color);
+}
+
+.sales-items-list {
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-sales-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-sm);
+    background: var(--background-light);
+}
+
+.modal-item-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.modal-item-details {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.modal-item-amount {
+    text-align: right;
+}
+
+.modal-item-quantity {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color);
+}
+
+.modal-item-subtotal {
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+}
+
+.sales-total-section {
+    border-top: 2px solid var(--border-color);
+    padding-top: var(--spacing-md);
+}
+
+.sales-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-label {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color);
+}
+
+.total-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-buttons {
+        flex-wrap: wrap;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .history-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .history-table th,
+    .history-table td {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+    
+    .note-cell {
+        max-width: 100px;
+    }
+    
+    .pagination-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .modal-sales-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .modal-item-amount {
+        text-align: left;
+    }
+}

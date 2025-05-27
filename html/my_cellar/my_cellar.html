@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイセラー | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/components/wine-detail-modal.css">
+    <link rel="stylesheet" href="../../css/pages/my_cellar.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/components/wine-detail-modal.js"></script>
+    <script defer src="../../js/page_specific/my_cellar_interactions.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>マイセラー</h1>
+            </div>
+            
+            <!-- クイックアクションブロック -->
+            <div class="quick-actions-block">
+                <div class="actions-block-header">
+                    <h2 class="actions-block-title">クイックアクション</h2>
+                    <div class="actions-block-subtitle">よく使う機能へのショートカット</div>
+                </div>
+                
+                <div class="main-actions">
+                    <a href="sales_input.html" class="main-action-btn primary">
+                        <div class="main-action-icon">📊</div>
+                        <div class="main-action-content">
+                            <div class="main-action-title">売上入力</div>
+                            <div class="main-action-desc">ワインの売上を記録</div>
+                        </div>
+                    </a>
+                    <a href="../orders/replenish_order.html" class="main-action-btn secondary">
+                        <div class="main-action-icon">📦</div>
+                        <div class="main-action-content">
+                            <div class="main-action-title">補充発注</div>
+                            <div class="main-action-desc">在庫の補充注文</div>
+                        </div>
+                    </a>
+                    <a href="menu_generator.html" class="main-action-btn accent">
+                        <div class="main-action-icon">📄</div>
+                        <div class="main-action-content">
+                            <div class="main-action-title">メニュー生成</div>
+                            <div class="main-action-desc">ワインメニューを作成</div>
+                        </div>
+                    </a>
+                    <a href="../wine_optimization.html" class="main-action-btn optimization">
+                        <div class="main-action-icon">🎯</div>
+                        <div class="main-action-content">
+                            <div class="main-action-title">ワインリスト最適化</div>
+                            <div class="main-action-desc">AIによる最適化分析</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- マイセラーブロック -->
+            <div class="my-cellar-block">
+                <div class="cellar-block-header">
+                    <h2 class="cellar-block-title">マイセラー</h2>
+                    <div class="cellar-block-subtitle">現在の在庫状況とワイン管理</div>
+                </div>
+                
+                <div class="ai-message-container">
+                    <div id="ai-message-area" class="ai-message ai-message-dismissible">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-text">現在のワイン在庫はこちらです。Sommiaと一緒に、売上を入力して在庫をピカピカにしましょう！</span>
+                        <button class="ai-close" onclick="dismissAiMessage(this)" title="閉じる">&times;</button>
+                    </div>
+                </div>
+                
+                <div class="cellar-filters">
+                <div class="filter-group">
+                    <label for="wine-type-filter">ワインタイプ</label>
+                    <select id="wine-type-filter" class="form-select">
+                        <option value="all">すべて</option>
+                        <option value="red">赤ワイン</option>
+                        <option value="white">白ワイン</option>
+                        <option value="sparkling">スパークリング</option>
+                        <option value="rose">ロゼ</option>
+                        <option value="dessert">デザートワイン</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="stock-status-filter">在庫状況</label>
+                    <select id="stock-status-filter" class="form-select">
+                        <option value="all">すべて</option>
+                        <option value="in-stock">在庫あり</option>
+                        <option value="low-stock">在庫少</option>
+                        <option value="out-of-stock">在庫切れ</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="search-wine">ワイン検索</label>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="search-wine" class="form-input" placeholder="ワイン名を入力...">
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="apply-filters" class="btn btn-secondary btn-sm">絞り込み</button>
+                    <button id="reset-filters" class="btn btn-light btn-sm">リセット</button>
+                </div>
+                
+                <div class="view-controls">
+                    <span class="view-control-label">表示：</span>
+                    <button id="grid-view-btn" class="view-control-btn active" title="グリッド表示">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button id="list-view-btn" class="view-control-btn" title="リスト表示">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="cellar-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">🍷</div>
+                    <div class="summary-content">
+                        <div class="summary-title">総在庫数</div>
+                        <div class="summary-value">43本</div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">💰</div>
+                    <div class="summary-content">
+                        <div class="summary-title">在庫総額</div>
+                        <div class="summary-value">¥430,000</div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">⚠️</div>
+                    <div class="summary-content">
+                        <div class="summary-title">在庫警告</div>
+                        <div class="summary-value">3本</div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">📊</div>
+                    <div class="summary-content">
+                        <div class="summary-title">ワイン種類</div>
+                        <div class="summary-value">12種</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wine-container view-grid">
+                <!-- グリッドビュー -->
+                <div class="wine-grid">
+                    <!-- ワインカード 1: キャンティ -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle red">
+                                    <div class="wine-label-text">キャンティ<br>クラシコ<br>リゼルヴァ</div>
+                                </div>
+                            </div>
+                            <div class="wine-badge">在庫少</div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">キャンティ クラシコ リゼルヴァ</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color red"></div>
+                                赤ワイン | イタリア
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥8,000</div>
+                                <div class="wine-stock">在庫: 2本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="1">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 2: ソーヴィニヨン・ブラン -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle white">
+                                    <div class="wine-label-text">ソーヴィニヨン<br>ブラン</div>
+                                </div>
+                            </div>
+                            <div class="wine-badge">要補充</div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">ソーヴィニヨン・ブラン</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color white"></div>
+                                白ワイン | ニュージーランド
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥7,000</div>
+                                <div class="wine-stock">在庫: 1本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="2">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 3: プロセッコ -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle sparkling">
+                                    <div class="wine-label-text">プロセッコ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">プロセッコ</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color sparkling"></div>
+                                スパークリング | イタリア
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥6,000</div>
+                                <div class="wine-stock">在庫: 5本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="3">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 4: メルロー -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle red">
+                                    <div class="wine-label-text">メルロー</div>
+                                </div>
+                            </div>
+                            <div class="wine-badge">在庫少</div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">メルロー</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color red"></div>
+                                赤ワイン | チリ
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥6,000</div>
+                                <div class="wine-stock">在庫: 3本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="4">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 5: シャルドネ -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle white">
+                                    <div class="wine-label-text">シャルドネ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">シャルドネ</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color white"></div>
+                                白ワイン | カリフォルニア
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥7,000</div>
+                                <div class="wine-stock">在庫: 4本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="5">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 6: バローロ -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle red">
+                                    <div class="wine-label-text">バローロ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">バローロ</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color red"></div>
+                                赤ワイン | イタリア
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥12,000</div>
+                                <div class="wine-stock">在庫: 6本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="6">詳細</button>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインカード 7: プイィ・フュメ -->
+                    <div class="wine-card">
+                        <div class="wine-label">
+                            <div class="wine-bottle-placeholder">
+                                <div class="wine-bottle white">
+                                    <div class="wine-label-text">プイィ・フュメ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wine-info">
+                            <h3 class="wine-name">プイィ・フュメ</h3>
+                            <div class="wine-type-info">
+                                <div class="wine-color white"></div>
+                                白ワイン | フランス
+                            </div>
+                            <div class="wine-price-stock">
+                                <div class="wine-price">¥10,000</div>
+                                <div class="wine-stock">在庫: 4本</div>
+                            </div>
+                        </div>
+                        <div class="wine-actions">
+                            <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="7">詳細</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- リストビュー -->
+                <div class="wine-inventory">
+                    <table class="wine-table">
+                        <thead>
+                            <tr>
+                                <th>ワイン名</th>
+                                <th>種類</th>
+                                <th>産地</th>
+                                <th>価格（仕入）</th>
+                                <th>販売価格</th>
+                                <th>在庫</th>
+                                <th>状態</th>
+                                <th>アクション</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color red"></div>
+                                        <span>キャンティ クラシコ リゼルヴァ</span>
+                                    </div>
+                                </td>
+                                <td>赤ワイン</td>
+                                <td>イタリア</td>
+                                <td>¥4,000</td>
+                                <td>¥8,000</td>
+                                <td>2</td>
+                                <td><span class="stock-status low">在庫少</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="1">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color white"></div>
+                                        <span>ソーヴィニヨン・ブラン</span>
+                                    </div>
+                                </td>
+                                <td>白ワイン</td>
+                                <td>ニュージーランド</td>
+                                <td>¥3,500</td>
+                                <td>¥7,000</td>
+                                <td>1</td>
+                                <td><span class="stock-status critical">要補充</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="2">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color sparkling"></div>
+                                        <span>プロセッコ</span>
+                                    </div>
+                                </td>
+                                <td>スパークリング</td>
+                                <td>イタリア</td>
+                                <td>¥3,000</td>
+                                <td>¥6,000</td>
+                                <td>5</td>
+                                <td><span class="stock-status good">在庫あり</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="3">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color red"></div>
+                                        <span>メルロー</span>
+                                    </div>
+                                </td>
+                                <td>赤ワイン</td>
+                                <td>チリ</td>
+                                <td>¥3,000</td>
+                                <td>¥6,000</td>
+                                <td>3</td>
+                                <td><span class="stock-status low">在庫少</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="4">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color white"></div>
+                                        <span>シャルドネ</span>
+                                    </div>
+                                </td>
+                                <td>白ワイン</td>
+                                <td>カリフォルニア</td>
+                                <td>¥3,500</td>
+                                <td>¥7,000</td>
+                                <td>4</td>
+                                <td><span class="stock-status good">在庫あり</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="5">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color red"></div>
+                                        <span>バローロ</span>
+                                    </div>
+                                </td>
+                                <td>赤ワイン</td>
+                                <td>イタリア</td>
+                                <td>¥6,000</td>
+                                <td>¥12,000</td>
+                                <td>6</td>
+                                <td><span class="stock-status good">在庫あり</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="6">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="wine-name-cell">
+                                        <div class="wine-color white"></div>
+                                        <span>プイィ・フュメ</span>
+                                    </div>
+                                </td>
+                                <td>白ワイン</td>
+                                <td>フランス</td>
+                                <td>¥5,000</td>
+                                <td>¥10,000</td>
+                                <td>4</td>
+                                <td><span class="stock-status good">在庫あり</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-secondary wine-detail-btn" data-wine-id="7">詳細</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+                <div class="wine-inventory-pagination">
+                    <button class="btn btn-sm btn-light">&laquo; 前へ</button>
+                    <div class="page-numbers">
+                        <button class="btn btn-sm btn-primary">1</button>
+                        <button class="btn btn-sm btn-light">2</button>
+                        <button class="btn btn-sm btn-light">3</button>
+                    </div>
+                    <button class="btn btn-sm btn-light">次へ &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- モーダル: 売上記録 -->
+    <div class="modal" id="sale-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>売上記録</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="record-sale-form">
+                    <input type="hidden" id="sale-wine-id">
+                    <div class="form-group">
+                        <label for="sale-wine-name" class="form-label">ワイン名</label>
+                        <input type="text" id="sale-wine-name" class="form-input" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-quantity" class="form-label">販売本数</label>
+                        <input type="number" id="sale-quantity" class="form-input" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-date" class="form-label">販売日</label>
+                        <input type="date" id="sale-date" class="form-input" value="2025-05-22">
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-price" class="form-label">販売価格（1本あたり）</label>
+                        <input type="number" id="sale-price" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-notes" class="form-label">備考</label>
+                        <textarea id="sale-notes" class="form-textarea" placeholder="お客様の反応など"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" id="cancel-sale">キャンセル</button>
+                <button class="btn btn-primary" id="confirm-sale">売上記録</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // AIメッセージを閉じる関数
+        function dismissAiMessage(button) {
+            const messageElement = button.closest('.ai-message-dismissible');
+            if (messageElement) {
+                messageElement.classList.add('dismissed');
+                setTimeout(() => {
+                    const container = messageElement.closest('.ai-message-container');
+                    if (container) {
+                        container.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+        
+        // ページ読み込み時にAIメッセージを表示
+        document.addEventListener('DOMContentLoaded', function() {
+            // AIメッセージの表示
+            try {
+                if (typeof displayAiMessage === 'function') {
+                    displayAiMessage('myCellar', 'overview', null, '#ai-message-area');
+                }
+            } catch (e) {
+                console.error('AI message display error:', e);
+            }
+        });
+    </script>
+</body>
+</html>

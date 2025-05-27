@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>発注履歴 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/components/notifications.js"></script>
+    <style>
+        .order-history-table {
+            width: 100%;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .order-history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .filter-control {
+            flex: 1;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: var(--font-size-xs);
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-processing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .order-detail-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .order-detail-item {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-detail-label {
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+            margin-bottom: 2px;
+        }
+
+        .order-detail-value {
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+
+        .order-notes {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-md);
+        }
+
+        .order-notes-label {
+            font-weight: bold;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .page-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        @media (max-width: 768px) {
+            .filter-controls {
+                flex-direction: column;
+            }
+
+            .order-detail-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <div class="ai-message-container">
+                    <div id="ai-message-area" class="ai-message">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-text">これまでのご注文の記録です。しっかり管理していますよ。</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-history-content">
+                <div class="order-history-header">
+                    <h1 class="page-title">発注履歴</h1>
+                    <div>
+                        <button class="btn btn-outline-primary" id="export-orders-btn">
+                            <i class="icon">📥</i> エクスポート
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-controls">
+                    <div class="filter-control">
+                        <label for="period-filter">期間</label>
+                        <select id="period-filter" class="form-control">
+                            <option value="all">すべて</option>
+                            <option value="1month" selected>直近1ヶ月</option>
+                            <option value="3months">直近3ヶ月</option>
+                            <option value="6months">直近6ヶ月</option>
+                            <option value="1year">1年間</option>
+                        </select>
+                    </div>
+                    <div class="filter-control">
+                        <label for="status-filter">ステータス</label>
+                        <select id="status-filter" class="form-control">
+                            <option value="all" selected>すべて</option>
+                            <option value="completed">納品済</option>
+                            <option value="processing">処理中</option>
+                            <option value="cancelled">キャンセル</option>
+                        </select>
+                    </div>
+                    <div class="filter-control">
+                        <label for="search-orders">検索</label>
+                        <input type="text" id="search-orders" class="form-control" placeholder="発注番号、ワイン名など...">
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <table class="data-table order-history-table">
+                        <thead>
+                            <tr>
+                                <th>発注ID</th>
+                                <th>発注日</th>
+                                <th>品目数</th>
+                                <th>合計金額</th>
+                                <th>ステータス</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 最新の発注（auto_order.htmlから遷移したもの） -->
+                            <tr class="highlight-row">
+                                <td>ORD-20250522-001</td>
+                                <td>2025/05/22</td>
+                                <td>3品目（14本）</td>
+                                <td>¥106,800</td>
+                                <td><span class="order-status status-processing">処理中</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250522-001">詳細</button>
+                                </td>
+                            </tr>
+                            <!-- 過去の発注（サンプルデータ） -->
+                            <tr>
+                                <td>ORD-20250510-003</td>
+                                <td>2025/05/10</td>
+                                <td>5品目（18本）</td>
+                                <td>¥154,200</td>
+                                <td><span class="order-status status-completed">納品済</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250510-003">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ORD-20250425-002</td>
+                                <td>2025/04/25</td>
+                                <td>4品目（12本）</td>
+                                <td>¥98,400</td>
+                                <td><span class="order-status status-completed">納品済</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250425-002">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ORD-20250405-001</td>
+                                <td>2025/04/05</td>
+                                <td>2品目（8本）</td>
+                                <td>¥62,400</td>
+                                <td><span class="order-status status-completed">納品済</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250405-001">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ORD-20250320-003</td>
+                                <td>2025/03/20</td>
+                                <td>6品目（24本）</td>
+                                <td>¥188,000</td>
+                                <td><span class="order-status status-completed">納品済</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250320-003">詳細</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ORD-20250305-002</td>
+                                <td>2025/03/05</td>
+                                <td>3品目（10本）</td>
+                                <td>¥84,500</td>
+                                <td><span class="order-status status-cancelled">キャンセル</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-order-btn" data-order-id="ORD-20250305-002">詳細</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="pagination">
+                        <button class="btn btn-sm btn-outline-secondary" disabled>&laquo; 前へ</button>
+                        <button class="btn btn-sm btn-primary">1</button>
+                        <button class="btn btn-sm btn-outline-secondary">2</button>
+                        <button class="btn btn-sm btn-outline-secondary">3</button>
+                        <button class="btn btn-sm btn-outline-secondary">次へ &raquo;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 発注詳細セクション -->
+            <div id="order-detail-section" class="order-detail-section" style="display: none; margin-top: var(--spacing-xl);">
+                <div class="dashboard-card">
+                    <div class="order-detail-header">
+                        <h2>発注詳細: <span id="order-detail-id">ORD-20250522-001</span></h2>
+                        <div>
+                            <button class="btn btn-outline-secondary" id="reorder-btn">再注文</button>
+                            <button class="btn btn-outline-danger" id="cancel-order-btn">キャンセル</button>
+                        </div>
+                    </div>
+
+                    <div class="order-detail-info">
+                        <div class="order-detail-item">
+                            <div class="order-detail-label">発注日</div>
+                            <div class="order-detail-value" id="order-detail-date">2025年5月22日</div>
+                        </div>
+                        <div class="order-detail-item">
+                            <div class="order-detail-label">ステータス</div>
+                            <div class="order-detail-value" id="order-detail-status"><span class="order-status status-processing">処理中</span></div>
+                        </div>
+                        <div class="order-detail-item">
+                            <div class="order-detail-label">予定納品日</div>
+                            <div class="order-detail-value" id="order-detail-delivery-date">2025年5月25日</div>
+                        </div>
+                        <div class="order-detail-item">
+                            <div class="order-detail-label">合計金額</div>
+                            <div class="order-detail-value" id="order-detail-total">¥106,800</div>
+                        </div>
+                    </div>
+
+                    <h3>注文内容</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>商品名</th>
+                                <th>種類</th>
+                                <th>生産地</th>
+                                <th>価格/本</th>
+                                <th>数量</th>
+                                <th>小計</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-detail-items">
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="wine-thumbnail red"></div>
+                                        キャンティ クラシコ リゼルヴァ
+                                    </div>
+                                </td>
+                                <td>赤ワイン</td>
+                                <td>イタリア</td>
+                                <td>¥8,800</td>
+                                <td>6本</td>
+                                <td>¥52,800</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="wine-thumbnail white"></div>
+                                        ソーヴィニヨン・ブラン
+                                    </div>
+                                </td>
+                                <td>白ワイン</td>
+                                <td>ニュージーランド</td>
+                                <td>¥7,000</td>
+                                <td>4本</td>
+                                <td>¥28,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="wine-thumbnail red"></div>
+                                        メルロー
+                                    </div>
+                                </td>
+                                <td>赤ワイン</td>
+                                <td>チリ</td>
+                                <td>¥6,500</td>
+                                <td>4本</td>
+                                <td>¥26,000</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>合計</strong></td>
+                                <td><strong>¥106,800</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div class="order-notes">
+                        <div class="order-notes-label">備考</div>
+                        <div id="order-notes-content">
+                            納品時は日中（10時〜17時）にお願いします。また、キャンティはワイングラスBと一緒に保管していただけると助かります。
+                        </div>
+                    </div>
+
+                    <div class="page-actions">
+                        <button class="btn btn-outline-secondary" id="back-to-list-btn">一覧に戻る</button>
+                        <button class="btn btn-outline-primary" id="print-order-btn">印刷</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AIメッセージの表示
+            if (typeof displayAiMessage === 'function') {
+                displayAiMessage('orders', 'orderHistory', null, '#ai-message-area');
+            }
+            
+            // URLパラメータを取得
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromOrderId = urlParams.get('order_id');
+            
+            // 発注IDがURLパラメータに含まれている場合、その詳細を表示
+            if (fromOrderId) {
+                showOrderDetail(fromOrderId);
+            }
+            
+            // 詳細ボタンのイベント
+            const viewOrderBtns = document.querySelectorAll('.view-order-btn');
+            viewOrderBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    showOrderDetail(orderId);
+                });
+            });
+            
+            // 一覧に戻るボタンのイベント
+            const backToListBtn = document.getElementById('back-to-list-btn');
+            if (backToListBtn) {
+                backToListBtn.addEventListener('click', function() {
+                    hideOrderDetail();
+                });
+            }
+            
+            // フィルタリングの機能
+            const periodFilter = document.getElementById('period-filter');
+            const statusFilter = document.getElementById('status-filter');
+            const searchInput = document.getElementById('search-orders');
+            
+            function applyFilters() {
+                console.log('フィルタを適用:', {
+                    period: periodFilter.value,
+                    status: statusFilter.value,
+                    search: searchInput.value
+                });
+                // 実際のフィルタリング処理はここに実装
+                // サンプルなので、ログ出力のみ
+            }
+            
+            if (periodFilter) periodFilter.addEventListener('change', applyFilters);
+            if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+            if (searchInput) searchInput.addEventListener('input', debounce(applyFilters, 500));
+            
+            // エクスポートボタンのイベント
+            const exportBtn = document.getElementById('export-orders-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function() {
+                    alert('発注履歴をCSVでエクスポートします。');
+                });
+            }
+            
+            // 印刷ボタンのイベント
+            const printBtn = document.getElementById('print-order-btn');
+            if (printBtn) {
+                printBtn.addEventListener('click', function() {
+                    window.print();
+                });
+            }
+            
+            // 再注文ボタンのイベント
+            const reorderBtn = document.getElementById('reorder-btn');
+            if (reorderBtn) {
+                reorderBtn.addEventListener('click', function() {
+                    alert('この内容で再注文します。');
+                });
+            }
+            
+            // キャンセルボタンのイベント
+            const cancelBtn = document.getElementById('cancel-order-btn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function() {
+                    if (confirm('この発注をキャンセルしてもよろしいですか？')) {
+                        alert('発注をキャンセルしました。');
+                        // 実際のキャンセル処理はここに実装
+                    }
+                });
+            }
+        });
+        
+        // 発注詳細を表示する関数
+        function showOrderDetail(orderId) {
+            const orderDetailSection = document.getElementById('order-detail-section');
+            const orderDetailId = document.getElementById('order-detail-id');
+            
+            if (orderDetailSection && orderDetailId) {
+                orderDetailId.textContent = orderId;
+                orderDetailSection.style.display = 'block';
+                
+                // スクロールして詳細セクションを表示
+                orderDetailSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // 発注詳細を非表示にする関数
+        function hideOrderDetail() {
+            const orderDetailSection = document.getElementById('order-detail-section');
+            
+            if (orderDetailSection) {
+                orderDetailSection.style.display = 'none';
+            }
+        }
+        
+        // デバウンス関数（ユーティリティから）
+        function debounce(func, wait = 300) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(this, args);
+                }, wait);
+            };
+        }
+    </script>
+</body>
+</html>

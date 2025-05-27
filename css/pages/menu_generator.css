@@ -1,0 +1,667 @@
+/* ワインメニュー生成ページ用スタイル */
+
+/* ステップ進行状況 */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    margin: var(--spacing-xl) 0;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background-color: var(--medium-gray);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    padding: 0 var(--spacing-sm);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--medium-gray);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    transition: all var(--transition-normal);
+}
+
+.step.active .step-number {
+    background-color: var(--primary-color);
+}
+
+.step.completed .step-number {
+    background-color: var(--success-color);
+}
+
+.step-label {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ステップコンテンツ */
+.step-content {
+    margin: var(--spacing-xl) 0;
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.step-header h2 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.step-description {
+    color: #6c757d;
+    font-size: var(--font-size-lg);
+}
+
+.step-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--medium-gray);
+}
+
+/* ワイン選択グリッド */
+.wine-selection-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-md);
+}
+
+.selection-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.selected-count {
+    font-size: var(--font-size-lg);
+}
+
+.wine-type-filter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.filter-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--medium-gray);
+    background: var(--white);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+}
+
+.filter-btn:hover {
+    background-color: var(--light-gray);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+.wine-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.wine-selection-card {
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.wine-selection-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.wine-selection-card.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.wine-selection-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.wine-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.wine-type-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: var(--spacing-sm);
+}
+
+.wine-type-indicator.red { background-color: #8B0000; }
+.wine-type-indicator.white { background-color: #F5F5DC; border: 1px solid #ddd; }
+.wine-type-indicator.sparkling { background-color: #FFD700; }
+.wine-type-indicator.rose { background-color: #FFC0CB; }
+
+.wine-card-name {
+    font-weight: bold;
+    color: var(--dark-gray);
+    font-size: var(--font-size-lg);
+}
+
+.wine-card-details {
+    color: #6c757d;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.wine-card-price {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* メニュー設定 */
+.menu-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.settings-section {
+    background-color: #f8f9fa;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+}
+
+.settings-section h3 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+}
+
+.sort-options,
+.display-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.radio-option,
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.radio-option:hover,
+.checkbox-option:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.radio-option input,
+.checkbox-option input {
+    margin-right: var(--spacing-sm);
+    accent-color: var(--primary-color);
+}
+
+/* カスタム順序設定 */
+.sortable-wine-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-md);
+    background: var(--white);
+}
+
+.sortable-wine-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--light-gray);
+    cursor: move;
+    background: var(--white);
+    transition: background-color var(--transition-fast);
+}
+
+.sortable-wine-item:hover {
+    background-color: #f8f9fa;
+}
+
+.sortable-wine-item:last-child {
+    border-bottom: none;
+}
+
+.drag-handle {
+    margin-right: var(--spacing-md);
+    color: #6c757d;
+    cursor: grab;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* テンプレート選択 */
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.template-card {
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.template-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.template-card.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.template-preview {
+    height: 200px;
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.classic-preview {
+    background: linear-gradient(135deg, #f8f4e6, #ffffff);
+    font-family: 'Times New Roman', serif;
+    border-bottom: 2px solid #d4af37;
+}
+
+.modern-preview {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+    font-family: 'Arial', sans-serif;
+}
+
+.elegant-preview {
+    background: linear-gradient(135deg, #faf9f7, #ffffff);
+    font-family: 'Georgia', serif;
+    border: 1px solid #e8e8e8;
+}
+
+.bistro-preview {
+    background: linear-gradient(135deg, #fff8dc, #fffacd);
+    font-family: 'Comic Sans MS', cursive;
+}
+
+.preview-header {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark-gray);
+}
+
+.preview-wine-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+}
+
+.template-info {
+    padding: var(--spacing-md);
+}
+
+.template-info h3 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-sm);
+}
+
+.template-info p {
+    color: #6c757d;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.template-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.feature-tag {
+    background-color: var(--light-gray);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--dark-gray);
+}
+
+/* カスタマイズフォーム */
+.customization-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-lg);
+}
+
+.form-section h3 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ロゴアップロード */
+.logo-upload-section {
+    margin-top: var(--spacing-md);
+}
+
+.upload-area {
+    border: 2px dashed var(--medium-gray);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.upload-area:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color-rgb), 0.02);
+}
+
+.upload-area.dragover {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.upload-placeholder svg {
+    color: #6c757d;
+    margin-bottom: var(--spacing-sm);
+}
+
+.upload-placeholder p {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-sm);
+}
+
+.upload-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+}
+
+.upload-placeholder small {
+    color: #6c757d;
+    font-size: var(--font-size-xs);
+}
+
+.logo-preview {
+    text-align: center;
+    margin-top: var(--spacing-md);
+}
+
+.logo-preview img {
+    max-width: 200px;
+    max-height: 100px;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* メニュープレビュー */
+.preview-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.preview-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-md);
+}
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.zoom-level {
+    min-width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.menu-preview-container {
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--white);
+    max-height: 600px;
+    overflow: auto;
+}
+
+.menu-preview {
+    width: 100%;
+    min-height: 400px;
+    background: var(--white);
+    transform-origin: top left;
+    transition: transform var(--transition-normal);
+}
+
+/* 生成アクション */
+.generation-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+}
+
+.action-group {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.save-options {
+    text-align: center;
+    padding: var(--spacing-md);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-md);
+}
+
+.save-options h4 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* 完了モーダル */
+.completion-message {
+    text-align: center;
+}
+
+.completion-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    margin: var(--spacing-lg) 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item strong {
+    display: block;
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.sommia-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: rgba(var(--secondary-color-rgb), 0.05);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-top: var(--spacing-lg);
+}
+
+.sommia-message .ai-avatar-small {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .progress-steps {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+    
+    .progress-steps::before {
+        display: none;
+    }
+    
+    .step-label {
+        font-size: var(--font-size-xs);
+    }
+    
+    .wine-selection-controls {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .filter-buttons {
+        flex-wrap: wrap;
+    }
+    
+    .menu-settings {
+        grid-template-columns: 1fr;
+    }
+    
+    .template-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .action-group .btn {
+        width: 100%;
+    }
+    
+    .step-actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .step-actions .btn {
+        width: 100%;
+    }
+    
+    .completion-stats {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}

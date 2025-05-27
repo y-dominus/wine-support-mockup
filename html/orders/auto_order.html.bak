@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動発注管理 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/wine-bottles.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/components/notifications.js"></script>
+    <style>
+        /* 自動発注管理ページスタイル */
+        .page-header {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .page-title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .page-title-container h1 {
+            margin: 0;
+        }
+        
+        .page-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .auto-order-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .order-list-table {
+            width: 100%;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .wine-select-container {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .wine-select-box {
+            flex: 1;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+        }
+        
+        .wine-select-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .wine-select-box-title {
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        .wine-select-items {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .wine-select-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .wine-select-item:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .wine-select-item:last-child {
+            border-bottom: none;
+        }
+        
+        .wine-select-item.selected {
+            background-color: rgba(255, 77, 0, 0.1);
+        }
+        
+        .wine-select-item-info {
+            flex: 1;
+            padding-left: var(--spacing-sm);
+        }
+        
+        .wine-select-item-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .wine-select-item-details {
+            font-size: var(--font-size-sm);
+            color: var(--dark-gray);
+        }
+        
+        .order-summary {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .order-summary-header {
+            font-weight: bold;
+            margin-bottom: var(--spacing-sm);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .order-summary-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+        }
+        
+        .order-summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .order-summary-label {
+            font-size: var(--font-size-sm);
+            color: var(--dark-gray);
+            margin-bottom: 2px;
+        }
+        
+        .order-summary-value {
+            font-weight: bold;
+        }
+        
+        .order-notes {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+        }
+        
+        /* 検索モーダル */
+        .search-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        .search-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--medium-gray);
+            position: sticky;
+            top: 0;
+            background-color: var(--white);
+            z-index: 10;
+        }
+        
+        .search-modal-title {
+            margin: 0;
+            color: var(--secondary-color);
+        }
+        
+        .search-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+        
+        .search-modal-body {
+            padding: var(--spacing-lg);
+        }
+        
+        .search-form {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .search-input-container {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .search-input {
+            flex: 1;
+        }
+        
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-result-info {
+            flex: 1;
+        }
+        
+        .search-result-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .search-result-details {
+            font-size: var(--font-size-sm);
+            color: var(--dark-gray);
+        }
+        
+        .search-result-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: var(--spacing-lg);
+            color: var(--dark-gray);
+        }
+        
+        .search-pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .wine-select-container {
+                flex-direction: column;
+            }
+            
+            .order-summary-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <div class="page-title-container">
+                    <h1 class="page-title">自動発注管理</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-outline-primary" id="search-wine-btn">ワインを検索</button>
+                    </div>
+                </div>
+                
+                <div class="ai-message-container">
+                    <div id="ai-message-area" class="ai-message">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-text">自動発注リストを作成しています。ワインを追加したり、不要なものを削除したりできます。変更したらSommiaがお手伝いします！</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auto-order-content">
+                <h2 class="section-title">発注リスト</h2>
+                <table class="data-table order-list-table">
+                    <thead>
+                        <tr>
+                            <th>商品名</th>
+                            <th>種類</th>
+                            <th>生産地</th>
+                            <th>価格/本</th>
+                            <th>在庫状況</th>
+                            <th>発注数</th>
+                            <th>小計</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="wine-thumbnail red"></div>
+                                    キャンティ クラシコ リゼルヴァ
+                                </div>
+                            </td>
+                            <td>赤ワイン</td>
+                            <td>イタリア</td>
+                            <td>¥8,800</td>
+                            <td>残り2本</td>
+                            <td>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-id="1">-</button>
+                                    <input type="number" class="quantity-input" value="6" min="1" max="24" data-id="1">
+                                    <button class="quantity-btn plus" data-id="1">+</button>
+                                </div>
+                            </td>
+                            <td>¥52,800</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger delete-item" data-id="1">削除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="wine-thumbnail white"></div>
+                                    ソーヴィニヨン・ブラン
+                                </div>
+                            </td>
+                            <td>白ワイン</td>
+                            <td>ニュージーランド</td>
+                            <td>¥7,000</td>
+                            <td>残り1本</td>
+                            <td>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-id="2">-</button>
+                                    <input type="number" class="quantity-input" value="4" min="1" max="24" data-id="2">
+                                    <button class="quantity-btn plus" data-id="2">+</button>
+                                </div>
+                            </td>
+                            <td>¥28,000</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger delete-item" data-id="2">削除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="wine-thumbnail red"></div>
+                                    メルロー
+                                </div>
+                            </td>
+                            <td>赤ワイン</td>
+                            <td>チリ</td>
+                            <td>¥6,500</td>
+                            <td>残り3本</td>
+                            <td>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-id="3">-</button>
+                                    <input type="number" class="quantity-input" value="4" min="1" max="24" data-id="3">
+                                    <button class="quantity-btn plus" data-id="3">+</button>
+                                </div>
+                            </td>
+                            <td>¥26,000</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger delete-item" data-id="3">削除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-right"><strong>合計</strong></td>
+                            <td><strong>¥106,800</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                <div class="order-summary">
+                    <div class="order-summary-header">発注サマリー</div>
+                    <div class="order-summary-content">
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">合計金額</span>
+                            <span class="order-summary-value">¥106,800</span>
+                        </div>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">合計本数</span>
+                            <span class="order-summary-value">14本</span>
+                        </div>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">ワイン種類数</span>
+                            <span class="order-summary-value">3種類</span>
+                        </div>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">最低発注金額まで</span>
+                            <span class="order-summary-value">発注可能（達成）</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-notes">
+                    <h3 class="section-title">備考</h3>
+                    <textarea class="form-control" rows="4" placeholder="配送希望日時や特記事項などをご記入ください"></textarea>
+                </div>
+                
+                <div class="order-actions">
+                    <button class="btn btn-outline-secondary" onclick="window.history.back()">前のページに戻る</button>
+                    <button class="btn btn-primary" id="confirm-order-btn">発注を確定する</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 検索モーダル -->
+    <div class="search-modal" id="search-modal">
+        <div class="search-modal-content">
+            <div class="search-modal-header">
+                <h3 class="search-modal-title">ワインを検索</h3>
+                <button class="search-modal-close">&times;</button>
+            </div>
+            <div class="search-modal-body">
+                <div class="search-form">
+                    <div class="search-filters">
+                        <div class="form-group">
+                            <label for="wine-type">ワインタイプ</label>
+                            <select class="form-control" id="wine-type">
+                                <option value="">すべて</option>
+                                <option value="red">赤ワイン</option>
+                                <option value="white">白ワイン</option>
+                                <option value="sparkling">スパークリング</option>
+                                <option value="rose">ロゼ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="wine-region">生産地</label>
+                            <select class="form-control" id="wine-region">
+                                <option value="">すべて</option>
+                                <option value="france">フランス</option>
+                                <option value="italy">イタリア</option>
+                                <option value="spain">スペイン</option>
+                                <option value="chile">チリ</option>
+                                <option value="australia">オーストラリア</option>
+                                <option value="japan">日本</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="wine-price">価格帯</label>
+                            <select class="form-control" id="wine-price">
+                                <option value="">すべて</option>
+                                <option value="under5000">〜¥5,000</option>
+                                <option value="5000-10000">¥5,000〜¥10,000</option>
+                                <option value="10000-20000">¥10,000〜¥20,000</option>
+                                <option value="over20000">¥20,000〜</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-input-container">
+                        <input type="text" class="form-control search-input" placeholder="ワイン名、生産者名、品種名などで検索">
+                        <button class="btn btn-primary" id="search-execute-btn">検索</button>
+                    </div>
+                </div>
+                
+                <div class="search-results">
+                    <div class="search-result-item">
+                        <div class="search-result-info">
+                            <div style="display: flex; align-items: center;">
+                                <div class="wine-thumbnail red"></div>
+                                <div>
+                                    <div class="search-result-name">バローロ</div>
+                                    <div class="search-result-details">赤ワイン | イタリア | 2017年 | ¥12,000</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-result-actions">
+                            <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="4">詳細</button>
+                            <button class="btn btn-sm btn-primary add-to-order-btn" data-wine-id="4">発注へ追加</button>
+                        </div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="search-result-info">
+                            <div style="display: flex; align-items: center;">
+                                <div class="wine-thumbnail white"></div>
+                                <div>
+                                    <div class="search-result-name">シャブリ プルミエ・クリュ</div>
+                                    <div class="search-result-details">白ワイン | フランス | 2020年 | ¥9,500</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-result-actions">
+                            <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="5">詳細</button>
+                            <button class="btn btn-sm btn-primary add-to-order-btn" data-wine-id="5">発注へ追加</button>
+                        </div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="search-result-info">
+                            <div style="display: flex; align-items: center;">
+                                <div class="wine-thumbnail red"></div>
+                                <div>
+                                    <div class="search-result-name">リオハ レゼルバ</div>
+                                    <div class="search-result-details">赤ワイン | スペイン | 2016年 | ¥7,800</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-result-actions">
+                            <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="6">詳細</button>
+                            <button class="btn btn-sm btn-primary add-to-order-btn" data-wine-id="6">発注へ追加</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-pagination">
+                    <button class="btn btn-sm btn-outline-secondary" disabled>&laquo; 前へ</button>
+                    <button class="btn btn-sm btn-primary">1</button>
+                    <button class="btn btn-sm btn-outline-secondary">2</button>
+                    <button class="btn btn-sm btn-outline-secondary">3</button>
+                    <button class="btn btn-sm btn-outline-secondary">次へ &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AIメッセージの表示
+            if (typeof displayAiMessage === 'function') {
+                displayAiMessage('orders', 'replenishOrder', null, '#ai-message-area');
+            }
+            
+            // 検索モーダルの制御
+            const searchBtn = document.getElementById('search-wine-btn');
+            const searchModal = document.getElementById('search-modal');
+            const searchCloseBtn = document.querySelector('.search-modal-close');
+            
+            if (searchBtn && searchModal) {
+                searchBtn.addEventListener('click', function() {
+                    searchModal.style.display = 'flex';
+                });
+            }
+            
+            if (searchCloseBtn && searchModal) {
+                searchCloseBtn.addEventListener('click', function() {
+                    searchModal.style.display = 'none';
+                });
+            }
+            
+            // モーダル外クリックで閉じる
+            window.addEventListener('click', function(event) {
+                if (event.target === searchModal) {
+                    searchModal.style.display = 'none';
+                }
+            });
+            
+            // 数量変更の制御
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            const minusButtons = document.querySelectorAll('.quantity-btn.minus');
+            const plusButtons = document.querySelectorAll('.quantity-btn.plus');
+            
+            // 数量入力の処理
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    updateOrderSummary();
+                });
+            });
+            
+            // マイナスボタンの処理
+            minusButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                    if (input) {
+                        const currentValue = parseInt(input.value);
+                        if (currentValue > parseInt(input.min)) {
+                            input.value = currentValue - 1;
+                            updateOrderSummary();
+                        }
+                    }
+                });
+            });
+            
+            // プラスボタンの処理
+            plusButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                    if (input) {
+                        const currentValue = parseInt(input.value);
+                        if (currentValue < parseInt(input.max)) {
+                            input.value = currentValue + 1;
+                            updateOrderSummary();
+                        }
+                    }
+                });
+            });
+            
+            // 削除ボタンの処理
+            const deleteButtons = document.querySelectorAll('.delete-item');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const row = this.closest('tr');
+                    if (row) {
+                        if (confirm('このワインを発注リストから削除しますか？')) {
+                            row.remove();
+                            updateOrderSummary();
+                        }
+                    }
+                });
+            });
+            
+            // 発注リストへの追加処理
+            const addToOrderButtons = document.querySelectorAll('.add-to-order-btn');
+            addToOrderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-wine-id');
+                    alert(`選択したワインを発注リストに追加しました。`);
+                    searchModal.style.display = 'none';
+                    // 実際の実装では、ここでリストに追加し、表を更新する処理を行う
+                });
+            });
+            
+            // 発注確定ボタンの処理
+            const confirmOrderBtn = document.getElementById('confirm-order-btn');
+            if (confirmOrderBtn) {
+                confirmOrderBtn.addEventListener('click', function() {
+                    if (confirm('この内容で発注を確定しますか？')) {
+                        alert('発注が確定しました。担当者に通知されます。');
+                        // 発注IDをパラメータとして発注履歴ページに遷移
+                        window.location.href = './order_history.html?order_id=ORD-20250522-001';
+                    }
+                });
+            }
+            
+            // 注文サマリーの更新
+            function updateOrderSummary() {
+                let totalAmount = 0;
+                let totalBottles = 0;
+                let wineTypes = 0;
+                
+                // 表の各行を処理
+                const rows = document.querySelectorAll('.order-list-table tbody tr');
+                if (rows.length > 0) {
+                    wineTypes = rows.length;
+                    
+                    rows.forEach(row => {
+                        const quantityInput = row.querySelector('.quantity-input');
+                        const priceText = row.cells[3].textContent;
+                        const price = parseInt(priceText.replace(/[^\d]/g, ''));
+                        const quantity = parseInt(quantityInput.value);
+                        
+                        totalBottles += quantity;
+                        const subtotal = price * quantity;
+                        totalAmount += subtotal;
+                        
+                        // 小計の更新
+                        row.cells[6].textContent = `¥${subtotal.toLocaleString()}`;
+                    });
+                    
+                    // 合計の更新
+                    const totalCell = document.querySelector('.order-list-table tfoot tr td:nth-child(2)');
+                    if (totalCell) {
+                        totalCell.innerHTML = `<strong>¥${totalAmount.toLocaleString()}</strong>`;
+                    }
+                }
+                
+                // サマリー情報の更新
+                document.querySelector('.order-summary-value:nth-child(1)').textContent = `¥${totalAmount.toLocaleString()}`;
+                document.querySelector('.order-summary-value:nth-child(2)').textContent = `${totalBottles}本`;
+                document.querySelector('.order-summary-value:nth-child(3)').textContent = `${wineTypes}種類`;
+                
+                // 最低発注金額のチェック（例として50,000円を設定）
+                const minOrderAmount = 50000;
+                const orderStatusElement = document.querySelector('.order-summary-value:nth-child(4)');
+                
+                if (totalAmount >= minOrderAmount) {
+                    orderStatusElement.textContent = '発注可能（達成）';
+                    orderStatusElement.style.color = '#28a745';
+                    document.getElementById('confirm-order-btn').disabled = false;
+                } else {
+                    const remaining = minOrderAmount - totalAmount;
+                    orderStatusElement.textContent = `あと¥${remaining.toLocaleString()}必要`;
+                    orderStatusElement.style.color = '#dc3545';
+                    document.getElementById('confirm-order-btn').disabled = true;
+                }
+            }
+            
+            // 初期更新
+            updateOrderSummary();
+        });
+    </script>
+</body>
+</html>

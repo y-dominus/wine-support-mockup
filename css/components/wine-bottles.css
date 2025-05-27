@@ -1,0 +1,122 @@
+/* ワインタイプ画像表示用 */
+.wine-image {
+    width: 60px;
+    height: 150px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: var(--spacing-sm);
+}
+
+.wine-image.red {
+    background-image: url('../../assets/images/wines/red_wine.svg');
+}
+
+.wine-image.white {
+    background-image: url('../../assets/images/wines/white_wine.svg');
+}
+
+.wine-image.sparkling {
+    background-image: url('../../assets/images/wines/sparkling_wine.svg');
+}
+
+.wine-image.rose {
+    background-image: url('../../assets/images/wines/rose_wine.svg');
+}
+
+/* ダッシュボードと発注ページ用のサムネイル */
+.wine-thumbnail {
+    width: 30px;
+    height: 75px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: var(--spacing-sm);
+}
+
+.wine-thumbnail.red {
+    background-image: url('../../assets/images/wines/red_wine.svg');
+}
+
+.wine-thumbnail.white {
+    background-image: url('../../assets/images/wines/white_wine.svg');
+}
+
+.wine-thumbnail.sparkling {
+    background-image: url('../../assets/images/wines/sparkling_wine.svg');
+}
+
+.wine-thumbnail.rose {
+    background-image: url('../../assets/images/wines/rose_wine.svg');
+}.wine-bottle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ボトル本体 */
+.wine-bottle::before {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 85%;
+    background-color: var(--bottle-color, #333);
+    border-radius: 10% 10% 0 0 / 5% 5% 0 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ボトルの首 */
+.wine-bottle::after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    width: 12%;
+    height: 20%;
+    background-color: var(--bottle-color, #333);
+    border-radius: 30% 30% 0 0 / 20% 20% 0 0;
+}
+
+/* ラベル */
+.wine-bottle-label {
+    position: absolute;
+    width: 35%;
+    height: 30%;
+    background-color: var(--label-color, #f5f5dc);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: #333;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ワインタイプごとの色設定 */
+.wine-bottle.red {
+    --bottle-color: #3b0404;
+    --label-color: #f5f5dc;
+}
+
+.wine-bottle.white {
+    --bottle-color: #234d20;
+    --label-color: #f0f0f0;
+}
+
+.wine-bottle.sparkling {
+    --bottle-color: #2d4654;
+    --label-color: #f8f8d8;
+}
+
+.wine-bottle.rose {
+    --bottle-color: #9e5a63;
+    --label-color: #fff5f5;
+}

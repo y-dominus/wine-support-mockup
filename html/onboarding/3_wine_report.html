@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選定レポート・ワインメニュー | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">6</div>
+                        <div class="step-label">レポート確認</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">7</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">8</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                            <span class="ai-text">素晴らしいワインリストが完成しました！選定レポートとワインメニューをご確認ください。お店に最適な組み合わせを厳選いたしました。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="report-sections">
+                        <!-- 選定レポート -->
+                        <div class="report-section">
+                            <div class="report-header">
+                                <h2 class="report-title">🍷 ワイン選定レポート</h2>
+                                <button class="btn btn-outline-primary btn-sm" onclick="downloadReport('selection')">
+                                    📄 PDFダウンロード
+                                </button>
+                            </div>
+                            
+                            <div class="report-content">
+                                <div class="report-summary">
+                                    <h3>選定概要</h3>
+                                    <div class="summary-grid">
+                                        <div class="summary-item">
+                                            <span class="summary-label">総選定本数</span>
+                                            <span class="summary-value">20本</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">価格帯</span>
+                                            <span class="summary-value">2,800円 〜 12,000円</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">構成比率</span>
+                                            <span class="summary-value">赤:50% 白:40% 泡:10%</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">主要産地</span>
+                                            <span class="summary-value">イタリア、フランス、スペイン</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="selection-rationale">
+                                    <h3>選定根拠</h3>
+                                    <div class="rationale-points">
+                                        <div class="rationale-point">
+                                            <h4>店舗特性への適合</h4>
+                                            <p>イタリアンレストラン、客単価5,000円帯、ソムリエ不在という特徴を踏まえ、親しみやすい品種を中心に構成。カベルネ・ソーヴィニヨン、ピノ・ノワール、シャルドネなど主要品種を重視。</p>
+                                        </div>
+                                        <div class="rationale-point">
+                                            <h4>料理との相性</h4>
+                                            <p>トマトベースの料理、グリル料理、魚介料理に最適化。酸味のバランスが良いキャンティ、フレッシュなソーヴィニヨン・ブランを選定。</p>
+                                        </div>
+                                        <div class="rationale-point">
+                                            <h4>価格バランス</h4>
+                                            <p>ボリュームゾーン（4,000〜6,000円）を中心に、エントリーレベルからプレミアムまでバランス良く配置。回転率を考慮した実用的な構成。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="pairing-recommendations">
+                                    <h3>主要ペアリング推奨</h3>
+                                    <div class="pairing-list">
+                                        <div class="pairing-item">
+                                            <div class="pairing-dish">トマトとモッツァレラのカプレーゼ</div>
+                                            <div class="pairing-arrow">→</div>
+                                            <div class="pairing-wine">ソーヴィニヨン・ブラン（ニュージーランド）</div>
+                                        </div>
+                                        <div class="pairing-item">
+                                            <div class="pairing-dish">牛フィレ肉のグリル</div>
+                                            <div class="pairing-arrow">→</div>
+                                            <div class="pairing-wine">キャンティ・クラシコ・リゼルヴァ</div>
+                                        </div>
+                                        <div class="pairing-item">
+                                            <div class="pairing-dish">シーフードパスタ</div>
+                                            <div class="pairing-arrow">→</div>
+                                            <div class="pairing-wine">ヴェルメンティーノ（サルデーニャ）</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ワインメニュー -->
+                        <div class="report-section">
+                            <div class="report-header">
+                                <h2 class="report-title">📋 ワインメニュー</h2>
+                                <button class="btn btn-outline-primary btn-sm" onclick="downloadReport('menu')">
+                                    📄 PDFダウンロード
+                                </button>
+                            </div>
+                            
+                            <div class="wine-menu-content">
+                                <div class="menu-category">
+                                    <h3 class="menu-category-title">🍷 赤ワイン</h3>
+                                    <div class="wine-menu-items">
+                                        <div class="wine-menu-item">
+                                            <div class="wine-info">
+                                                <h4 class="wine-name">キャンティ・クラシコ・リゼルヴァ</h4>
+                                                <p class="wine-description">イタリア・トスカーナ | フルボディ | サンジョヴェーゼ</p>
+                                                <p class="wine-tasting-note">チェリーとスパイスの香り、しっかりとしたタンニン</p>
+                                            </div>
+                                            <div class="wine-price">¥4,800</div>
+                                        </div>
+                                        <div class="wine-menu-item">
+                                            <div class="wine-info">
+                                                <h4 class="wine-name">リオハ・クリアンサ</h4>
+                                                <p class="wine-description">スペイン・リオハ | ミディアムボディ | テンプラニーリョ</p>
+                                                <p class="wine-tasting-note">ベリー系果実味とバニラのニュアンス</p>
+                                            </div>
+                                            <div class="wine-price">¥3,600</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="menu-category">
+                                    <h3 class="menu-category-title">🤍 白ワイン</h3>
+                                    <div class="wine-menu-items">
+                                        <div class="wine-menu-item">
+                                            <div class="wine-info">
+                                                <h4 class="wine-name">ソーヴィニヨン・ブラン</h4>
+                                                <p class="wine-description">ニュージーランド・マールボロ | 辛口 | ソーヴィニヨン・ブラン</p>
+                                                <p class="wine-tasting-note">柑橘系の爽やかな酸味とハーブの香り</p>
+                                            </div>
+                                            <div class="wine-price">¥3,200</div>
+                                        </div>
+                                        <div class="wine-menu-item">
+                                            <div class="wine-info">
+                                                <h4 class="wine-name">ヴェルメンティーノ・ディ・サルデーニャ</h4>
+                                                <p class="wine-description">イタリア・サルデーニャ | 辛口 | ヴェルメンティーノ</p>
+                                                <p class="wine-tasting-note">海のミネラル感と白い花の香り</p>
+                                            </div>
+                                            <div class="wine-price">¥4,200</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="menu-category">
+                                    <h3 class="menu-category-title">🍾 スパークリングワイン</h3>
+                                    <div class="wine-menu-items">
+                                        <div class="wine-menu-item">
+                                            <div class="wine-info">
+                                                <h4 class="wine-name">プロセッコ・ディ・ヴァルドッビアーデネ</h4>
+                                                <p class="wine-description">イタリア・ヴェネト | 辛口 | グレラ</p>
+                                                <p class="wine-tasting-note">青リンゴと洋梨の軽やかな泡</p>
+                                            </div>
+                                            <div class="wine-price">¥3,800</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 提案書 -->
+                        <div class="report-section">
+                            <div class="report-header">
+                                <h2 class="report-title">📊 ワイン導入提案書</h2>
+                                <button class="btn btn-outline-primary btn-sm" onclick="downloadReport('proposal')">
+                                    📄 PDFダウンロード
+                                </button>
+                            </div>
+                            
+                            <div class="proposal-content">
+                                <div class="financial-projection">
+                                    <h3>売上予測</h3>
+                                    <div class="projection-grid">
+                                        <div class="projection-item">
+                                            <span class="projection-label">月間ワイン売上目標</span>
+                                            <span class="projection-value">¥480,000</span>
+                                        </div>
+                                        <div class="projection-item">
+                                            <span class="projection-label">平均客単価向上</span>
+                                            <span class="projection-value">+¥800</span>
+                                        </div>
+                                        <div class="projection-item">
+                                            <span class="projection-label">ワイン粗利率</span>
+                                            <span class="projection-value">68%</span>
+                                        </div>
+                                        <div class="projection-item">
+                                            <span class="projection-label">初期投資回収期間</span>
+                                            <span class="projection-value">2.1ヶ月</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="implementation-plan">
+                                    <h3>導入計画</h3>
+                                    <div class="timeline">
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Week 1</div>
+                                            <div class="timeline-content">初回発注・スタッフトレーニング</div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Week 2</div>
+                                            <div class="timeline-content">メニュー印刷・店内告知</div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Week 3</div>
+                                            <div class="timeline-content">本格運用開始</div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-date">Month 1</div>
+                                            <div class="timeline-content">効果測定・微調整</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="success-factors">
+                                    <h3>成功のポイント</h3>
+                                    <ul class="success-list">
+                                        <li>スタッフの基本的なワイン知識習得（Sommiaサポート付き）</li>
+                                        <li>料理とのペアリング提案の積極的な実施</li>
+                                        <li>月次売上データの分析と改善サイクル構築</li>
+                                        <li>お客様フィードバックの収集と反映</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a href="3_initial_proposal.html" class="btn btn-outline-primary">戻る</a>
+                        <a href="4_signup_form.html" class="btn btn-primary btn-lg">この内容で登録する</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // PDFダウンロード機能（シミュレーション）
+        function downloadReport(type) {
+            let fileName;
+            switch(type) {
+                case 'selection':
+                    fileName = 'ワイン選定レポート.pdf';
+                    break;
+                case 'menu':
+                    fileName = 'ワインメニュー.pdf';
+                    break;
+                case 'proposal':
+                    fileName = 'ワイン導入提案書.pdf';
+                    break;
+            }
+            
+            // 実際の実装では、サーバーサイドでPDF生成
+            alert(`${fileName} をダウンロードします。\n（実装時はPDFファイルが生成されます）`);
+        }
+        
+        // ページロード時のアニメーション
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportSections = document.querySelectorAll('.report-section');
+            reportSections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+    
+    <style>
+        .report-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .report-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #6b46c1 0%, #9333ea 100%);
+            color: white;
+        }
+        
+        .report-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .report-content, .wine-menu-content, .proposal-content {
+            padding: 2rem;
+        }
+        
+        .report-summary {
+            margin-bottom: 2rem;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .summary-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .summary-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .summary-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .rationale-points {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .rationale-point h4 {
+            color: #6b46c1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pairing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .pairing-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        
+        .pairing-dish {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .pairing-arrow {
+            font-size: 1.5rem;
+            color: #6b46c1;
+        }
+        
+        .pairing-wine {
+            font-weight: 500;
+            color: #7c3aed;
+        }
+        
+        .menu-category {
+            margin-bottom: 2rem;
+        }
+        
+        .menu-category-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .wine-menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .wine-menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: 8px;
+            border-left: 4px solid #6b46c1;
+        }
+        
+        .wine-info h4 {
+            margin: 0 0 0.25rem 0;
+            color: #1e293b;
+        }
+        
+        .wine-description {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        
+        .wine-tasting-note {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #475569;
+            font-style: italic;
+        }
+        
+        .wine-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #dc2626;
+        }
+        
+        .projection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .projection-item {
+            background: #ecfdf5;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            border-left: 4px solid #10b981;
+        }
+        
+        .projection-label {
+            font-size: 0.875rem;
+            color: #065f46;
+            font-weight: 500;
+        }
+        
+        .projection-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #059669;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fff7ed;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: #92400e;
+            min-width: 80px;
+        }
+        
+        .timeline-content {
+            color: #1e293b;
+        }
+        
+        .success-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .success-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .success-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .success-list li:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 768px) {
+            .pairing-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pairing-arrow {
+                transform: rotate(90deg);
+            }
+            
+            .wine-menu-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</body>
+</html>

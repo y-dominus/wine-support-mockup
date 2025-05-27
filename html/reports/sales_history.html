@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>売上履歴 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/components/modals.css">
+    <link rel="stylesheet" href="../../css/pages/sales_history.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/sales_history.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>売上履歴</h1>
+                <div class="page-actions">
+                    <button class="btn btn-outline-secondary" id="export-csv">CSV出力</button>
+                    <a href="../my_cellar/sales_input.html" class="btn btn-primary">売上を入力</a>
+                </div>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                    <span class="ai-text">売上履歴を分析して、お店の成長をお手伝いします。気になる期間や傾向があれば教えてくださいね！</span>
+                </div>
+            </div>
+            
+            <!-- フィルター・検索エリア -->
+            <div class="filter-section">
+                <div class="filter-card">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">期間</label>
+                            <div class="filter-buttons">
+                                <button class="btn btn-sm btn-outline-primary filter-btn" data-period="thisMonth">今月</button>
+                                <button class="btn btn-sm btn-outline-primary filter-btn" data-period="lastMonth">先月</button>
+                                <button class="btn btn-sm btn-outline-primary filter-btn active" data-period="last3Months">過去3ヶ月</button>
+                                <button class="btn btn-sm btn-outline-primary filter-btn" data-period="custom">カスタム</button>
+                            </div>
+                        </div>
+                        <div class="filter-group custom-date-range" style="display: none;">
+                            <input type="date" id="start-date" class="form-input">
+                            <span>〜</span>
+                            <input type="date" id="end-date" class="form-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- サマリーセクション -->
+            <div class="summary-section">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-icon">💰</div>
+                        <div class="summary-content">
+                            <div class="summary-label">合計売上</div>
+                            <div class="summary-value" id="total-sales">¥0</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">🍷</div>
+                        <div class="summary-content">
+                            <div class="summary-label">販売ボトル数</div>
+                            <div class="summary-value" id="total-bottles">0本</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">📊</div>
+                        <div class="summary-content">
+                            <div class="summary-label">平均客単価</div>
+                            <div class="summary-value" id="average-sale">¥0</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">📅</div>
+                        <div class="summary-content">
+                            <div class="summary-label">売上日数</div>
+                            <div class="summary-value" id="sales-days">0日</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sommiaの分析コメント -->
+            <div class="ai-analysis-section">
+                <div class="ai-analysis-card">
+                    <div class="ai-analysis-header">
+                        <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                        <h3>Sommiaの売上分析</h3>
+                    </div>
+                    <div class="ai-analysis-content" id="ai-analysis-content">
+                        <p>期間を選択すると、売上データを分析してアドバイスいたします。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 売上履歴テーブル -->
+            <div class="history-section">
+                <div class="history-card">
+                    <div class="history-header">
+                        <h3>売上詳細</h3>
+                        <div class="history-controls">
+                            <select class="form-select" id="items-per-page">
+                                <option value="10">10件表示</option>
+                                <option value="25">25件表示</option>
+                                <option value="50">50件表示</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="history-table-container">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>日付</th>
+                                    <th>ワイン名</th>
+                                    <th>数量</th>
+                                    <th>単価</th>
+                                    <th>小計</th>
+                                    <th>メモ</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <tr class="no-data">
+                                    <td colspan="7">
+                                        <div class="no-data-message">
+                                            <div class="no-data-icon">📊</div>
+                                            <div class="no-data-text">売上データがありません</div>
+                                            <div class="no-data-subtext">売上を入力して履歴を確認しましょう</div>
+                                            <a href="../my_cellar/sales_input.html" class="btn btn-primary btn-sm">売上を入力</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- ページネーション -->
+                    <div class="pagination-container" id="pagination-container" style="display: none;">
+                        <div class="pagination-info">
+                            <span id="pagination-info-text">1-10 / 0件</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-sm btn-outline-secondary" id="prev-page" disabled>前へ</button>
+                            <div class="pagination-numbers" id="pagination-numbers"></div>
+                            <button class="btn btn-sm btn-outline-secondary" id="next-page" disabled>次へ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 売上詳細モーダル -->
+    <div class="modal" id="sales-detail-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title">売上詳細</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="sales-detail-info">
+                    <div class="detail-row">
+                        <span class="detail-label">日付:</span>
+                        <span class="detail-value" id="detail-date">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">メモ:</span>
+                        <span class="detail-value" id="detail-note">-</span>
+                    </div>
+                </div>
+                
+                <h4>売上アイテム</h4>
+                <div class="sales-items-list" id="modal-sales-items">
+                    <!-- 売上アイテムが動的に表示される -->
+                </div>
+                
+                <div class="sales-total-section">
+                    <div class="sales-total-row">
+                        <span class="total-label">合計金額:</span>
+                        <span class="total-value" id="detail-total">¥0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">閉じる</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

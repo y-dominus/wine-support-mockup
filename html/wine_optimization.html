@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワインリスト最適化分析 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/tables.css">
+    <link rel="stylesheet" href="../css/components/wine-optimization.css">
+    <link rel="stylesheet" href="../css/pages/wine-optimization-detail.css">
+    <script defer src="../js/main.js"></script>
+    <script defer src="../js/common_parts.js"></script>
+    <script defer src="../js/ai_simulator.js"></script>
+    <script defer src="../js/utils.js"></script>
+    <script defer src="../js/page_specific/wine_optimization.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>🍷 ワインリスト最適化分析</h1>
+                <div class="page-actions">
+                    <a href="dashboard.html" class="btn btn-outline-secondary">ダッシュボードに戻る</a>
+                </div>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <div class="ai-avatar-container">
+                        <img src="../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-name">Sommia</span>
+                    </div>
+                    <span class="ai-text">売上データを詳しく分析して、最適なワインリストの提案をお作りしました。データに基づいた戦略的な銘柄入替えで、売上向上を目指しましょう！</span>
+                </div>
+            </div>
+            
+            <!-- 分析サマリー -->
+            <div class="analysis-summary">
+                <div class="summary-card main-summary">
+                    <div class="summary-header">
+                        <h2>💡 分析結果サマリー</h2>
+                        <div class="analysis-period">分析期間: 2025年2月 - 2025年5月</div>
+                    </div>
+                    <div class="summary-content">
+                        <div class="key-insights">
+                            <div class="insight-item">
+                                <div class="insight-icon">📈</div>
+                                <div class="insight-text">
+                                    <strong>売上向上の可能性:</strong> 約15%（月額+¥36,750）
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">🔄</div>
+                                <div class="insight-text">
+                                    <strong>推奨アクション:</strong> 2銘柄削除 + 3銘柄追加
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">⏱️</div>
+                                <div class="insight-text">
+                                    <strong>実施タイミング:</strong> 6月初旬（夏季メニュー更新時）
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 現状分析 -->
+            <div class="analysis-section">
+                <h2 class="section-title">📊 現状分析</h2>
+                <div class="analysis-cards">
+                    <div class="analysis-card">
+                        <h3>売上パフォーマンス分析</h3>
+                        <div class="performance-chart">
+                            <canvas id="performance-chart"></canvas>
+                        </div>
+                        <div class="chart-summary">
+                            <p>過去3ヶ月の売上データから、<strong>低パフォーマンス銘柄2種</strong>と<strong>機会損失銘柄3種</strong>を特定しました。</p>
+                        </div>
+                    </div>
+                    <div class="analysis-card">
+                        <h3>在庫回転率分析</h3>
+                        <div class="rotation-data">
+                            <div class="rotation-item good">
+                                <span class="rotation-label">良好（2回/月以上）</span>
+                                <span class="rotation-count">5銘柄</span>
+                            </div>
+                            <div class="rotation-item average">
+                                <span class="rotation-label">平均（1-2回/月）</span>
+                                <span class="rotation-count">8銘柄</span>
+                            </div>
+                            <div class="rotation-item poor">
+                                <span class="rotation-label">低迷（1回/月未満）</span>
+                                <span class="rotation-count">3銘柄</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 削除推奨銘柄 -->
+            <div class="recommendation-section remove-section">
+                <h2 class="section-title">🔴 削除推奨銘柄</h2>
+                <div class="recommendation-intro">
+                    <p>以下の銘柄は売上実績、在庫回転率、顧客反応の分析から削除を推奨します。</p>
+                </div>
+                
+                <div class="wine-recommendation-cards">
+                    <div class="wine-rec-card remove-card">
+                        <div class="wine-rec-header">
+                            <div class="wine-info">
+                                <h3>シラーズ 2021</h3>
+                                <div class="wine-details">オーストラリア | 赤ワイン | ¥7,200</div>
+                            </div>
+                            <div class="performance-badge poor">要削除</div>
+                        </div>
+                        <div class="wine-rec-body">
+                            <div class="performance-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">過去3ヶ月売上</span>
+                                    <span class="metric-value bad">0本</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">在庫回転率</span>
+                                    <span class="metric-value bad">0回/月</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">在庫期間</span>
+                                    <span class="metric-value bad">4ヶ月</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-reason">
+                                <h4>削除理由</h4>
+                                <ul>
+                                    <li>3ヶ月間全く売上がない</li>
+                                    <li>価格が類似商品より高く、選ばれにくい</li>
+                                    <li>夏季に重い赤ワインの需要が低下</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wine-rec-card remove-card">
+                        <div class="wine-rec-header">
+                            <div class="wine-info">
+                                <h3>リースリング 2022</h3>
+                                <div class="wine-details">ドイツ | 白ワイン | ¥6,500</div>
+                            </div>
+                            <div class="performance-badge poor">要削除</div>
+                        </div>
+                        <div class="wine-rec-body">
+                            <div class="performance-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">過去3ヶ月売上</span>
+                                    <span class="metric-value bad">1本</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">在庫回転率</span>
+                                    <span class="metric-value bad">0.3回/月</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">顧客評価</span>
+                                    <span class="metric-value bad">2.5/5.0</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-reason">
+                                <h4>削除理由</h4>
+                                <ul>
+                                    <li>非常に低い売上実績</li>
+                                    <li>甘口で当店の客層に合わない</li>
+                                    <li>同価格帯でより人気の白ワインがある</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 追加推奨銘柄 -->
+            <div class="recommendation-section add-section">
+                <h2 class="section-title">🟢 追加推奨銘柄</h2>
+                <div class="recommendation-intro">
+                    <p>市場トレンド、季節性、他店実績を分析し、売上向上が期待できる銘柄を選定しました。</p>
+                </div>
+                
+                <div class="wine-recommendation-cards">
+                    <div class="wine-rec-card add-card">
+                        <div class="wine-rec-header">
+                            <div class="wine-info">
+                                <h3>ヴェルメンティーノ 2023</h3>
+                                <div class="wine-details">イタリア・サルデーニャ | 白ワイン | ¥6,800</div>
+                            </div>
+                            <div class="performance-badge excellent">高期待</div>
+                        </div>
+                        <div class="wine-rec-body">
+                            <div class="performance-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">予想売上</span>
+                                    <span class="metric-value good">8-12本/月</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">利益率</span>
+                                    <span class="metric-value good">65%</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">市場トレンド</span>
+                                    <span class="metric-value good">上昇中</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-reason">
+                                <h4>推奨理由</h4>
+                                <ul>
+                                    <li>夏季に最適なフレッシュで軽やかな味わい</li>
+                                    <li>他店で月平均15本の売上実績</li>
+                                    <li>コスパが良く幅広い客層にアピール</li>
+                                    <li>魚料理との相性が抜群</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wine-rec-card add-card">
+                        <div class="wine-rec-header">
+                            <div class="wine-info">
+                                <h3>サンジョヴェーゼ 2021</h3>
+                                <div class="wine-details">イタリア・トスカーナ | 赤ワイン | ¥5,200</div>
+                            </div>
+                            <div class="performance-badge good">推奨</div>
+                        </div>
+                        <div class="wine-rec-body">
+                            <div class="performance-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">予想売上</span>
+                                    <span class="metric-value good">6-10本/月</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">利益率</span>
+                                    <span class="metric-value good">70%</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">客層マッチ</span>
+                                    <span class="metric-value good">95%</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-reason">
+                                <h4>推奨理由</h4>
+                                <ul>
+                                    <li>当店の客層に非常に適した味わい</li>
+                                    <li>手頃な価格でデイリーワインに最適</li>
+                                    <li>パスタ料理との相性が良い</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wine-rec-card add-card">
+                        <div class="wine-rec-header">
+                            <div class="wine-info">
+                                <h3>アルバリーニョ 2023</h3>
+                                <div class="wine-details">スペイン・リアス・バイシャス | 白ワイン | ¥7,500</div>
+                            </div>
+                            <div class="performance-badge good">推奨</div>
+                        </div>
+                        <div class="wine-rec-body">
+                            <div class="performance-metrics">
+                                <div class="metric">
+                                    <span class="metric-label">予想売上</span>
+                                    <span class="metric-value good">5-8本/月</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">利益率</span>
+                                    <span class="metric-value good">60%</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">差別化効果</span>
+                                    <span class="metric-value good">高</span>
+                                </div>
+                            </div>
+                            <div class="recommendation-reason">
+                                <h4>推奨理由</h4>
+                                <ul>
+                                    <li>希少性があり他店との差別化が可能</li>
+                                    <li>シーフード料理に非常に良く合う</li>
+                                    <li>夏季の暑い日に最適な酸味とミネラル感</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 実行プラン -->
+            <div class="action-plan-section">
+                <h2 class="section-title">🎯 実行プラン</h2>
+                <div class="action-plan-card">
+                    <div class="plan-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">今週</div>
+                            <div class="timeline-content">
+                                <h4>準備フェーズ</h4>
+                                <ul>
+                                    <li>推奨銘柄の詳細情報確認</li>
+                                    <li>仕入れ先への在庫確認</li>
+                                    <li>スタッフへの新銘柄説明資料作成</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">来週</div>
+                            <div class="timeline-content">
+                                <h4>発注・削除フェーズ</h4>
+                                <ul>
+                                    <li>新銘柄の発注（初回少量仕入れ）</li>
+                                    <li>削除対象銘柄の在庫処分開始</li>
+                                    <li>メニュー更新の準備</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">6月初旬</div>
+                            <div class="timeline-content">
+                                <h4>実装フェーズ</h4>
+                                <ul>
+                                    <li>新ワインリストの正式導入</li>
+                                    <li>スタッフトレーニング実施</li>
+                                    <li>顧客への新銘柄紹介開始</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expected-results">
+                        <h3>期待される効果</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <div class="result-icon">💰</div>
+                                <div class="result-content">
+                                    <div class="result-title">売上向上</div>
+                                    <div class="result-value">+15% (¥36,750/月)</div>
+                                </div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-icon">📈</div>
+                                <div class="result-content">
+                                    <div class="result-title">回転率改善</div>
+                                    <div class="result-value">平均1.8 → 2.3回/月</div>
+                                </div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-icon">😊</div>
+                                <div class="result-content">
+                                    <div class="result-title">顧客満足度</div>
+                                    <div class="result-value">新しい味わいの発見</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- アクションボタン -->
+            <div class="final-actions">
+                <div class="action-buttons">
+                    <button class="btn btn-outline-secondary" id="save-analysis">分析結果を保存</button>
+                    <button class="btn btn-primary" id="execute-plan">推奨プランを実行</button>
+                </div>
+                <div class="action-note">
+                    <p>💡 <strong>Sommiaのアドバイス:</strong> 段階的な実行をお勧めします。まずは1-2銘柄から始めて、お客様の反応を見ながら調整していきましょう。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 実行確認モーダル -->
+    <div class="modal" id="execution-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>推奨プランの実行確認</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="execution-summary">
+                    <h4>実行内容</h4>
+                    <div class="execution-item">
+                        <strong>削除:</strong> シラーズ 2021、リースリング 2022
+                    </div>
+                    <div class="execution-item">
+                        <strong>追加:</strong> ヴェルメンティーノ 2023、サンジョヴェーゼ 2021、アルバリーニョ 2023
+                    </div>
+                    <div class="execution-item">
+                        <strong>予想効果:</strong> 月売上 +¥36,750 (15%向上)
+                    </div>
+                </div>
+                <div class="execution-options">
+                    <label class="form-checkbox">
+                        <input type="checkbox" id="gradual-execution" checked>
+                        <span>段階的実行（推奨）</span>
+                    </label>
+                    <label class="form-checkbox">
+                        <input type="checkbox" id="auto-order">
+                        <span>自動発注も実行</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">キャンセル</button>
+                <button class="btn btn-primary" id="confirm-execution">実行開始</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

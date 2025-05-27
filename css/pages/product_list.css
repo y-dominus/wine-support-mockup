@@ -1,0 +1,336 @@
+/* 商品一覧ページ専用スタイル */
+
+/* カートサマリーブロック */
+.cart-summary-block {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    border-left: 4px solid #0ea5e9;
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+}
+
+.cart-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.cart-summary-title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: #0c4a6e;
+    margin: 0;
+}
+
+.cart-clear-btn {
+    background: none;
+    border: 1px solid #94a3b8;
+    color: #64748b;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-clear-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.cart-summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.cart-item-name {
+    flex: 1;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.cart-item-quantity {
+    font-size: var(--font-size-sm);
+    color: #64748b;
+    margin: 0 var(--spacing-sm);
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: #0ea5e9;
+    margin-right: var(--spacing-sm);
+}
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.cart-item-remove:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-md);
+    border-top: 2px solid rgba(14, 165, 233, 0.2);
+}
+
+.cart-total-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cart-total-items {
+    font-size: var(--font-size-sm);
+    color: #64748b;
+}
+
+.cart-total-price {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: #0c4a6e;
+}
+
+.cart-add-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
+}
+
+.cart-add-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+.cart-add-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 数量コントロール */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background-color: #ffffff;
+    color: #64748b;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quantity-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.quantity-btn:active {
+    transform: scale(0.95);
+}
+
+.quantity-input {
+    width: 50px;
+    height: 28px;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.quantity-input:focus {
+    outline: none;
+    background-color: rgba(136, 69, 145, 0.05);
+    border-radius: 4px;
+}
+
+/* テーブル内の数量コントロール */
+.table-quantity {
+    padding: 2px;
+}
+
+.table-quantity .quantity-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+}
+
+.table-quantity .quantity-input {
+    width: 40px;
+    height: 24px;
+    font-size: 12px;
+}
+
+/* ワインアクションの調整 */
+.wine-actions {
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.wine-actions .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    border: 1.5px solid #e2e8f0;
+    background-color: white;
+    color: #64748b;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wine-actions .btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: rgba(136, 69, 145, 0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(136, 69, 145, 0.15);
+    text-decoration: none;
+}
+
+/* ビュー切り替えで表示/非表示を制御 */
+.wine-container.view-grid .wine-grid {
+    display: grid;
+}
+
+.wine-container.view-grid .wine-inventory {
+    display: none;
+}
+
+.wine-container.view-list .wine-grid {
+    display: none;
+}
+
+.wine-container.view-list .wine-inventory {
+    display: block;
+}
+
+/* 仕入先在庫バッジのスタイル */
+.wine-badge.supplier-stock {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .cart-summary-block {
+        padding: var(--spacing-md);
+    }
+    
+    .cart-total {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .cart-add-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .wine-actions {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .wine-actions .btn {
+        width: 100%;
+    }
+    
+    .quantity-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .cart-item-name {
+        font-size: var(--font-size-sm);
+    }
+    
+    .cart-summary-header {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求管理 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../../css/components/cards.css">
+    <link rel="stylesheet" href="../../../css/components/tables.css">
+    <link rel="stylesheet" href="../../../css/components/forms.css">
+    <link rel="stylesheet" href="../../../css/pages/billing.css">
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/common_parts.js"></script>
+    <script defer src="../../../js/ai_simulator.js"></script>
+    <script defer src="../../../js/utils.js"></script>
+    <script defer src="../../../js/page_specific/billing_management.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>請求管理</h1>
+                <div class="page-actions">
+                    <a href="../../../html/account/account_settings.html" class="btn btn-outline-primary">アカウント設定</a>
+                </div>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <!-- AIメッセージがここに表示されます -->
+                    <div class="ai-avatar-container">
+                        <img src="../../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-name">Sommia</span>
+                    </div>
+                    <span class="ai-text">こちらでは請求情報の確認や請求書のダウンロードができます。お支払い期限は翌月末日となっております。何かご不明な点があれば、お気軽にお問い合わせくださいね。</span>
+                </div>
+            </div>
+            
+            <!-- 当月の請求見込み -->
+            <div class="dashboard-section">
+                <h2 class="section-title">当月の請求見込み（2025年5月）</h2>
+                <div class="dashboard-card">
+                    <div class="billing-summary">
+                        <div class="billing-amount">
+                            <div class="amount-label">請求見込み額（税込）</div>
+                            <div class="amount-value">¥96,800</div>
+                            <div class="amount-note">※月末締めの金額です。確定前の見込み金額となります。</div>
+                        </div>
+                        <div class="billing-details">
+                            <div class="details-item">
+                                <div class="details-label">ワイン購入</div>
+                                <div class="details-value">¥88,000</div>
+                            </div>
+                            <div class="details-item">
+                                <div class="details-label">送料</div>
+                                <div class="details-value">¥0</div>
+                            </div>
+                            <div class="details-item">
+                                <div class="details-label">消費税（10%）</div>
+                                <div class="details-value">¥8,800</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="billing-actions">
+                        <button class="btn btn-outline-primary" id="view-current-orders">当月注文詳細を確認</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 請求履歴 -->
+            <div class="dashboard-section">
+                <h2 class="section-title">請求履歴</h2>
+                <div class="dashboard-card">
+                    <div class="billing-filter">
+                        <div class="form-group">
+                            <label for="billing-year" class="form-label">年</label>
+                            <select id="billing-year" class="form-select">
+                                <option value="2025">2025年</option>
+                                <option value="2024">2024年</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing-status" class="form-label">ステータス</label>
+                            <select id="billing-status" class="form-select">
+                                <option value="all">すべて</option>
+                                <option value="paid">支払済み</option>
+                                <option value="unpaid">未払い</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-secondary" id="apply-filter">適用</button>
+                        </div>
+                    </div>
+                    
+                    <div class="billing-history">
+                        <table class="billing-table">
+                            <thead>
+                                <tr>
+                                    <th>請求月</th>
+                                    <th>請求番号</th>
+                                    <th>請求日</th>
+                                    <th>請求金額（税込）</th>
+                                    <th>支払期限</th>
+                                    <th>支払状況</th>
+                                    <th>アクション</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025年4月</td>
+                                    <td>INV-2504001</td>
+                                    <td>2025/05/01</td>
+                                    <td>¥124,300</td>
+                                    <td>2025/05/31</td>
+                                    <td><span class="payment-status unpaid">未払い</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="invoice_detail.html?id=INV-2504001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                            <button class="btn btn-sm btn-outline-secondary btn-download-invoice" data-invoice-id="INV-2504001">請求書DL</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2025年3月</td>
+                                    <td>INV-2503001</td>
+                                    <td>2025/04/01</td>
+                                    <td>¥98,450</td>
+                                    <td>2025/04/30</td>
+                                    <td><span class="payment-status paid">支払済み</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="invoice_detail.html?id=INV-2503001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                            <button class="btn btn-sm btn-outline-secondary btn-download-invoice" data-invoice-id="INV-2503001">請求書DL</button>
+                                            <button class="btn btn-sm btn-outline-success btn-download-receipt" data-invoice-id="INV-2503001">領収書DL</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2025年2月</td>
+                                    <td>INV-2502001</td>
+                                    <td>2025/03/01</td>
+                                    <td>¥110,770</td>
+                                    <td>2025/03/31</td>
+                                    <td><span class="payment-status paid">支払済み</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="invoice_detail.html?id=INV-2502001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                            <button class="btn btn-sm btn-outline-secondary btn-download-invoice" data-invoice-id="INV-2502001">請求書DL</button>
+                                            <button class="btn btn-sm btn-outline-success btn-download-receipt" data-invoice-id="INV-2502001">領収書DL</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2025年1月</td>
+                                    <td>INV-2501001</td>
+                                    <td>2025/02/01</td>
+                                    <td>¥85,800</td>
+                                    <td>2025/02/28</td>
+                                    <td><span class="payment-status paid">支払済み</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a href="invoice_detail.html?id=INV-2501001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                            <button class="btn btn-sm btn-outline-secondary btn-download-invoice" data-invoice-id="INV-2501001">請求書DL</button>
+                                            <button class="btn btn-sm btn-outline-success btn-download-receipt" data-invoice-id="INV-2501001">領収書DL</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="billing-pagination">
+                        <button class="btn btn-sm btn-light">&laquo; 前へ</button>
+                        <div class="page-numbers">
+                            <button class="btn btn-sm btn-primary">1</button>
+                            <button class="btn btn-sm btn-light">2</button>
+                        </div>
+                        <button class="btn btn-sm btn-light">次へ &raquo;</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 支払い方法と問い合わせ -->
+            <div class="dashboard-section">
+                <h2 class="section-title">お支払い情報</h2>
+                <div class="dashboard-card">
+                    <div class="payment-info-grid">
+                        <div class="payment-info-card">
+                            <div class="card-title">お支払い方法</div>
+                            <div class="card-content">
+                                <p>請求書に記載の銀行口座へのお振込みとなります。</p>
+                                <p><strong>支払期限：</strong>翌月末日まで</p>
+                                <p><strong>振込先：</strong>ワイサポ銀行 渋谷支店 普通口座 1234567</p>
+                                <p><strong>口座名義：</strong>株式会社ワイサポート</p>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-info-card">
+                            <div class="card-title">請求に関するお問い合わせ</div>
+                            <div class="card-content">
+                                <p>請求内容や支払いに関してご不明な点がございましたら、下記までお問い合わせください。</p>
+                                <p><strong>メール：</strong>billing@winesupport.co.jp</p>
+                                <p><strong>電話：</strong>03-1234-5678（平日10:00-18:00）</p>
+                                <a href="../../../html/help/faq.html" class="btn btn-outline-primary mt-3">請求関連FAQ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 当月注文詳細モーダル -->
+    <div class="modal" id="current-orders-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container modal-lg">
+            <div class="modal-header">
+                <h3>当月注文詳細（2025年5月）</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="current-orders-table">
+                    <table class="order-detail-table">
+                        <thead>
+                            <tr>
+                                <th>注文日</th>
+                                <th>注文番号</th>
+                                <th>ワイン名</th>
+                                <th>数量</th>
+                                <th>単価（税抜）</th>
+                                <th>小計（税抜）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025/05/05</td>
+                                <td>ORD-2505001</td>
+                                <td>キャンティ クラシコ リゼルヴァ</td>
+                                <td>6本</td>
+                                <td>¥4,000</td>
+                                <td>¥24,000</td>
+                            </tr>
+                            <tr>
+                                <td>2025/05/05</td>
+                                <td>ORD-2505001</td>
+                                <td>ソーヴィニヨン・ブラン</td>
+                                <td>4本</td>
+                                <td>¥3,500</td>
+                                <td>¥14,000</td>
+                            </tr>
+                            <tr>
+                                <td>2025/05/15</td>
+                                <td>ORD-2505002</td>
+                                <td>バローロ</td>
+                                <td>3本</td>
+                                <td>¥6,000</td>
+                                <td>¥18,000</td>
+                            </tr>
+                            <tr>
+                                <td>2025/05/15</td>
+                                <td>ORD-2505002</td>
+                                <td>プロセッコ</td>
+                                <td>5本</td>
+                                <td>¥3,000</td>
+                                <td>¥15,000</td>
+                            </tr>
+                            <tr>
+                                <td>2025/05/20</td>
+                                <td>ORD-2505003</td>
+                                <td>シャルドネ</td>
+                                <td>3本</td>
+                                <td>¥3,500</td>
+                                <td>¥10,500</td>
+                            </tr>
+                            <tr>
+                                <td>2025/05/20</td>
+                                <td>ORD-2505003</td>
+                                <td>プイィ・フュメ</td>
+                                <td>1本</td>
+                                <td>¥6,500</td>
+                                <td>¥6,500</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>合計（税抜）</strong></td>
+                                <td><strong>¥88,000</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right">消費税（10%）</td>
+                                <td>¥8,800</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right">送料</td>
+                                <td>¥0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>総合計（税込）</strong></td>
+                                <td><strong>¥96,800</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-btn btn btn-primary">閉じる</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 領収書生成中モーダル -->
+    <div class="modal" id="processing-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container modal-sm">
+            <div class="modal-body text-center p-4">
+                <div class="spinner"></div>
+                <p class="mt-3">処理中です。しばらくお待ちください...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 当月注文詳細モーダル
+            const currentOrdersBtn = document.getElementById('view-current-orders');
+            const currentOrdersModal = document.getElementById('current-orders-modal');
+            const modalCloseButtons = document.querySelectorAll('.modal-close, .modal-close-btn');
+            
+            currentOrdersBtn.addEventListener('click', function() {
+                currentOrdersModal.classList.add('active');
+            });
+            
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.modal.active').forEach(modal => {
+                        modal.classList.remove('active');
+                    });
+                });
+            });
+            
+            // 請求書ダウンロードボタン
+            const invoiceButtons = document.querySelectorAll('.btn-download-invoice');
+            invoiceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const invoiceId = this.getAttribute('data-invoice-id');
+                    showProcessingModal();
+                    
+                    // モック用の遅延処理（実際の実装では適切なAPI呼び出しに置き換える）
+                    setTimeout(() => {
+                        hideProcessingModal();
+                        alert(`請求書 ${invoiceId} がダウンロードされました`);
+                    }, 1500);
+                });
+            });
+            
+            // 領収書ダウンロードボタン
+            const receiptButtons = document.querySelectorAll('.btn-download-receipt');
+            receiptButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const invoiceId = this.getAttribute('data-invoice-id');
+                    showProcessingModal();
+                    
+                    // モック用の遅延処理（実際の実装では適切なAPI呼び出しに置き換える）
+                    setTimeout(() => {
+                        hideProcessingModal();
+                        alert(`領収書 ${invoiceId} がダウンロードされました`);
+                    }, 1500);
+                });
+            });
+            
+            // フィルター適用ボタン
+            const filterButton = document.getElementById('apply-filter');
+            filterButton.addEventListener('click', function() {
+                const year = document.getElementById('billing-year').value;
+                const status = document.getElementById('billing-status').value;
+                
+                // モック用のアラート（実際の実装ではフィルタリング処理を行う）
+                alert(`フィルター適用: ${year}年 / ステータス: ${status}`);
+            });
+            
+            // 処理中モーダルの表示/非表示
+            function showProcessingModal() {
+                document.getElementById('processing-modal').classList.add('active');
+            }
+            
+            function hideProcessingModal() {
+                document.getElementById('processing-modal').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

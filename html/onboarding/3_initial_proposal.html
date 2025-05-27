@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワイン提案 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">6</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">7</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                            <span class="ai-text">お待たせしました！お店のデータとSommiaの魔法で、おすすめのワインリストを3パターン考えてみました。いかがですか？</span>
+                        </div>
+                    </div>
+                    
+                    <div class="wine-proposal-cards">
+                        <!-- ワイン提案1 -->
+                        <div class="wine-proposal-card" id="proposal-1">
+                            <div class="proposal-header">
+                                <h3 class="proposal-title">スタンダードプラン</h3>
+                                <p class="proposal-subtitle">バランスの良いベーシックなワイン構成</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">キャンティ クラシコ リゼルヴァ</div>
+                                        <div class="wine-description">イタリア産 | ミディアムボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ソーヴィニヨン・ブラン</div>
+                                        <div class="wine-description">ニュージーランド産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">プロセッコ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">メルロー</div>
+                                        <div class="wine-description">チリ産 | ミディアムボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">シャルドネ</div>
+                                        <div class="wine-description">カリフォルニア産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>初期仕入れ目安：</span>
+                                <span class="price-amount">¥75,000</span>
+                            </div>
+                            
+                            <button class="btn btn-outline-primary select-proposal-btn" data-proposal-id="1">このリストで登録する</button>
+                        </div>
+                        
+                        <!-- ワイン提案2 -->
+                        <div class="wine-proposal-card" id="proposal-2">
+                            <div class="proposal-header">
+                                <h3 class="proposal-title">プレミアムプラン</h3>
+                                <p class="proposal-subtitle">高品質で個性的なラインナップ</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">バローロ</div>
+                                        <div class="wine-description">イタリア産 | フルボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">プイィ・フュメ</div>
+                                        <div class="wine-description">フランス産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">クレマン・ド・ブルゴーニュ</div>
+                                        <div class="wine-description">フランス産 | 辛口 | スパークリング</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ピノ・ノワール</div>
+                                        <div class="wine-description">オレゴン産 | ミディアムボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">甲州</div>
+                                        <div class="wine-description">日本産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>初期仕入れ目安：</span>
+                                <span class="price-amount">¥120,000</span>
+                            </div>
+                            
+                            <button class="btn btn-outline-primary select-proposal-btn" data-proposal-id="2">このリストで登録する</button>
+                        </div>
+                        
+                        <!-- ワイン提案3 -->
+                        <div class="wine-proposal-card" id="proposal-3">
+                            <div class="proposal-header">
+                                <h3 class="proposal-title">セレクトプラン</h3>
+                                <p class="proposal-subtitle">料理にぴったりのマリアージュ重視</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">リオハ・レゼルバ</div>
+                                        <div class="wine-description">スペイン産 | フルボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">アルバリーニョ</div>
+                                        <div class="wine-description">スペイン産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">カヴァ・ブリュット</div>
+                                        <div class="wine-description">スペイン産 | 辛口 | スパークリング</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ジンファンデル</div>
+                                        <div class="wine-description">カリフォルニア産 | フルボディ | 赤</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">グリューナー・ヴェルトリナー</div>
+                                        <div class="wine-description">オーストリア産 | 辛口 | 白</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>初期仕入れ目安：</span>
+                                <span class="price-amount">¥95,000</span>
+                            </div>
+                            
+                            <button class="btn btn-outline-primary select-proposal-btn" data-proposal-id="3">このリストで登録する</button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-prompt-box mt-4">
+                        <div class="ai-prompt-title">
+                            <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                            Sommiaからのアドバイス
+                        </div>
+                        <div class="ai-prompt-content">
+                            これらの提案は、入力いただいたメニュー情報をもとに作成しました。登録後もワインリストは自由にカスタマイズできますので、まずはお気に入りのプランを選んでください。料理とワインのマリアージュは、Sommiaがいつでもサポートします！
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a href="2_menu_info_form.html" class="btn btn-outline-primary">戻る</a>
+                        <a href="3_wine_report.html" class="btn btn-primary btn-lg" id="next-button" style="display: none;">次へ（レポートを確認）</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // 提案カードの選択処理
+        document.addEventListener('DOMContentLoaded', function() {
+            const proposalCards = document.querySelectorAll('.wine-proposal-card');
+            const selectButtons = document.querySelectorAll('.select-proposal-btn');
+            const nextButton = document.getElementById('next-button');
+            
+            // 提案を選択したときの処理
+            selectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 全てのカードから選択状態を解除
+                    proposalCards.forEach(card => {
+                        card.classList.remove('selected');
+                        if (card.querySelector('.selected-badge')) {
+                            card.querySelector('.selected-badge').remove();
+                        }
+                    });
+                    
+                    // 選択されたカードにクラスと選択バッジを追加
+                    const proposalId = this.getAttribute('data-proposal-id');
+                    const selectedCard = document.getElementById('proposal-' + proposalId);
+                    selectedCard.classList.add('selected');
+                    
+                    // 選択済みバッジを追加
+                    const badge = document.createElement('div');
+                    badge.className = 'selected-badge';
+                    badge.textContent = '選択中';
+                    selectedCard.appendChild(badge);
+                    
+                    // ボタンのテキストを変更
+                    selectButtons.forEach(btn => {
+                        if (btn.getAttribute('data-proposal-id') === proposalId) {
+                            btn.textContent = '選択中';
+                            btn.classList.remove('btn-outline-primary');
+                            btn.classList.add('btn-primary');
+                        } else {
+                            btn.textContent = 'このリストで登録する';
+                            btn.classList.remove('btn-primary');
+                            btn.classList.add('btn-outline-primary');
+                        }
+                    });
+                    
+                    // 次へボタンを表示
+                    nextButton.style.display = 'block';
+                    
+                    // 選択情報をローカルストレージに保存
+                    localStorage.setItem('selectedProposal', proposalId);
+                });
+            });
+            
+            // ローカルストレージから選択状態を復元
+            const savedProposal = localStorage.getItem('selectedProposal');
+            if (savedProposal) {
+                const savedButton = document.querySelector(`.select-proposal-btn[data-proposal-id="${savedProposal}"]`);
+                if (savedButton) {
+                    savedButton.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

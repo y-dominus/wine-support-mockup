@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求書詳細 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../../css/components/cards.css">
+    <link rel="stylesheet" href="../../../css/components/tables.css">
+    <link rel="stylesheet" href="../../../css/pages/billing.css">
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/common_parts.js"></script>
+    <script defer src="../../../js/ai_simulator.js"></script>
+    <script defer src="../../../js/utils.js"></script>
+    <script defer src="../../../js/page_specific/billing_management.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>請求書詳細: INV-2504001</h1>
+                <div class="page-actions">
+                    <button class="btn btn-outline-secondary" id="btn-download-invoice">請求書ダウンロード</button>
+                    <a href="billing_management.html" class="btn btn-outline-primary">請求一覧へ戻る</a>
+                </div>
+            </div>
+            
+            <!-- 請求書の概要情報 -->
+            <div class="dashboard-section">
+                <h2 class="section-title">請求概要</h2>
+                <div class="dashboard-card">
+                    <div class="invoice-summary-grid">
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">請求番号</div>
+                            <div class="summary-value">INV-2504001</div>
+                        </div>
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">請求月</div>
+                            <div class="summary-value">2025年4月</div>
+                        </div>
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">請求日</div>
+                            <div class="summary-value">2025年5月1日</div>
+                        </div>
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">支払期限</div>
+                            <div class="summary-value">2025年5月31日</div>
+                        </div>
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">請求金額（税込）</div>
+                            <div class="summary-value amount-large">¥124,300</div>
+                        </div>
+                        <div class="invoice-summary-item">
+                            <div class="summary-label">支払状況</div>
+                            <div class="summary-value"><span class="payment-status unpaid">未払い</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 請求元・請求先情報 -->
+            <div class="dashboard-section">
+                <h2 class="section-title">請求情報</h2>
+                <div class="dashboard-card">
+                    <div class="invoice-address-grid">
+                        <div class="invoice-address-card">
+                            <div class="address-title">請求元</div>
+                            <div class="address-content">
+                                <p><strong>株式会社ワイサポート</strong></p>
+                                <p>〒150-0002</p>
+                                <p>東京都渋谷区渋谷1-1-1 渋谷ビル10F</p>
+                                <p>TEL: 03-1234-5678</p>
+                                <p>適格請求書発行事業者登録番号: T1234567890123</p>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-address-card">
+                            <div class="address-title">請求先</div>
+                            <div class="address-content">
+                                <p><strong>レストラン さくら</strong></p>
+                                <p>〒106-0032</p>
+                                <p>東京都港区六本木3-2-1 六本木ビル1F</p>
+                                <p>TEL: 03-9876-5432</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 請求明細 -->
+            <div class="dashboard-section">
+                <h2 class="section-title">請求明細</h2>
+                <div class="dashboard-card">
+                    <div class="invoice-detail-table">
+                        <table class="order-detail-table">
+                            <thead>
+                                <tr>
+                                    <th>注文日</th>
+                                    <th>注文番号</th>
+                                    <th>商品名</th>
+                                    <th>数量</th>
+                                    <th>単価（税抜）</th>
+                                    <th>税率</th>
+                                    <th>小計（税抜）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025/04/03</td>
+                                    <td>ORD-2504001</td>
+                                    <td>キャンティ クラシコ リゼルヴァ</td>
+                                    <td>8本</td>
+                                    <td>¥4,000</td>
+                                    <td>10%</td>
+                                    <td>¥32,000</td>
+                                </tr>
+                                <tr>
+                                    <td>2025/04/03</td>
+                                    <td>ORD-2504001</td>
+                                    <td>ソーヴィニヨン・ブラン</td>
+                                    <td>6本</td>
+                                    <td>¥3,500</td>
+                                    <td>10%</td>
+                                    <td>¥21,000</td>
+                                </tr>
+                                <tr>
+                                    <td>2025/04/12</td>
+                                    <td>ORD-2504002</td>
+                                    <td>バローロ</td>
+                                    <td>4本</td>
+                                    <td>¥6,000</td>
+                                    <td>10%</td>
+                                    <td>¥24,000</td>
+                                </tr>
+                                <tr>
+                                    <td>2025/04/12</td>
+                                    <td>ORD-2504002</td>
+                                    <td>プロセッコ</td>
+                                    <td>7本</td>
+                                    <td>¥3,000</td>
+                                    <td>10%</td>
+                                    <td>¥21,000</td>
+                                </tr>
+                                <tr>
+                                    <td>2025/04/25</td>
+                                    <td>ORD-2504003</td>
+                                    <td>シャルドネ</td>
+                                    <td>5本</td>
+                                    <td>¥3,500</td>
+                                    <td>10%</td>
+                                    <td>¥17,500</td>
+                                </tr>
+                                <tr>
+                                    <td>2025/04/25</td>
+                                    <td>ORD-2504003</td>
+                                    <td>プイィ・フュメ</td>
+                                    <td>2本</td>
+                                    <td>¥5,000</td>
+                                    <td>10%</td>
+                                    <td>¥10,000</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-right"><strong>小計（税抜）</strong></td>
+                                    <td><strong>¥113,000</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="text-right">消費税（10%対象）</td>
+                                    <td>¥11,300</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="text-right">送料</td>
+                                    <td>¥0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="text-right"><strong>合計（税込）</strong></td>
+                                    <td><strong>¥124,300</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 支払い情報 -->
+            <div class="dashboard-section">
+                <h2 class="section-title">お支払い情報</h2>
+                <div class="dashboard-card">
+                    <div class="payment-info">
+                        <div class="payment-info-row">
+                            <div class="info-label">支払期限</div>
+                            <div class="info-value">2025年5月31日</div>
+                        </div>
+                        <div class="payment-info-row">
+                            <div class="info-label">支払方法</div>
+                            <div class="info-value">銀行振込</div>
+                        </div>
+                        <div class="payment-info-row">
+                            <div class="info-label">振込先</div>
+                            <div class="info-value">
+                                <p>ワイサポ銀行 渋谷支店</p>
+                                <p>普通口座 1234567</p>
+                                <p>口座名義：株式会社ワイサポート</p>
+                            </div>
+                        </div>
+                        <div class="payment-info-row">
+                            <div class="info-label">備考</div>
+                            <div class="info-value">お振込みの際は、請求番号（INV-2504001）をお振込み名義の前に入力してください。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- アクションボタン -->
+            <div class="invoice-actions">
+                <button class="btn btn-outline-secondary" id="btn-download-invoice-bottom">請求書ダウンロード</button>
+                <a href="billing_management.html" class="btn btn-primary">請求一覧へ戻る</a>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 処理中モーダル -->
+    <div class="modal" id="processing-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container modal-sm">
+            <div class="modal-body text-center p-4">
+                <div class="spinner"></div>
+                <p class="mt-3">処理中です。しばらくお待ちください...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 請求書ダウンロードボタン
+            const downloadButtons = document.querySelectorAll('#btn-download-invoice, #btn-download-invoice-bottom');
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    showProcessingModal();
+                    
+                    // モック用の遅延処理（実際の実装では適切なAPI呼び出しに置き換える）
+                    setTimeout(() => {
+                        hideProcessingModal();
+                        alert('請求書 INV-2504001 がダウンロードされました');
+                    }, 1500);
+                });
+            });
+            
+            // 処理中モーダルの表示/非表示
+            function showProcessingModal() {
+                document.getElementById('processing-modal').classList.add('active');
+            }
+            
+            function hideProcessingModal() {
+                document.getElementById('processing-modal').classList.remove('active');
+            }
+            
+            // URLパラメータから請求書IDを取得（実際の実装ではこれを使用してデータを取得）
+            function getInvoiceIdFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('id');
+            }
+            
+            console.log('請求書ID:', getInvoiceIdFromUrl());
+        });
+    </script>
+</body>
+</html>

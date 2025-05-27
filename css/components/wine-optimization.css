@@ -1,0 +1,218 @@
+/* ワインリスト最適化提案カード用スタイル */
+
+.wine-optimization-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.wine-optimization-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.optimization-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+}
+
+.ai-avatar-inline {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: var(--spacing-md);
+    border: 3px solid var(--primary-color);
+    flex-shrink: 0;
+}
+
+.optimization-message {
+    flex: 1;
+}
+
+.optimization-title {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.optimization-summary {
+    color: var(--gray-800);
+    line-height: 1.6;
+}
+
+.highlight-number {
+    color: var(--primary-color);
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.optimization-preview {
+    margin-bottom: var(--spacing-lg);
+}
+
+.optimization-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin-right: var(--spacing-sm);
+}
+
+.stat-icon.remove {
+    background-color: #ffeaea;
+    color: #d32f2f;
+    border: 2px solid #ffcdd2;
+}
+
+.stat-icon.add {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 2px solid #c8e6c9;
+}
+
+.stat-icon.profit {
+    background-color: #fff3e0;
+    color: var(--warning-color);
+    border: 2px solid #ffcc02;
+}
+
+.stat-content {
+    text-align: left;
+}
+
+.stat-number {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--gray-900);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.optimization-preview-wines {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.preview-section h4 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-800);
+}
+
+.wine-preview-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.wine-preview-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    border: 1px solid transparent;
+}
+
+.wine-preview-item.low-performance {
+    background-color: #ffeaea;
+    border-left: 4px solid #d32f2f;
+    border: 1px solid #ffcdd2;
+}
+
+.wine-preview-item.high-potential {
+    background-color: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.wine-name {
+    font-weight: bold;
+    color: var(--gray-900);
+}
+
+.wine-reason {
+    font-size: var(--font-size-xs);
+    color: var(--gray-600);
+    font-style: italic;
+}
+
+.optimization-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-md);
+    border-top: 2px solid var(--gray-100);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .optimization-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .ai-avatar-inline {
+        margin-right: 0;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .optimization-stats {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .stat-item {
+        justify-content: center;
+    }
+    
+    .optimization-preview-wines {
+        grid-template-columns: 1fr;
+    }
+    
+    .optimization-actions {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .optimization-actions .btn {
+        width: 100%;
+    }
+}

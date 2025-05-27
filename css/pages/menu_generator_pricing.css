@@ -1,0 +1,345 @@
+/* メニュー生成ページ専用スタイル拡張 */
+
+/* 価格設定セクション */
+.price-settings-container {
+    margin-bottom: var(--spacing-lg);
+}
+
+.pricing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bulk-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.wine-pricing-list {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.wine-pricing-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all 0.2s;
+}
+
+.wine-pricing-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wine-pricing-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.wine-type-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.wine-type-indicator.red { background: #8B0000; }
+.wine-type-indicator.white { background: #F5F5DC; border: 1px solid #DDD; }
+.wine-type-indicator.sparkling { background: linear-gradient(45deg, #FFD700, #FFF); border: 1px solid #DDD; }
+.wine-type-indicator.rose { background: #FF69B4; }
+
+.wine-pricing-info h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: var(--font-size-base);
+}
+
+.wine-pricing-info .wine-origin {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.wine-pricing-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.pricing-group {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+}
+
+.pricing-group h5 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+}
+
+.pricing-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.pricing-row:last-child {
+    margin-bottom: 0;
+}
+
+.pricing-label {
+    min-width: 60px;
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+}
+
+.glass-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.glass-controls {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.glass-controls.enabled {
+    opacity: 1;
+}
+
+/* 他社ワインセクション */
+.external-wines-container {
+    margin-bottom: var(--spacing-lg);
+}
+
+.external-wines-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.external-wines-list {
+    min-height: 200px;
+}
+
+.no-external-wines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    border: 2px dashed var(--border-color);
+}
+
+.no-data-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.no-data-text {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.no-data-subtext {
+    color: var(--text-color-light);
+    font-size: var(--font-size-sm);
+}
+
+.external-wine-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.external-wine-info {
+    flex: 1;
+}
+
+.external-wine-info h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    color: var(--text-color);
+}
+
+.external-wine-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.external-wine-pricing {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+}
+
+.external-wine-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* モーダル内のスタイル */
+.form-section {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-section h4 {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--text-color);
+    font-size: var(--font-size-base);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix,
+.input-suffix {
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+}
+
+.input-prefix {
+    border-right: none;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.input-suffix {
+    border-left: none;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.input-group .form-input {
+    border-radius: 0;
+}
+
+.input-group .form-input:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.input-group .form-input:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.glass-price-group {
+    margin-left: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    border-left: 2px solid var(--border-color);
+}
+
+/* マークアップモーダル */
+.markup-options {
+    text-align: left;
+}
+
+.markup-method {
+    margin-bottom: var(--spacing-lg);
+}
+
+.markup-input-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-help {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--text-color-light);
+}
+
+.markup-preview {
+    background: var(--background-light);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.markup-preview h5 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+}
+
+.preview-example {
+    font-size: var(--font-size-base);
+    color: var(--text-color);
+}
+
+.preview-example strong {
+    color: var(--primary-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .pricing-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .bulk-actions {
+        flex-wrap: wrap;
+    }
+    
+    .wine-pricing-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .external-wine-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+    
+    .external-wine-actions {
+        justify-content: flex-end;
+    }
+    
+    .markup-method {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}

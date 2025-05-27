@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワインメニュー生成 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/tables.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/modals.css">
+    <link rel="stylesheet" href="../../css/pages/menu_generator.css">
+    <link rel="stylesheet" href="../../css/pages/menu_generator_pricing.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/menu_generator.js"></script>
+    <script defer src="../../js/page_specific/menu_generator_enhanced.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>🍷 ワインメニュー生成</h1>
+                <div class="page-actions">
+                    <a href="my_cellar.html" class="btn btn-outline-secondary">マイセラーに戻る</a>
+                </div>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                    <span class="ai-text">素敵なワインメニューを作成しましょう！お店の雰囲気に合わせたデザインテンプレートをご用意しました。</span>
+                </div>
+            </div>
+            
+            <!-- ステップ進行状況 -->
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">ワイン選択</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">価格設定</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">他社ワイン</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">順番・設定</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-label">デザイン選択</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-number">6</div>
+                    <div class="step-label">カスタマイズ</div>
+                </div>
+                <div class="step" data-step="7">
+                    <div class="step-number">7</div>
+                    <div class="step-label">生成・保存</div>
+                </div>
+            </div>
+            
+            <!-- ステップ1: ワイン選択 -->
+            <div class="step-content" id="step-1">
+                <div class="step-header">
+                    <h2>📋 メニューに掲載するワインを選択</h2>
+                    <div class="step-description">現在の在庫から、ワインメニューに掲載するワインを選択してください。</div>
+                </div>
+                
+                <div class="wine-selection-controls">
+                    <div class="selection-summary">
+                        <span class="selected-count">選択済み: <strong id="selected-wine-count">0</strong>本</span>
+                        <button class="btn btn-sm btn-outline-secondary" id="select-all-wines">すべて選択</button>
+                        <button class="btn btn-sm btn-light" id="clear-selection">選択解除</button>
+                    </div>
+                    
+                    <div class="wine-type-filter">
+                        <label>種類で絞り込み:</label>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-type="all">すべて</button>
+                            <button class="filter-btn" data-type="red">赤ワイン</button>
+                            <button class="filter-btn" data-type="white">白ワイン</button>
+                            <button class="filter-btn" data-type="sparkling">スパークリング</button>
+                            <button class="filter-btn" data-type="rose">ロゼ</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="wine-selection-grid" id="wine-selection-grid">
+                    <!-- ワイン選択カードがJavaScriptで動的に生成されます -->
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-primary btn-next" data-next="2" id="step1-next" disabled>次へ: 価格設定</button>
+                </div>
+            </div>
+            
+            <!-- ステップ2: 価格設定 -->
+            <div class="step-content" id="step-2" style="display: none;">
+                <div class="step-header">
+                    <h2>💰 提供方法・価格設定</h2>
+                    <div class="step-description">選択したワインの販売価格と提供方法（ボトル・グラス）を設定してください。</div>
+                </div>
+                
+                <div class="price-settings-container">
+                    <div class="pricing-header">
+                        <h3>価格設定</h3>
+                        <div class="bulk-actions">
+                            <button class="btn btn-sm btn-outline-secondary" id="apply-markup">一括マークアップ</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="enable-all-glass">全てグラス有効</button>
+                            <button class="btn btn-sm btn-light" id="disable-all-glass">全てグラス無効</button>
+                        </div>
+                    </div>
+                    
+                    <div class="wine-pricing-list" id="wine-pricing-list">
+                        <!-- 選択されたワインの価格設定カードが動的に生成されます -->
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="1">戻る</button>
+                    <button class="btn btn-primary btn-next" data-next="3">次へ: 他社ワイン追加</button>
+                </div>
+            </div>
+            
+            <!-- ステップ3: 他社ワイン追加 -->
+            <div class="step-content" id="step-3" style="display: none;">
+                <div class="step-header">
+                    <h2>🍷 他社ワイン情報入力</h2>
+                    <div class="step-description">メニュー作成用に、他社ワインの情報を追加できます。（マイセラーへの登録はされません）</div>
+                </div>
+                
+                <div class="external-wines-container">
+                    <div class="external-wines-header">
+                        <h3>他社ワイン一覧</h3>
+                        <button class="btn btn-primary" id="add-external-wine">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            ワインを追加
+                        </button>
+                    </div>
+                    
+                    <div class="external-wines-list" id="external-wines-list">
+                        <div class="no-external-wines">
+                            <div class="no-data-icon">🍷</div>
+                            <div class="no-data-text">他社ワインが追加されていません</div>
+                            <div class="no-data-subtext">「ワインを追加」ボタンから他社ワインを追加できます</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="2">戻る</button>
+                    <button class="btn btn-primary btn-next" data-next="4">次へ: 順番・設定</button>
+                </div>
+            </div>
+            
+            <!-- ステップ4: 順番・設定 -->
+            <div class="step-content" id="step-4" style="display: none;">
+                <div class="step-header">
+                    <h2>🔄 ワインの順番と表示設定</h2>
+                    <div class="step-description">選択したワインの表示順序と、メニューに含める情報を設定します。</div>
+                </div>
+                
+                <div class="menu-settings">
+                    <div class="settings-section">
+                        <h3>ワインの並び順</h3>
+                        <div class="sort-options">
+                            <label class="radio-option">
+                                <input type="radio" name="sort-order" value="type-price" checked>
+                                ワインタイプ別 → 価格順
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="sort-order" value="price-asc">
+                                価格順（安い順）
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="sort-order" value="price-desc">
+                                価格順（高い順）
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="sort-order" value="popularity">
+                                人気順（売上実績）
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="sort-order" value="custom">
+                                カスタム（手動で順番を設定）
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>メニューに表示する情報</h3>
+                        <div class="display-options">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="origin" checked>
+                                産地・生産者
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="vintage" checked>
+                                ヴィンテージ（年）
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="grape" checked>
+                                ブドウ品種
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="pairing">
+                                おすすめ料理ペアリング
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="sommia-comment">
+                                Sommiaのおすすめコメント
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="display-options" value="tasting-notes">
+                                テイスティングノート
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section" id="custom-order-section" style="display: none;">
+                        <h3>カスタム順序設定</h3>
+                        <div class="sortable-wine-list" id="sortable-wines">
+                            <!-- 選択されたワインがドラッグ&ドロップで並び替え可能なリストとして表示 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="3">戻る</button>
+                    <button class="btn btn-primary btn-next" data-next="5">次へ: デザイン選択</button>
+                </div>
+            </div>
+            
+            <!-- ステップ5: デザイン選択 -->
+            <div class="step-content" id="step-5" style="display: none;">
+                <div class="step-header">
+                    <h2>🎨 デザインテンプレート選択</h2>
+                    <div class="step-description">お店の雰囲気に合わせたデザインテンプレートを選択してください。</div>
+                </div>
+                
+                <div class="template-selection">
+                    <div class="template-grid">
+                        <div class="template-card" data-template="classic">
+                            <div class="template-preview">
+                                <div class="preview-image classic-preview">
+                                    <div class="preview-header">クラシック</div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Chianti Classico</span>
+                                        <span class="wine-price">¥8,000</span>
+                                    </div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Sauvignon Blanc</span>
+                                        <span class="wine-price">¥7,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="template-info">
+                                <h3>クラシック</h3>
+                                <p>伝統的で上品なデザイン。高級レストランに最適。</p>
+                                <div class="template-features">
+                                    <span class="feature-tag">✓ セリフフォント</span>
+                                    <span class="feature-tag">✓ ゴールドアクセント</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="template-card" data-template="modern">
+                            <div class="template-preview">
+                                <div class="preview-image modern-preview">
+                                    <div class="preview-header">モダン</div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Chianti Classico</span>
+                                        <span class="wine-price">¥8,000</span>
+                                    </div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Sauvignon Blanc</span>
+                                        <span class="wine-price">¥7,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="template-info">
+                                <h3>モダン</h3>
+                                <p>シンプルで洗練されたデザイン。カジュアルダイニングに。</p>
+                                <div class="template-features">
+                                    <span class="feature-tag">✓ サンセリフフォント</span>
+                                    <span class="feature-tag">✓ ミニマルデザイン</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="template-card" data-template="elegant">
+                            <div class="template-preview">
+                                <div class="preview-image elegant-preview">
+                                    <div class="preview-header">エレガント</div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Chianti Classico</span>
+                                        <span class="wine-price">¥8,000</span>
+                                    </div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Sauvignon Blanc</span>
+                                        <span class="wine-price">¥7,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="template-info">
+                                <h3>エレガント</h3>
+                                <p>洗練された美しいデザイン。特別な日のディナーに。</p>
+                                <div class="template-features">
+                                    <span class="feature-tag">✓ 装飾フォント</span>
+                                    <span class="feature-tag">✓ 繊細なボーダー</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="template-card" data-template="bistro">
+                            <div class="template-preview">
+                                <div class="preview-image bistro-preview">
+                                    <div class="preview-header">ビストロ</div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Chianti Classico</span>
+                                        <span class="wine-price">¥8,000</span>
+                                    </div>
+                                    <div class="preview-wine-item">
+                                        <span class="wine-name">Sauvignon Blanc</span>
+                                        <span class="wine-price">¥7,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="template-info">
+                                <h3>ビストロ</h3>
+                                <p>カジュアルで親しみやすいデザイン。気軽なビストロに。</p>
+                                <div class="template-features">
+                                    <span class="feature-tag">✓ 手書き風フォント</span>
+                                    <span class="feature-tag">✓ 温かみのある色合い</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="6">戻る</button>
+                    <button class="btn btn-primary btn-next" data-next="6" id="step5-next" disabled>次へ: カスタマイズ</button>
+                </div>
+            </div>
+            
+            <!-- ステップ6: カスタマイズ -->
+            <div class="step-content" id="step-6" style="display: none;">
+                <div class="step-header">
+                    <h2>⚙️ メニューカスタマイズ</h2>
+                    <div class="step-description">店舗情報やロゴなど、メニューの基本情報をカスタマイズしてください。</div>
+                </div>
+                
+                <div class="customization-form">
+                    <div class="form-section">
+                        <h3>店舗情報</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="restaurant-name" class="form-label">店舗名 *</label>
+                                <input type="text" id="restaurant-name" class="form-input" placeholder="レストラン名を入力" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="restaurant-subtitle" class="form-label">サブタイトル</label>
+                                <input type="text" id="restaurant-subtitle" class="form-input" placeholder="Wine List, Menu Selection など">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="restaurant-address" class="form-label">住所</label>
+                                <input type="text" id="restaurant-address" class="form-input" placeholder="店舗の住所">
+                            </div>
+                            <div class="form-group">
+                                <label for="restaurant-phone" class="form-label">電話番号</label>
+                                <input type="tel" id="restaurant-phone" class="form-input" placeholder="03-1234-5678">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>ロゴ・画像</h3>
+                        <div class="logo-upload-section">
+                            <div class="upload-area" id="logo-upload-area">
+                                <div class="upload-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21,15 16,10 5,21"></polyline>
+                                    </svg>
+                                    <p>ロゴ画像をドラッグ&ドロップ<br>または<button class="upload-btn" type="button">ファイルを選択</button></p>
+                                    <small>推奨サイズ: 300x100px, PNG/JPG形式</small>
+                                </div>
+                                <input type="file" id="logo-input" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="logo-preview" id="logo-preview" style="display: none;">
+                                <img id="logo-preview-image" src="" alt="ロゴプレビュー">
+                                <button class="btn btn-sm btn-light remove-logo" type="button">削除</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>メニュー詳細設定</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="menu-title" class="form-label">メニュータイトル</label>
+                                <input type="text" id="menu-title" class="form-input" value="Wine Selection" placeholder="Wine List, Our Selection など">
+                            </div>
+                            <div class="form-group">
+                                <label for="menu-date" class="form-label">更新日</label>
+                                <input type="date" id="menu-date" class="form-input">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="menu-description" class="form-label">メニュー説明文</label>
+                            <textarea id="menu-description" class="form-textarea" rows="3" placeholder="ワインセレクションの説明や店舗のこだわりを記載"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Sommiaコメント設定</h3>
+                        <div class="sommia-options">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="include-sommia-branding" checked>
+                                「Sommia AI推奨」表示を含める
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="include-sommia-comments" checked>
+                                各ワインにSommiaのコメントを追加
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="5">戻る</button>
+                    <button class="btn btn-primary btn-next" data-next="7">次へ: プレビュー・生成</button>
+                </div>
+            </div>
+            
+            <!-- ステップ7: 生成・保存 -->
+            <div class="step-content" id="step-7" style="display: none;">
+                <div class="step-header">
+                    <h2>📄 メニュープレビュー・生成</h2>
+                    <div class="step-description">作成されたワインメニューをプレビューして、PDFとして保存・印刷できます。</div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="preview-controls">
+                        <button class="btn btn-outline-secondary" id="edit-menu">編集に戻る</button>
+                        <div class="zoom-controls">
+                            <button class="btn btn-sm btn-light" id="zoom-out">-</button>
+                            <span class="zoom-level">100%</span>
+                            <button class="btn btn-sm btn-light" id="zoom-in">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-preview-container">
+                        <div class="menu-preview" id="menu-preview">
+                            <!-- 生成されたメニューのプレビューがここに表示されます -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="generation-actions">
+                    <div class="action-group">
+                        <button class="btn btn-primary btn-lg" id="download-pdf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10,9 9,9 8,9"></polyline>
+                            </svg>
+                            PDFダウンロード
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg" id="print-menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <polyline points="6,9 6,2 18,2 18,9"></polyline>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                <polyline points="6,14 6,22 18,22 18,14"></polyline>
+                            </svg>
+                            印刷
+                        </button>
+                    </div>
+                    
+                    <div class="save-options">
+                        <h4>保存オプション</h4>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="save-as-template" checked>
+                            このメニュー設定をテンプレートとして保存
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="auto-update-menu">
+                            在庫変更時に自動でメニューを更新
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button class="btn btn-outline-secondary btn-prev" data-prev="4">戻る</button>
+                    <button class="btn btn-success btn-lg" id="complete-generation">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <polyline points="20,6 9,17 4,12"></polyline>
+                        </svg>
+                        メニュー生成完了
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- 他社ワイン追加モーダル -->
+    <div class="modal" id="external-wine-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🍷 他社ワイン追加</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="external-wine-form">
+                    <div class="form-group">
+                        <label for="external-wine-name" class="form-label">ワイン名 <span class="required">*</span></label>
+                        <input type="text" id="external-wine-name" class="form-input" placeholder="例: シャブリ グランクリュ" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="external-wine-type" class="form-label">ワインタイプ</label>
+                            <select id="external-wine-type" class="form-select">
+                                <option value="red">赤ワイン</option>
+                                <option value="white">白ワイン</option>
+                                <option value="sparkling">スパークリング</option>
+                                <option value="rose">ロゼワイン</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="external-wine-origin" class="form-label">産地</label>
+                            <input type="text" id="external-wine-origin" class="form-input" placeholder="例: フランス / ブルゴーニュ">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>価格設定</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="external-bottle-price" class="form-label">ボトル価格 <span class="required">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-prefix">¥</span>
+                                    <input type="number" id="external-bottle-price" class="form-input" placeholder="8000" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="external-glass-available">
+                                グラスでも提供する
+                            </label>
+                        </div>
+                        
+                        <div class="form-group glass-price-group" style="display: none;">
+                            <label for="external-glass-price" class="form-label">グラス価格</label>
+                            <div class="input-group">
+                                <span class="input-prefix">¥</span>
+                                <input type="number" id="external-glass-price" class="form-input" placeholder="1500">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="external-wine-description" class="form-label">説明文（任意）</label>
+                        <textarea id="external-wine-description" class="form-textarea" rows="3" placeholder="ワインの特徴やおすすめポイントなど"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">キャンセル</button>
+                <button class="btn btn-primary" id="save-external-wine">追加</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 一括マークアップモーダル -->
+    <div class="modal" id="markup-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>💰 一括マークアップ</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="markup-options">
+                    <h4>マークアップ方法を選択</h4>
+                    <div class="markup-method">
+                        <label class="radio-option">
+                            <input type="radio" name="markup-method" value="percentage" checked>
+                            パーセンテージ指定
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="markup-method" value="fixed">
+                            固定金額指定
+                        </label>
+                    </div>
+                    
+                    <div class="markup-input-group">
+                        <div class="markup-percentage" id="markup-percentage-group">
+                            <label for="markup-percent" class="form-label">マークアップ率</label>
+                            <div class="input-group">
+                                <input type="number" id="markup-percent" class="form-input" value="200" min="100" max="500">
+                                <span class="input-suffix">%</span>
+                            </div>
+                            <small class="form-help">仕入れ価格に対する率。200% = 仕入れ価格で2倍</small>
+                        </div>
+                        
+                        <div class="markup-fixed" id="markup-fixed-group" style="display: none;">
+                            <label for="markup-amount" class="form-label">加算金額</label>
+                            <div class="input-group">
+                                <span class="input-prefix">¥</span>
+                                <input type="number" id="markup-amount" class="form-input" value="3000" min="0">
+                            </div>
+                            <small class="form-help">仕入れ価格に加算する金額</small>
+                        </div>
+                    </div>
+                    
+                    <div class="markup-preview">
+                        <h5>プレビュー</h5>
+                        <div class="preview-example">
+                            <span>仕入れ価格 ¥4,000 → 販売価格 <strong id="markup-preview-price">¥8,000</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">キャンセル</button>
+                <button class="btn btn-primary" id="apply-markup-confirm">適用</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 完了確認モーダル -->
+    <div class="modal" id="completion-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🎉 ワインメニュー生成完了</h3>
+            </div>
+            <div class="modal-body">
+                <div class="completion-message">
+                    <p>ワインメニューが正常に生成されました！</p>
+                    <div class="completion-stats">
+                        <div class="stat-item">
+                            <strong id="final-wine-count">12</strong>
+                            <span>選択ワイン数</span>
+                        </div>
+                        <div class="stat-item">
+                            <strong id="final-template">クラシック</strong>
+                            <span>使用テンプレート</span>
+                        </div>
+                    </div>
+                    <div class="sommia-message">
+                        <img src="../../sommia.png" alt="Sommia" class="ai-avatar-small">
+                        <span>素敵なワインメニューが完成しましたね！お客様にきっと喜んでいただけると思います。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="back-to-cellar">マイセラーに戻る</button>
+                <button class="btn btn-outline-primary" id="create-another">新しいメニューを作成</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

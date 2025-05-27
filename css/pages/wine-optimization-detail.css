@@ -1,0 +1,515 @@
+/* ワインリスト最適化詳細分析ページのスタイル */
+
+/* 分析サマリー */
+.analysis-summary {
+    margin-bottom: var(--spacing-xl);
+}
+
+.main-summary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.summary-header h2 {
+    margin: 0;
+    color: var(--white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-period {
+    opacity: 0.9;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.key-insights {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.insight-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--border-radius-md);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.insight-icon {
+    font-size: 1.5rem;
+    margin-right: var(--spacing-md);
+    width: 40px;
+    text-align: center;
+}
+
+.insight-text {
+    color: var(--white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 分析セクション */
+.analysis-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.analysis-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.analysis-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--gray-100);
+}
+
+.analysis-card h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.performance-chart {
+    height: 200px;
+    margin-bottom: var(--spacing-md);
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-sm);
+}
+
+.chart-summary {
+    font-size: var(--font-size-sm);
+    color: var(--gray-700);
+}
+
+.rotation-data {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.rotation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+}
+
+.rotation-item.good {
+    background-color: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    border: 1px solid #c8e6c9;
+}
+
+.rotation-item.average {
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+    border: 1px solid #ffcc02;
+}
+
+.rotation-item.poor {
+    background-color: #ffeaea;
+    border-left: 4px solid #f44336;
+    border: 1px solid #ffcdd2;
+}
+
+.rotation-count {
+    font-weight: bold;
+    color: var(--gray-900);
+}
+
+/* 推奨セクション */
+.recommendation-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.remove-section .section-title {
+    color: #d32f2f;
+}
+
+.add-section .section-title {
+    color: #388e3c;
+}
+
+.recommendation-intro {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--gray-200);
+}
+
+.recommendation-intro p {
+    margin: 0;
+    color: var(--gray-800);
+}
+
+.wine-recommendation-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.wine-rec-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    border: 2px solid var(--gray-100);
+}
+
+.wine-rec-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.remove-card {
+    border-left: 5px solid #d32f2f;
+    border: 2px solid #ffcdd2;
+}
+
+.add-card {
+    border-left: 5px solid #2e7d32;
+    border: 2px solid #c8e6c9;
+}
+
+.wine-rec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.wine-info h3 {
+    margin: 0 0 var(--spacing-xs) 0;
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+.wine-details {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.performance-badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.performance-badge.poor {
+    background-color: #ffeaea;
+    color: #d32f2f;
+    border: 1px solid #ffcdd2;
+}
+
+.performance-badge.good {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.performance-badge.excellent {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+.wine-rec-body {
+    padding: var(--spacing-lg);
+}
+
+.performance-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+}
+
+.metric-label {
+    font-size: var(--font-size-xs);
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-weight: bold;
+    font-size: var(--font-size-md);
+}
+
+.metric-value.good {
+    color: #388e3c;
+}
+
+.metric-value.bad {
+    color: #d32f2f;
+}
+
+.recommendation-reason h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.recommendation-reason ul {
+    margin: 0;
+    padding-left: var(--spacing-md);
+}
+
+.recommendation-reason li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--gray-800);
+}
+
+/* 実行プラン */
+.action-plan-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.action-plan-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--gray-100);
+}
+
+.plan-timeline {
+    margin-bottom: var(--spacing-xl);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: 60px;
+    width: 2px;
+    height: 40px;
+    background-color: var(--gray-300);
+}
+
+.timeline-date {
+    width: 100px;
+    font-weight: bold;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.timeline-content {
+    flex: 1;
+    padding-left: var(--spacing-md);
+}
+
+.timeline-content h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+.timeline-content ul {
+    margin: 0;
+    padding-left: var(--spacing-md);
+}
+
+.timeline-content li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--gray-800);
+}
+
+.expected-results h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.result-icon {
+    font-size: 1.5rem;
+    margin-right: var(--spacing-md);
+}
+
+.result-title {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.result-value {
+    font-weight: bold;
+    color: var(--gray-900);
+}
+
+/* 最終アクション */
+.final-actions {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--gray-100);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.action-note {
+    padding: var(--spacing-md);
+    background-color: var(--primary-light);
+    border-radius: var(--border-radius-md);
+    border-left: 4px solid var(--primary-color);
+    border: 1px solid rgba(255, 77, 0, 0.2);
+}
+
+.action-note p {
+    margin: 0;
+    color: var(--gray-800);
+}
+
+/* 実行モーダル */
+.execution-summary {
+    margin-bottom: var(--spacing-lg);
+}
+
+.execution-summary h4 {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.execution-item {
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--gray-200);
+}
+
+.execution-options {
+    margin-top: var(--spacing-lg);
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.form-checkbox input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .summary-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .key-insights {
+        gap: var(--spacing-sm);
+    }
+    
+    .insight-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .insight-icon {
+        margin-right: 0;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .analysis-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .timeline-item {
+        flex-direction: column;
+    }
+    
+    .timeline-date {
+        width: auto;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .timeline-content {
+        padding-left: 0;
+    }
+    
+    .timeline-item:not(:last-child)::after {
+        display: none;
+    }
+}

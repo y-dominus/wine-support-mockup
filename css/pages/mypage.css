@@ -1,0 +1,306 @@
+/* マイページ用スタイル */
+
+/* ユーザーサマリーセクション */
+.user-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: var(--spacing-md);
+    overflow: hidden;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.user-details {
+    display: flex;
+    color: var(--dark-gray);
+}
+
+.user-position {
+    margin-right: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    border-right: 1px solid var(--medium-gray);
+}
+
+.subscription-info {
+    text-align: right;
+}
+
+.subscription-label {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-xs);
+}
+
+.subscription-value {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.subscription-expiry {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+}
+
+/* メニューグリッド */
+.mypage-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.menu-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    color: var(--black);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    color: var(--black);
+}
+
+.menu-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.menu-title {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    color: var(--secondary-color);
+}
+
+.menu-description {
+    color: var(--dark-gray);
+    font-size: var(--font-size-md);
+}
+
+/* アクティビティリスト */
+.activity-overview {
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark-gray);
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    font-size: 1.5rem;
+    margin-right: var(--spacing-md);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activity-icon.order {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.activity-icon.billing {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.activity-icon.stock {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.activity-icon.sale {
+    background-color: #f3e5f5;
+    color: #8e24aa;
+}
+
+.activity-icon.payment {
+    background-color: #e0f7fa;
+    color: #0097a7;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.activity-description {
+    color: var(--dark-gray);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.activity-time {
+    color: var(--dark-gray);
+    font-size: var(--font-size-xs);
+}
+
+.activity-action {
+    margin-left: var(--spacing-md);
+}
+
+/* ステータス概要カード */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.summary-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+}
+
+.summary-icon {
+    font-size: 2rem;
+    margin-right: var(--spacing-md);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-content {
+    flex: 1;
+}
+
+.summary-title {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-xs);
+}
+
+.summary-value {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.summary-link {
+    font-size: var(--font-size-sm);
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.summary-link:hover {
+    text-decoration: underline;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .user-summary {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .user-profile {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .subscription-info {
+        text-align: left;
+    }
+    
+    .mypage-menu-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .activity-icon {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .activity-action {
+        margin-left: 0;
+        margin-top: var(--spacing-sm);
+        align-self: flex-start;
+    }
+}

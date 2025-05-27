@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詳細レポート | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>詳細レポート</h1>
+                <p class="page-description">ワインの売上、在庫、トレンドの詳細分析レポートです。</p>
+            </div>
+            
+            <div class="ai-message-container" id="ai-message-container" style="display: none;">
+                <div id="ai-message-area" class="ai-message ai-message-dismissible">
+                    <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                    <span class="ai-text">詳細レポート機能は現在開発中です。売上履歴ページで基本的な売上データを確認できます。</span>
+                    <button class="ai-close" onclick="dismissAiMessage(this)" title="閉じる">&times;</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2>🚧 開発中のページです</h2>
+                <p>詳細レポート機能は現在開発中です。以下のページをご利用ください：</p>
+                
+                <div class="button-group" style="margin-top: var(--spacing-lg);">
+                    <a href="../dashboard.html" class="btn btn-secondary">ダッシュボードに戻る</a>
+                    <a href="sales_history.html" class="btn btn-primary">売上履歴を見る</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        function dismissAiMessage(button) {
+            const messageElement = button.closest('.ai-message-dismissible');
+            if (messageElement) {
+                messageElement.classList.add('dismissed');
+                setTimeout(() => {
+                    const container = messageElement.closest('.ai-message-container');
+                    if (container) {
+                        container.style.display = 'none';
+                        localStorage.setItem('sales-report-ai-message-dismissed', 'true');
+                    }
+                }, 300);
+            }
+        }
+        
+        function checkAiMessageDisplay() {
+            const dismissed = localStorage.getItem('sales-report-ai-message-dismissed');
+            const container = document.getElementById('ai-message-container');
+            
+            if (!dismissed && container) {
+                container.style.display = 'block';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAiMessageDisplay();
+        });
+    </script>
+</body>
+</html>

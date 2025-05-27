@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/pages/mypage.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>マイページ</h1>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <!-- AIメッセージがここに表示されます -->
+                    <div class="ai-avatar-container">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-name">Sommia</span>
+                    </div>
+                    <span class="ai-text">ようこそ、山田さん！今日はどのようなお手伝いができますか？注文履歴や請求の確認、アカウント設定などこちらからアクセスできますよ。</span>
+                </div>
+            </div>
+            
+            <div class="mypage-container">
+                <!-- ユーザー情報サマリー -->
+                <div class="user-summary">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <div class="avatar-placeholder">YT</div>
+                        </div>
+                        <div class="user-info">
+                            <h2 class="user-name">山田 太郎</h2>
+                            <div class="user-details">
+                                <div class="user-position">オーナー</div>
+                                <div class="user-store">レストラン ワインベリー</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subscription-info">
+                        <div class="subscription-label">現在のプラン</div>
+                        <div class="subscription-value">スタンダードプラン</div>
+                        <div class="subscription-expiry">次回更新: 2025年6月22日</div>
+                    </div>
+                </div>
+
+                <!-- マイページメニュー -->
+                <div class="mypage-menu-grid">
+                    <a href="billing/billing_management.html" class="menu-card">
+                        <div class="menu-icon">📊</div>
+                        <div class="menu-title">請求管理</div>
+                        <div class="menu-description">請求書の確認、ダウンロードおよび支払い状況の管理ができます。</div>
+                    </a>
+                    <a href="../orders/order_history.html" class="menu-card">
+                        <div class="menu-icon">📦</div>
+                        <div class="menu-title">注文履歴</div>
+                        <div class="menu-description">過去の注文内容や配送状況を確認できます。</div>
+                    </a>
+                    <a href="account_settings.html" class="menu-card">
+                        <div class="menu-icon">⚙️</div>
+                        <div class="menu-title">アカウント設定</div>
+                        <div class="menu-description">プロフィール情報や通知設定、パスワードの変更ができます。</div>
+                    </a>
+                    <a href="../my_cellar/my_cellar.html" class="menu-card">
+                        <div class="menu-icon">🍷</div>
+                        <div class="menu-title">マイセラー</div>
+                        <div class="menu-description">在庫状況の確認や売上入力ができます。</div>
+                    </a>
+                </div>
+
+                <!-- アクティビティ概要 -->
+                <div class="activity-overview">
+                    <h2 class="section-title">最近のアクティビティ</h2>
+                    <div class="dashboard-card">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon order">📦</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">発注完了: ORD-20250522-001</div>
+                                    <div class="activity-description">キャンティ クラシコ リゼルヴァ 他 合計¥106,800</div>
+                                    <div class="activity-time">2025年5月22日 10:23</div>
+                                </div>
+                                <div class="activity-action">
+                                    <a href="../orders/order_history.html?order_id=ORD-20250522-001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon billing">📊</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">新しい請求書: INV-2504001</div>
+                                    <div class="activity-description">2025年4月分 ¥124,300（支払期限: 2025年5月31日）</div>
+                                    <div class="activity-time">2025年5月1日 00:00</div>
+                                </div>
+                                <div class="activity-action">
+                                    <a href="billing/invoice_detail.html?id=INV-2504001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon stock">🍷</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">在庫アラート</div>
+                                    <div class="activity-description">ソーヴィニヨン・ブラン 在庫残り1本</div>
+                                    <div class="activity-time">2025年5月20日 15:45</div>
+                                </div>
+                                <div class="activity-action">
+                                    <a href="../my_cellar/my_cellar.html" class="btn btn-sm btn-outline-primary">詳細</a>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon sale">💰</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">売上入力</div>
+                                    <div class="activity-description">バローロ 2本 ¥24,000</div>
+                                    <div class="activity-time">2025年5月19日 21:30</div>
+                                </div>
+                                <div class="activity-action">
+                                    <a href="../my_cellar/sales_input.html" class="btn btn-sm btn-outline-primary">詳細</a>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon payment">💳</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">支払い完了: INV-2503001</div>
+                                    <div class="activity-description">2025年3月分 ¥98,450</div>
+                                    <div class="activity-time">2025年4月25日 14:12</div>
+                                </div>
+                                <div class="activity-action">
+                                    <a href="billing/invoice_detail.html?id=INV-2503001" class="btn btn-sm btn-outline-primary">詳細</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 概要カード -->
+                <div class="summary-cards">
+                    <h2 class="section-title">ステータス概要</h2>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-icon">📦</div>
+                            <div class="summary-content">
+                                <div class="summary-title">未発送の注文</div>
+                                <div class="summary-value">1</div>
+                                <a href="../orders/order_history.html" class="summary-link">詳細を見る →</a>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">📊</div>
+                            <div class="summary-content">
+                                <div class="summary-title">未払いの請求</div>
+                                <div class="summary-value">1</div>
+                                <a href="billing/billing_management.html" class="summary-link">詳細を見る →</a>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">⚠️</div>
+                            <div class="summary-content">
+                                <div class="summary-title">在庫アラート</div>
+                                <div class="summary-value">3</div>
+                                <a href="../my_cellar/my_cellar.html" class="summary-link">詳細を見る →</a>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">🔔</div>
+                            <div class="summary-content">
+                                <div class="summary-title">新着お知らせ</div>
+                                <div class="summary-value">2</div>
+                                <a href="../notifications.html" class="summary-link">詳細を見る →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AIメッセージの表示
+            try {
+                if (typeof displayAiMessage === 'function') {
+                    displayAiMessage('account', 'mypage', 'ユーザー名', '#ai-message-area');
+                }
+            } catch (e) {
+                console.error('AI message display error:', e);
+            }
+        });
+    </script>
+</body>
+</html>

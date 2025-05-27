@@ -1,0 +1,204 @@
+/* ドロップダウンメニューのスタイル */
+
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 320px;
+    max-width: 90vw;
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    overflow: hidden;
+    transform-origin: top right;
+    transform: scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.dropdown-menu.active {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dropdown-header {
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-bottom: 1px solid var(--medium-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-header h3 {
+    margin: 0;
+    font-size: var(--font-size-md);
+    color: var(--dark-gray);
+}
+
+.dropdown-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--dark-gray);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: background-color var(--transition-fast);
+}
+
+.dropdown-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.dropdown-footer {
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-top: 1px solid var(--medium-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-link {
+    color: var(--primary-color);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+}
+
+.dropdown-link:hover {
+    text-decoration: underline;
+}
+
+/* お知らせアイテム */
+.notification-item {
+    display: flex;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--light-gray);
+    transition: background-color var(--transition-fast);
+    cursor: pointer;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.notification-item.unread {
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.notification-item.unread:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.notification-icon {
+    margin-right: var(--spacing-sm);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-gray);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.notification-item.unread .notification-icon {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: bold;
+    margin-bottom: 2px;
+    color: var(--dark-gray);
+}
+
+.notification-time {
+    font-size: var(--font-size-xs);
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.notification-text {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+}
+
+.notification-category {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: var(--spacing-xs);
+    background-color: var(--light-gray);
+}
+
+.notification-category.system {
+    background-color: #e2f0fd;
+    color: #0d6efd;
+}
+
+.notification-category.campaign {
+    background-color: #fff3cd;
+    color: #ffc107;
+}
+
+.notification-category.wine-info {
+    background-color: #d1e7dd;
+    color: #198754;
+}
+
+.notification-category.event {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+/* カテゴリフィルター */
+.notification-filters {
+    display: flex;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--medium-gray);
+    overflow-x: auto;
+    gap: var(--spacing-xs);
+}
+
+.notification-filter {
+    font-size: var(--font-size-xs);
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: var(--light-gray);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.notification-filter:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.notification-filter.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}

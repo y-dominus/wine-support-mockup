@@ -1,0 +1,686 @@
+                                    <div class="wine-details">
+                                        <div class="wine-name">プロセッコ・ヴァルドッビアーデネ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                        <div class="wine-pairing">→ アンティパストとの組み合わせ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>想定仕入れ価格：</span>
+                                <span class="price-amount">¥65,000</span>
+                            </div>
+                        </div>
+                        
+                        <!-- ワイン提案3 -->
+                        <div class="wine-proposal-card" id="modal-proposal-3">
+                            <div class="proposal-header">
+                                <h4 class="proposal-title">リニューアルプラン C</h4>
+                                <p class="proposal-subtitle">プレミアム・マリアージュ重視</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">バルバレスコ DOCG</div>
+                                        <div class="wine-description">イタリア産 | フルボディ | 赤</div>
+                                        <div class="wine-pairing">→ 高級肉料理のマリアージュ</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ソアーヴェ・クラッシコ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | 白</div>
+                                        <div class="wine-pairing">→ 繊細な魚介料理に</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">トレント DOC スプマンテ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                        <div class="wine-pairing">→ 特別な日の乾杯に</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>想定仕入れ価格：</span>
+                                <span class="price-amount">¥135,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-prompt-box mt-4">
+                        <div class="ai-prompt-title">
+                            <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                            Sommiaからのアドバイス
+                        </div>
+                        <div class="ai-prompt-content">
+                            更新されたメニュー情報に基づいて、イタリアンの特色を活かしたワイン構成を提案しました。どのプランもお店のシグネチャー料理との相性を重視しています。気に入ったプランがあれば、マイセラーに追加して発注することができます！
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" id="close-proposal-modal">閉じる</button>
+                <button class="btn btn-primary" id="apply-proposal" style="display: none;">選択したプランを適用</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - initializing settings page');
+            
+            // 設定ナビゲーションの切り替え
+            const navLinks = document.querySelectorAll('.settings-nav-link');
+            const sections = document.querySelectorAll('.settings-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    // アクティブなナビアイテムを更新
+                    document.querySelector('.settings-nav-item.active').classList.remove('active');
+                    this.closest('.settings-nav-item').classList.add('active');
+                    
+                    // セクションの表示を切り替え
+                    const targetId = this.getAttribute('href');
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.querySelector(targetId).classList.add('active');
+                });
+            });
+            
+            // ワイン提案生成機能の初期化
+            initializeWineProposalGenerator();
+            
+            // フォーム送信イベント
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    if (this.id === 'menu-form') {
+                        alert('メニュー情報を保存しました。「新しいワイン提案を生成」ボタンから最新のメニューに基づいた提案を受けることができます。');
+                        // 最終更新日を更新
+                        const lastUpdateSpan = document.querySelector('.last-update');
+                        if (lastUpdateSpan) {
+                            const today = new Date();
+                            lastUpdateSpan.textContent = `最終更新: ${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+                        }
+                    } else {
+                        alert('設定を保存しました（モックアップのため実際には反映されません）');
+                    }
+                });
+            });
+            
+            // AIメッセージの表示
+            try {
+                if (typeof displayAiMessage === 'function') {
+                    displayAiMessage('account', 'settings', null, '#ai-message-area');
+                }
+            } catch (e) {
+                console.error('AI message display error:', e);
+            }
+        });
+        
+        // ワイン提案生成機能の初期化
+        function initializeWineProposalGenerator() {
+            const generateProposalBtn = document.getElementById('generate-wine-proposal');
+            const proposalModal = document.getElementById('wine-proposal-modal');
+            const proposalLoading = document.getElementById('proposal-loading');
+            const proposalResult = document.getElementById('proposal-result');
+            const closeModalBtn = document.getElementById('close-proposal-modal');
+            const modalClose = document.querySelector('#wine-proposal-modal .modal-close');
+            const applyProposalBtn = document.getElementById('apply-proposal');
+            
+            console.log('Initializing wine proposal generator, elements found:', {
+                generateProposalBtn: !!generateProposalBtn,
+                proposalModal: !!proposalModal,
+                proposalLoading: !!proposalLoading,
+                proposalResult: !!proposalResult
+            });
+            
+            // 提案生成ボタンのクリックイベント
+            if (generateProposalBtn) {
+                generateProposalBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    console.log('Generate wine proposal button clicked');
+                    
+                    if (proposalModal) {
+                        proposalModal.style.display = 'block';
+                        if (proposalLoading) proposalLoading.style.display = 'block';
+                        if (proposalResult) proposalResult.style.display = 'none';
+                        
+                        // 3秒後に結果を表示（AI処理をシミュレート）
+                        setTimeout(() => {
+                            if (proposalLoading) proposalLoading.style.display = 'none';
+                            if (proposalResult) proposalResult.style.display = 'block';
+                        }, 3000);
+                    }
+                });
+            } else {
+                console.error('Generate wine proposal button not found');
+            }
+            
+            // モーダルを閉じる関数
+            function closeModal() {
+                if (proposalModal) {
+                    proposalModal.style.display = 'none';
+                    if (proposalLoading) proposalLoading.style.display = 'block';
+                    if (proposalResult) proposalResult.style.display = 'none';
+                    // 選択状態をリセット
+                    document.querySelectorAll('.wine-proposal-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    if (applyProposalBtn) applyProposalBtn.style.display = 'none';
+                }
+            }
+            
+            // モーダルを閉じるイベント
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+            
+            // モーダル外クリックで閉じる
+            if (proposalModal) {
+                proposalModal.addEventListener('click', function(event) {
+                    if (event.target === proposalModal) {
+                        closeModal();
+                    }
+                });
+            }
+            
+            // ワイン提案カードの選択
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.wine-proposal-card')) {
+                    const card = event.target.closest('.wine-proposal-card');
+                    
+                    // 他のカードの選択を解除
+                    document.querySelectorAll('.wine-proposal-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    
+                    // 選択されたカードをハイライト
+                    card.classList.add('selected');
+                    
+                    // 適用ボタンを表示
+                    if (applyProposalBtn) applyProposalBtn.style.display = 'block';
+                }
+            });
+            
+            // プラン適用ボタン
+            if (applyProposalBtn) {
+                applyProposalBtn.addEventListener('click', function() {
+                    const selectedCard = document.querySelector('.wine-proposal-card.selected');
+                    if (selectedCard) {
+                        const planTitle = selectedCard.querySelector('.proposal-title').textContent;
+                        alert(`${planTitle}を適用しました。マイセラーページで新しいワイン構成を確認し、発注を行ってください。`);
+                        closeModal();
+                    }
+                });
+            }
+        }
+    </script>
+    
+    <style>
+        /* 設定ページ特有のスタイル */
+        .settings-container {
+            display: flex;
+            gap: var(--spacing-xl);
+        }
+        
+        .settings-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        
+        .settings-content {
+            flex: 1;
+        }
+        
+        .settings-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .settings-nav-item {
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .settings-nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-nav-link {
+            display: block;
+            padding: var(--spacing-md);
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .settings-nav-link:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .settings-nav-item.active .settings-nav-link {
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            font-weight: bold;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .settings-section {
+            display: none;
+        }
+        
+        .settings-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-xl);
+            color: var(--dark-gray);
+        }
+        
+        .form-section-title {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+        
+        .current-plan {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .plan-info {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .plan-name {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .plan-price {
+            font-size: var(--font-size-md);
+            font-weight: bold;
+        }
+        
+        .plan-period {
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+        }
+        
+        .plan-features {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .plan-features h4 {
+            font-size: var(--font-size-md);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .plan-features ul {
+            padding-left: 20px;
+        }
+        
+        .payment-card {
+            background-color: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .card-brand {
+            font-weight: bold;
+        }
+        
+        .mt-4 {
+            margin-top: var(--spacing-lg);
+        }
+        
+        /* メニュー情報セクションのスタイル */
+        .card-header {
+            padding: var(--spacing-md) var(--spacing-md) 0;
+            border-bottom: none;
+        }
+        
+        .card-title {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .card-subtitle {
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        
+        .form-checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+        }
+        
+        .form-radio-group {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .menu-update-actions {
+            background-color: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .update-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        /* モーダルのスタイル */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            margin: 5vh auto;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .modal-lg {
+            max-width: 900px;
+        }
+        
+        .modal-header {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: var(--font-size-lg);
+            color: var(--dark-gray);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            color: var(--dark-gray);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-md);
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .modal-footer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+        }
+        
+        /* ローディングアニメーション */
+        .proposal-loading {
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+        
+        .ai-thinking {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .ai-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: var(--spacing-md);
+        }
+        
+        .thinking-animation {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .thinking-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            animation: thinking 1.5s infinite;
+        }
+        
+        .thinking-dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .thinking-dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes thinking {
+            0%, 80%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
+        .loading-text {
+            font-size: var(--font-size-md);
+            color: #6c757d;
+        }
+        
+        /* ワイン提案カードのスタイル */
+        .wine-proposal-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .wine-proposal-card {
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            background-color: var(--white);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .wine-proposal-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .wine-proposal-card.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .proposal-header {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .proposal-title {
+            font-size: var(--font-size-md);
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .proposal-subtitle {
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        .wine-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .wine-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .wine-details {
+            flex: 1;
+        }
+        
+        .wine-name {
+            font-weight: bold;
+            color: var(--dark-gray);
+            margin-bottom: 2px;
+        }
+        
+        .wine-description {
+            font-size: var(--font-size-sm);
+            color: #6c757d;
+            margin-bottom: 2px;
+        }
+        
+        .wine-pairing {
+            font-size: var(--font-size-sm);
+            color: var(--primary-color);
+            font-style: italic;
+        }
+        
+        .proposal-price {
+            text-align: right;
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .price-amount {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--success-color);
+        }
+        
+        .ai-prompt-box {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .ai-prompt-title {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .ai-avatar-inline {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .ai-prompt-content {
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .settings-container {
+                flex-direction: column;
+            }
+            
+            .settings-sidebar {
+                width: 100%;
+                margin-bottom: var(--spacing-md);
+            }
+        }
+    </style>
+</body>
+</html>

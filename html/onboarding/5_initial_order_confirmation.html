@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録完了 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">6</div>
+                        <div class="step-label">レポート確認</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">7</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">8</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-welcome-container">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-large">
+                        <div class="ai-welcome-message">
+                            <h1>ご登録ありがとうございます！</h1>
+                            <div id="ai-message-area" class="ai-message-large">
+                                <!-- AIメッセージがここに表示されます -->
+                                <span class="ai-text">ご登録ありがとうございます！ゲストさん。選んでいただいたワインで、お店に美味しい魔法をかけましょう！Sommiaが全力でサポートします。さあ、ダッシュボードへどうぞ！</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="completion-container">
+                        <div class="completion-icon">🎉</div>
+                        <h2 class="completion-title">登録が完了しました</h2>
+                        <p class="completion-message">選択されたワインリストの発注準備を行っています。納品情報はメールでお知らせします。</p>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">初回注文確認</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="order-summary">
+                                    <div class="order-item">
+                                        <span class="order-label">プラン：</span>
+                                        <span class="order-value" id="plan-name">スタンダードプラン</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <span class="order-label">ワイン数：</span>
+                                        <span class="order-value">5種類</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <span class="order-label">初期仕入れ予算：</span>
+                                        <span class="order-value" id="plan-price">¥75,000</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <span class="order-label">納品予定日：</span>
+                                        <span class="order-value">2025年5月30日頃</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="order-status">発注手続き中</span>
+                                <a href="../orders/order_history.html" class="btn btn-outline-primary btn-sm">詳細を確認</a>
+                            </div>
+                        </div>
+                        
+                        <div class="next-steps">
+                            <h3>次のステップ</h3>
+                            <div class="steps-list">
+                                <div class="step-item">
+                                    <div class="step-icon">📋</div>
+                                    <div class="step-content">
+                                        <h4>ダッシュボードをチェック</h4>
+                                        <p>あなたのワイン管理の中心となるダッシュボードをご確認ください。</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon">🔍</div>
+                                    <div class="step-content">
+                                        <h4>商品一覧を探索</h4>
+                                        <p>Sommiaが厳選したワインラインナップをご覧ください。</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon">🍷</div>
+                                    <div class="step-content">
+                                        <h4>マイセラーで在庫管理</h4>
+                                        <p>納品されたワインの在庫を簡単に管理できます。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="completion-actions">
+                            <a href="../dashboard.html" class="btn btn-primary btn-lg">ダッシュボードへ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // 選択されたプランの情報を表示
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedProposal = localStorage.getItem('selectedProposal');
+            const planNameElement = document.getElementById('plan-name');
+            const planPriceElement = document.getElementById('plan-price');
+            
+            if (savedProposal) {
+                let planName = 'スタンダードプラン';
+                let planPrice = '¥75,000';
+                
+                switch (savedProposal) {
+                    case '2':
+                        planName = 'プレミアムプラン';
+                        planPrice = '¥120,000';
+                        break;
+                    case '3':
+                        planName = 'セレクトプラン';
+                        planPrice = '¥95,000';
+                        break;
+                }
+                
+                planNameElement.textContent = planName;
+                planPriceElement.textContent = planPrice;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+/* モーダルスタイル */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .modal-container {
+        width: 95%;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+    }
+    
+    .modal-tabs {
+        flex-direction: column;
+    }
+    
+    .modal-tab {
+        border-bottom: none;
+        border-left: 2px solid transparent;
+    }
+    
+    .modal-tab.active {
+        border-bottom-color: transparent;
+        border-left-color: var(--primary-color);
+    }
+    
+    .execution-summary {
+        padding: var(--spacing-sm);
+    }
+    
+    .form-checkbox {
+        font-size: var(--font-size-sm);
+    }
+}
+
+.modal.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+}
+
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal:not(.active) .modal-container {
+    transform: translate(-50%, -45%);
+    opacity: 0;
+}
+
+.modal-header {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--medium-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--dark-gray);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--dark-gray);
+}
+
+.modal-body {
+    padding: var(--spacing-md);
+}
+
+.modal-footer {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--medium-gray);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+/* モーダルサイズバリエーション */
+.modal-sm .modal-container {
+    max-width: 400px;
+}
+
+.modal-lg .modal-container {
+    max-width: 800px;
+}
+
+.modal-xl .modal-container {
+    max-width: 1000px;
+}
+
+.modal-fullscreen .modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+}
+
+/* モーダルアニメーション */
+.modal-fade .modal-container {
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.modal-fade.active .modal-container {
+    opacity: 1;
+}
+
+.modal-slide-down .modal-container {
+    transform: translate(-50%, -70%);
+    opacity: 0;
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.modal-slide-down.active .modal-container {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.modal-slide-up .modal-container {
+    transform: translate(-50%, 30%);
+    opacity: 0;
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.modal-slide-up.active .modal-container {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+/* モーダル内コンテンツ */
+.modal-title {
+    margin-top: 0;
+    color: var(--dark-gray);
+}
+
+.modal-subtitle {
+    margin-top: var(--spacing-xs);
+    color: #6c757d;
+    font-size: var(--font-size-sm);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.modal-divider {
+    margin: var(--spacing-md) 0;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.modal-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-section-title {
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-gray);
+}
+
+/* モーダルタブ */
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--medium-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-tab {
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.modal-tab:hover {
+    background-color: var(--light-gray);
+}
+
+.modal-tab.active {
+    border-bottom-color: var(--primary-color);
+    font-weight: bold;
+}
+
+.modal-tab-content {
+    display: none;
+}
+
+.modal-tab-content.active {
+    display: block;
+}
+
+/* モーダル確認ダイアログ */
+.modal-confirm-message {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    font-size: var(--font-size-lg);
+}
+
+.modal-confirm-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-confirm-icon.warning {
+    color: #ffc107;
+}
+
+.modal-confirm-icon.danger {
+    color: #dc3545;
+}
+
+.modal-confirm-icon.success {
+    color: #28a745;
+}
+
+.modal-confirm-icon.info {
+    color: #17a2b8;
+}
+
+/* 実行確認モーダル専用スタイル */
+.execution-summary {
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.execution-summary h4 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+}
+
+.execution-item {
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--medium-gray);
+    font-size: var(--font-size-md);
+    line-height: 1.5;
+}
+
+.execution-item:last-child {
+    border-bottom: none;
+}
+
+.execution-item strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.execution-options {
+    margin-top: var(--spacing-lg);
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: var(--spacing-sm);
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.form-checkbox span {
+    color: var(--dark-gray);
+    user-select: none;
+}
+
+.form-checkbox:hover span {
+    color: var(--primary-color);
+}
+
+/* モーダルアニメーションの改善 */
+.modal {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal.active .modal-container {
+    animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+    to {
+        opacity: 1;
+        backdrop-filter: blur(2px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -40%);
+        opacity: 0;
+        scale: 0.9;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        scale: 1;
+    }
+}

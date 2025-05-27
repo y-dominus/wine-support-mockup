@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>料理情報入力 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">6</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">7</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-page-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <div class="ai-avatar-container">
+                                <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar">
+                                <span class="ai-name">Sommia</span>
+                            </div>
+                            <span class="ai-text">ワインのご要望をありがとうございます！次は料理情報ですね。お料理の写真を撮影していただけると、より精度の高いワイン提案ができますよ！</span>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-form">
+                        <form id="menu-info-form" action="3_initial_proposal.html">
+                            <!-- 料理写真アップロード -->
+                            <div class="form-group">
+                                <label class="form-label">料理写真 <span class="required">*</span></label>
+                                <div class="photo-upload-area">
+                                    <div class="photo-upload-box" id="photo-upload-box">
+                                        <div class="upload-icon">📸</div>
+                                        <div class="upload-text">
+                                            <strong>料理写真をアップロード</strong>
+                                            <p>クリックまたはドラッグ&ドロップで追加</p>
+                                            <small>JPG, PNG, WEBP対応、複数可</small>
+                                        </div>
+                                        <input type="file" id="dish-photos" name="dish-photos" accept="image/*" multiple style="display: none;">
+                                    </div>
+                                    <div class="uploaded-photos" id="uploaded-photos"></div>
+                                </div>
+                                <div class="form-hint">
+                                    看板メニューや人気料理の写真をアップロードしてください。<br>
+                                    AIが写真を分析し、最適なワインペアリング提案を行います。
+                                </div>
+                            </div>
+                            
+                            <!-- 看板メニューピックアップ -->
+                            <div class="form-group">
+                                <label class="form-label">看板メニューのピックアップ <span class="required">*</span></label>
+                                <div class="signature-dishes-section">
+                                    <div class="dishes-list" id="dishes-list">
+                                        <!-- JavaScriptで動的に生成される -->
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary" id="add-dish-btn">メニューを追加</button>
+                                </div>
+                                <div class="form-hint">
+                                    <strong>重要：</strong>ワインリスト提案数の40%まで選択可能です。<br>
+                                    例：提案ワイン数が20本なら最大8品まで選択できます。<br>
+                                    理由：ワインペアリングを考慮したセレクトでリスト全体のバランスを保つため
+                                </div>
+                            </div>
+                            
+                            <!-- 要素の修正セクション -->
+                            <div class="form-group">
+                                <label class="form-label">料理要素の詳細設定</label>
+                                <div class="dish-elements-grid" id="dish-elements-grid">
+                                    <!-- 選択されたメニューに基づいて動的に生成される -->
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <a href="1_wine_requirements_form.html" class="btn btn-outline-primary">戻る</a>
+                                <button type="submit" class="btn btn-primary">次へ（ワイン提案へ）</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let dishCount = 0;
+            let uploadedFiles = [];
+            
+            // 写真アップロード機能
+            const photoUploadBox = document.getElementById('photo-upload-box');
+            const photoInput = document.getElementById('dish-photos');
+            const uploadedPhotosContainer = document.getElementById('uploaded-photos');
+            
+            photoUploadBox.addEventListener('click', () => photoInput.click());
+            
+            photoUploadBox.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                photoUploadBox.classList.add('dragover');
+            });
+            
+            photoUploadBox.addEventListener('dragleave', () => {
+                photoUploadBox.classList.remove('dragover');
+            });
+            
+            photoUploadBox.addEventListener('drop', (e) => {
+                e.preventDefault();
+                photoUploadBox.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            photoInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+            
+            function handleFiles(files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        uploadedFiles.push(file);
+                        displayUploadedPhoto(file);
+                    }
+                });
+            }
+            
+            function displayUploadedPhoto(file) {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'uploaded-photo';
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    photoDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="料理写真">
+                        <button type="button" class="remove-photo" onclick="removePhoto(this, '${file.name}')">×</button>
+                        <span class="photo-name">${file.name}</span>
+                    `;
+                };
+                reader.readAsDataURL(file);
+                
+                uploadedPhotosContainer.appendChild(photoDiv);
+            }
+            
+            // 写真削除機能
+            window.removePhoto = function(button, fileName) {
+                uploadedFiles = uploadedFiles.filter(file => file.name !== fileName);
+                button.parentElement.remove();
+            };
+            
+            // メニュー追加機能
+            const addDishBtn = document.getElementById('add-dish-btn');
+            const dishesListContainer = document.getElementById('dishes-list');
+            const dishElementsGrid = document.getElementById('dish-elements-grid');
+            
+            addDishBtn.addEventListener('click', addDishInput);
+            
+            function addDishInput() {
+                dishCount++;
+                const dishDiv = document.createElement('div');
+                dishDiv.className = 'dish-input-group';
+                dishDiv.innerHTML = `
+                    <div class="dish-input-header">
+                        <h4>メニュー ${dishCount}</h4>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeDish(this)">削除</button>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col-6">
+                            <input type="text" name="dish-name-${dishCount}" class="form-input" placeholder="料理名" required>
+                        </div>
+                        <div class="form-col-6">
+                            <select name="dish-category-${dishCount}" class="form-select" required>
+                                <option value="">カテゴリ選択</option>
+                                <option value="appetizer">前菜・アペタイザー</option>
+                                <option value="salad">サラダ</option>
+                                <option value="soup">スープ</option>
+                                <option value="pasta">パスタ・リゾット</option>
+                                <option value="meat">肉料理</option>
+                                <option value="fish">魚介料理</option>
+                                <option value="pizza">ピザ</option>
+                                <option value="dessert">デザート</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <textarea name="dish-description-${dishCount}" class="form-textarea" placeholder="詳細説明（使用食材、調理法、味付けなど）"></textarea>
+                `;
+                
+                dishesListContainer.appendChild(dishDiv);
+                updateDishElements();
+            }
+            
+            // メニュー削除機能
+            window.removeDish = function(button) {
+                button.closest('.dish-input-group').remove();
+                updateDishElements();
+            };
+            
+            // 料理要素の更新
+            function updateDishElements() {
+                const dishInputs = document.querySelectorAll('.dish-input-group');
+                dishElementsGrid.innerHTML = '';
+                
+                dishInputs.forEach((dishDiv, index) => {
+                    const dishName = dishDiv.querySelector(`input[name^="dish-name"]`).value || `メニュー ${index + 1}`;
+                    
+                    const elementDiv = document.createElement('div');
+                    elementDiv.className = 'dish-element-card';
+                    elementDiv.innerHTML = `
+                        <h5>${dishName}</h5>
+                        <div class="element-groups">
+                            <div class="element-group">
+                                <label class="element-label">主要素材</label>
+                                <div class="element-tags">
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="beef"> 牛肉</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="pork"> 豚肉</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="chicken"> 鶏肉</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="fish"> 白身魚</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="salmon"> サーモン</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="shellfish"> 貝類</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="cheese"> チーズ</label>
+                                    <label class="element-tag"><input type="checkbox" name="ingredient-${index + 1}" value="vegetables"> 野菜</label>
+                                </div>
+                            </div>
+                            <div class="element-group">
+                                <label class="element-label">味付け</label>
+                                <div class="element-tags">
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="tomato"> トマトベース</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="cream"> クリームベース</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="olive"> オリーブオイル</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="garlic"> ガーリック</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="herb"> ハーブ</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="spicy"> スパイシー</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="sweet"> 甘口</label>
+                                    <label class="element-tag"><input type="checkbox" name="seasoning-${index + 1}" value="salty"> 塩味</label>
+                                </div>
+                            </div>
+                            <div class="element-group">
+                                <label class="element-label">調理法</label>
+                                <div class="element-tags">
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="grilled"> グリル</label>
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="roasted"> ロースト</label>
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="fried"> フライ</label>
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="steamed"> 蒸し</label>
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="boiled"> 煮込み</label>
+                                    <label class="element-tag"><input type="checkbox" name="cooking-${index + 1}" value="raw"> 生・冷製</label>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    dishElementsGrid.appendChild(elementDiv);
+                });
+            }
+            
+            // 初期メニュー追加
+            addDishInput();
+        });
+    </script>
+</body>
+</html>

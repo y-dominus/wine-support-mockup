@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>店舗情報入力 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">メニュー情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">6</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-page-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <div class="ai-avatar-container">
+                                <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar">
+                                <span class="ai-name">Sommia</span>
+                            </div>
+                            <span class="ai-text">お店の基本的な情報を教えてくださいね。この情報をもとに、お店の個性に合わせたワインをSommiaが見つけます！</span>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-form">
+                        <form id="store-info-form" action="1_wine_requirements_form.html">
+                            <div class="form-group">
+                                <label for="store-name" class="form-label">店舗名 <span class="required">*</span></label>
+                                <input type="text" id="store-name" name="store-name" class="form-input" required placeholder="例：レストラン ワインベリー">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="store-type" class="form-label">業態 <span class="required">*</span></label>
+                                <select id="store-type" name="store-type" class="form-select" required>
+                                    <option value="">選択してください</option>
+                                    <option value="italian">イタリアン</option>
+                                    <option value="french">フレンチ</option>
+                                    <option value="spanish">スパニッシュ</option>
+                                    <option value="japanese">和食</option>
+                                    <option value="asian">アジアン</option>
+                                    <option value="fusion">フュージョン</option>
+                                    <option value="bistro">ビストロ</option>
+                                    <option value="bar">バー・ワインバー</option>
+                                    <option value="other">その他</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="price-range" class="form-label">客単価帯 <span class="required">*</span></label>
+                                <select id="price-range" name="price-range" class="form-select" required>
+                                    <option value="">選択してください</option>
+                                    <option value="budget">〜3,000円</option>
+                                    <option value="moderate">3,000円〜5,000円</option>
+                                    <option value="premium">5,000円〜8,000円</option>
+                                    <option value="luxury">8,000円〜15,000円</option>
+                                    <option value="high-end">15,000円〜</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="target-customers" class="form-label">主要顧客層 <span class="required">*</span></label>
+                                <select id="target-customers" name="target-customers" class="form-select" required>
+                                    <option value="">選択してください</option>
+                                    <option value="young-casual">若年層・カジュアル</option>
+                                    <option value="business">ビジネス層</option>
+                                    <option value="family">ファミリー</option>
+                                    <option value="couple">カップル・デート</option>
+                                    <option value="gourmet">食通・ワイン愛好家</option>
+                                    <option value="senior">シニア層</option>
+                                    <option value="mixed">多様な客層</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="postal-code" class="form-label">所在地 <span class="required">*</span></label>
+                                <div class="form-row">
+                                    <div class="form-col-4">
+                                        <input type="text" id="postal-code" name="postal-code" class="form-input" placeholder="例：100-0001" pattern="\d{3}-\d{4}" required>
+                                        <button type="button" id="postal-search-btn" class="btn btn-outline-primary btn-sm mt-2">住所検索</button>
+                                    </div>
+                                    <div class="form-col-8">
+                                        <input type="text" id="address" name="address" class="form-input" placeholder="詳細住所を入力してください" required readonly>
+                                        <input type="text" id="address-detail" name="address-detail" class="form-input mt-2" placeholder="建物名・部屋番号など">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="seats" class="form-label">席数 <span class="required">*</span></label>
+                                <input type="number" id="seats" name="seats" class="form-input" placeholder="例：40" min="1" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">ソムリエ有無 <span class="required">*</span></label>
+                                <div class="form-radio-group">
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-sommelier" value="yes" required>
+                                        <span>有り（資格保有者在籍）</span>
+                                    </label>
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-sommelier" value="experienced" required>
+                                        <span>無し（ワイン経験豊富なスタッフ在籍）</span>
+                                    </label>
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-sommelier" value="no" required>
+                                        <span>無し（ワイン初心者）</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">セラー有無 <span class="required">*</span></label>
+                                <div class="form-radio-group">
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-cellar" value="professional" required>
+                                        <span>本格的なワインセラー有り</span>
+                                    </label>
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-cellar" value="simple" required>
+                                        <span>簡易的な冷蔵保管設備有り</span>
+                                    </label>
+                                    <label class="form-radio">
+                                        <input type="radio" name="has-cellar" value="no" required>
+                                        <span>無し（一般的な冷蔵庫のみ）</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="wine-sales" class="form-label">月別ワイン売上金額 <span class="required">*</span></label>
+                                <div class="form-row">
+                                    <div class="form-col-6">
+                                        <select id="wine-sales-type" name="wine-sales-type" class="form-select" required>
+                                            <option value="">選択してください</option>
+                                            <option value="wine-direct">ワイン売上を直接入力</option>
+                                            <option value="alcohol-ratio">アルコール売上から算出</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-col-6">
+                                        <input type="number" id="monthly-wine-sales" name="monthly-wine-sales" class="form-input" placeholder="例：500000" min="0">
+                                    </div>
+                                </div>
+                                <div id="alcohol-ratio-section" class="mt-3" style="display: none;">
+                                    <label for="alcohol-sales" class="form-label">月間アルコール売上総額（円）</label>
+                                    <input type="number" id="alcohol-sales" name="alcohol-sales" class="form-input" placeholder="例：800000" min="0">
+                                    <label for="wine-ratio" class="form-label mt-2">ワインの割合（%）</label>
+                                    <input type="number" id="wine-ratio" name="wine-ratio" class="form-input" placeholder="例：60" min="0" max="100">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">月別価格帯別提供数・売上本数 <span class="required">*</span></label>
+                                <div class="price-band-table">
+                                    <table class="form-table">
+                                        <thead>
+                                            <tr>
+                                                <th>価格帯</th>
+                                                <th>月間提供本数</th>
+                                                <th>売上本数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>〜3,000円</td>
+                                                <td><input type="number" name="price-band-serve-low" class="form-input-sm" min="0"></td>
+                                                <td><input type="number" name="price-band-sales-low" class="form-input-sm" min="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3,000〜5,000円</td>
+                                                <td><input type="number" name="price-band-serve-mid" class="form-input-sm" min="0"></td>
+                                                <td><input type="number" name="price-band-sales-mid" class="form-input-sm" min="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5,000〜8,000円</td>
+                                                <td><input type="number" name="price-band-serve-high" class="form-input-sm" min="0"></td>
+                                                <td><input type="number" name="price-band-sales-high" class="form-input-sm" min="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>8,000円〜</td>
+                                                <td><input type="number" name="price-band-serve-premium" class="form-input-sm" min="0"></td>
+                                                <td><input type="number" name="price-band-sales-premium" class="form-input-sm" min="0"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-hint">現在ワインを提供していない場合は、すべて0を入力してください</div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <a href="0_welcome_ai.html" class="btn btn-outline-primary">戻る</a>
+                                <button type="submit" class="btn btn-primary">次へ（ワイン要望を入力）</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+</body>
+</html>

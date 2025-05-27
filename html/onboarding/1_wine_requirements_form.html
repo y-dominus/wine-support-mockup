@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワイン要望入力 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">6</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">7</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-page-message">
+                            <!-- AIメッセージがここに表示されます -->
+                            <div class="ai-avatar-container">
+                                <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar">
+                                <span class="ai-name">Sommia</span>
+                            </div>
+                            <span class="ai-text">店舗情報をありがとうございます！次にワインリストについてのご要望を詳しく教えてください。理想のワインリストを一緒に作りましょう！</span>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-form">
+                        <form id="wine-requirements-form" action="2_menu_info_form.html">
+                            <!-- 全体感決定セクション -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">🍷 全体的なご要望</h3>
+                                
+                                <div class="form-group">
+                                    <label for="min-price" class="form-label">売価の指定 <span class="required">*</span></label>
+                                    <div class="form-row">
+                                        <div class="form-col-6">
+                                            <label for="min-price" class="form-label-sm">最低売価（円）</label>
+                                            <input type="number" id="min-price" name="min-price" class="form-input" placeholder="例：2500" min="0" required>
+                                        </div>
+                                        <div class="form-col-6">
+                                            <label for="max-price" class="form-label-sm">最高売価（円）</label>
+                                            <input type="number" id="max-price" name="max-price" class="form-input" placeholder="例：15000" min="0" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="sku-count" class="form-label">SKU数とボリュームゾーン <span class="required">*</span></label>
+                                    <div class="form-row">
+                                        <div class="form-col-6">
+                                            <label for="sku-count" class="form-label-sm">総SKU数（種類）</label>
+                                            <select id="sku-count" name="sku-count" class="form-select" required>
+                                                <option value="">選択してください</option>
+                                                <option value="10-20">10〜20種類</option>
+                                                <option value="20-30">20〜30種類</option>
+                                                <option value="30-50">30〜50種類</option>
+                                                <option value="50+">50種類以上</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-col-6">
+                                            <label for="volume-zone" class="form-label-sm">ボリュームゾーン（価格帯）</label>
+                                            <select id="volume-zone" name="volume-zone" class="form-select" required>
+                                                <option value="">選択してください</option>
+                                                <option value="3000-5000">3,000〜5,000円</option>
+                                                <option value="4000-6000">4,000〜6,000円</option>
+                                                <option value="5000-8000">5,000〜8,000円</option>
+                                                <option value="6000-10000">6,000〜10,000円</option>
+                                                <option value="8000+">8,000円以上</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">赤白泡×価格帯の本数割合 <span class="required">*</span></label>
+                                    <div class="wine-allocation-table">
+                                        <table class="form-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>価格帯</th>
+                                                    <th>赤ワイン（%）</th>
+                                                    <th>白ワイン（%）</th>
+                                                    <th>スパークリング（%）</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>〜5,000円</td>
+                                                    <td><input type="number" name="red-low" class="form-input-sm" min="0" max="100" placeholder="40"></td>
+                                                    <td><input type="number" name="white-low" class="form-input-sm" min="0" max="100" placeholder="50"></td>
+                                                    <td><input type="number" name="spark-low" class="form-input-sm" min="0" max="100" placeholder="10"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5,000〜8,000円</td>
+                                                    <td><input type="number" name="red-mid" class="form-input-sm" min="0" max="100" placeholder="50"></td>
+                                                    <td><input type="number" name="white-mid" class="form-input-sm" min="0" max="100" placeholder="40"></td>
+                                                    <td><input type="number" name="spark-mid" class="form-input-sm" min="0" max="100" placeholder="10"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8,000円〜</td>
+                                                    <td><input type="number" name="red-high" class="form-input-sm" min="0" max="100" placeholder="60"></td>
+                                                    <td><input type="number" name="white-high" class="form-input-sm" min="0" max="100" placeholder="30"></td>
+                                                    <td><input type="number" name="spark-high" class="form-input-sm" min="0" max="100" placeholder="10"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="form-hint">各行の合計が100%になるようにしてください。</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 優先条件セクション -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">⭐ 優先条件</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">主要品種での構成</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="main-varieties" value="yes">
+                                            <span>主要品種のみでリスト化（カベルネ・ピノ・シラー、シャルドネ・ソーヴィニヨンブラン・リースリング）</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-hint">店舗の特徴：客単価低め（5,000円）、ソムリエ不在の場合に推奨</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">キャッチーなワイン</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="catchy-wines" value="flashy-labels">
+                                            <span>ラベルの派手さ重視（サラジェシカ、干支ワイン、カロンセギュール等）</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="catchy-wines" value="famous-regions">
+                                            <span>有名銘柄・産地重視（ブルゴーニュ、シャンパーニュ等）</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="catchy-wines" value="theme-wines">
+                                            <span>テーマ性のあるワイン（例：魚バルならサーモンラン等）</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">ハーフボトル</label>
+                                    <div class="form-radio-group">
+                                        <label class="form-radio">
+                                            <input type="radio" name="half-bottles" value="yes">
+                                            <span>ハーフボトルを積極的に取り入れたい</span>
+                                        </label>
+                                        <label class="form-radio">
+                                            <input type="radio" name="half-bottles" value="some">
+                                            <span>一部ハーフボトルがあっても良い</span>
+                                        </label>
+                                        <label class="form-radio">
+                                            <input type="radio" name="half-bottles" value="no" checked>
+                                            <span>ハーフボトルは不要</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 絶対条件セクション -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">✅ 絶対条件</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">細かな産地要望</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="regions" value="france">
+                                            <span>フランス産</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="regions" value="italy">
+                                            <span>イタリア産</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="regions" value="italy-south">
+                                            <span>イタリア南部産のみ</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="regions" value="spain">
+                                            <span>スペイン産</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="regions" value="new-world">
+                                            <span>ニューワールド</span>
+                                        </label>
+                                    </div>
+                                    <textarea name="region-detail" class="form-textarea mt-2" placeholder="その他の産地要望があれば詳しく記載してください"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">醸造要望</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="production-method" value="natural">
+                                            <span>ナチュラルワイン</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="production-method" value="lutte-raisonnee">
+                                            <span>リュット・リゾネ（減農薬栽培）のみ</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="production-method" value="organic">
+                                            <span>オーガニック</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="production-method" value="biodynamic">
+                                            <span>ビオディナミ</span>
+                                        </label>
+                                    </div>
+                                    <textarea name="production-detail" class="form-textarea mt-2" placeholder="醸造に関する詳細な要望があれば記載してください"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- NG条件セクション -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">❌ NG条件</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">除外したい銘柄・産地</label>
+                                    <div class="form-checkbox-group">
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="ng-brands" value="supermarket">
+                                            <span>スーパーでよく見るワイン（ローヤルなど大手ブランド）</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="ng-regions" value="japan">
+                                            <span>日本産ワイン</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="ng-regions" value="china">
+                                            <span>中国産ワイン</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="ng-regions" value="brazil">
+                                            <span>ブラジル産ワイン</span>
+                                        </label>
+                                        <label class="form-checkbox">
+                                            <input type="checkbox" name="ng-service" value="no-glass">
+                                            <span>グラス提供不要</span>
+                                        </label>
+                                    </div>
+                                    <textarea name="ng-detail" class="form-textarea mt-2" placeholder="その他の除外したい銘柄・産地・条件があれば記載してください"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <a href="1_store_info_form.html" class="btn btn-outline-primary">戻る</a>
+                                <button type="submit" class="btn btn-primary">次へ（料理情報を入力）</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // 割合計算の自動チェック
+        document.addEventListener('DOMContentLoaded', function() {
+            const allocationRows = [
+                ['red-low', 'white-low', 'spark-low'],
+                ['red-mid', 'white-mid', 'spark-mid'],
+                ['red-high', 'white-high', 'spark-high']
+            ];
+            
+            allocationRows.forEach(row => {
+                row.forEach(inputName => {
+                    const input = document.querySelector(`input[name="${inputName}"]`);
+                    if (input) {
+                        input.addEventListener('input', function() {
+                            checkRowTotal(row);
+                        });
+                    }
+                });
+            });
+            
+            function checkRowTotal(rowInputs) {
+                let total = 0;
+                const inputs = [];
+                
+                rowInputs.forEach(inputName => {
+                    const input = document.querySelector(`input[name="${inputName}"]`);
+                    if (input && input.value) {
+                        total += parseInt(input.value) || 0;
+                        inputs.push(input);
+                    }
+                });
+                
+                // 行の合計が100を超える場合の警告
+                inputs.forEach(input => {
+                    if (total > 100) {
+                        input.classList.add('error');
+                    } else {
+                        input.classList.remove('error');
+                    }
+                });
+            }
+            
+            // ワイン売上タイプの切り替え
+            const wineSalesType = document.getElementById('wine-sales-type');
+            const alcoholRatioSection = document.getElementById('alcohol-ratio-section');
+            
+            if (wineSalesType) {
+                wineSalesType.addEventListener('change', function() {
+                    if (this.value === 'alcohol-ratio') {
+                        alcoholRatioSection.style.display = 'block';
+                    } else {
+                        alcoholRatioSection.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,754 @@
+/* ログインリンクコンテナ */
+.login-link-container {
+    margin-top: var(--spacing-md);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+}
+
+.login-link-container a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.login-link-container a:hover {
+    text-decoration: none;
+}
+
+/* オンボーディングページのスタイル */
+
+/* プログレスバー */
+.onboarding-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md) 0;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    background-color: var(--medium-gray);
+    color: var(--dark-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.step-label {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+    text-align: center;
+    transition: color var(--transition-normal);
+}
+
+.progress-line {
+    flex: 1;
+    height: 2px;
+    background-color: var(--medium-gray);
+    position: relative;
+    z-index: 0;
+}
+
+/* アクティブなステップ */
+.progress-step.active .step-number {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.progress-step.active .step-label {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.progress-step.completed .step-number {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+/* オンボーディングコンテナ */
+.onboarding-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.onboarding-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* AIウェルカムエリア */
+.ai-welcome-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(136, 69, 145, 0.1), rgba(185, 90, 157, 0.1));
+    border-radius: var(--border-radius-lg);
+}
+
+.ai-avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--secondary-color);
+    margin-right: var(--spacing-lg);
+}
+
+.ai-welcome-message h1 {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-xxl);
+}
+
+.ai-message-large {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--dark-gray);
+}
+
+/* 機能紹介 */
+.onboarding-features {
+    margin-bottom: var(--spacing-xl);
+}
+
+.onboarding-features h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--dark-gray);
+    position: relative;
+}
+
+.onboarding-features h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.feature-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--medium-gray);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+}
+
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+}
+
+.feature-card p {
+    color: var(--dark-gray);
+    font-size: var(--font-size-md);
+}
+
+/* アクション領域 */
+.onboarding-actions {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+/* フォーム */
+.onboarding-form {
+    max-width: 600px;
+    margin: 0 auto var(--spacing-xl);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    color: var(--dark-gray);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-md);
+    transition: border-color var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(136, 69, 145, 0.2);
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-hint {
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+    margin-top: var(--spacing-xs);
+}
+
+.form-error {
+    color: #dc3545;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+}
+
+/* ワイン提案カード */
+.wine-proposal-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.wine-proposal-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--medium-gray);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.wine-proposal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.wine-proposal-card.selected {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.2);
+}
+
+.proposal-header {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.proposal-title {
+    color: var(--secondary-color);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-subtitle {
+    color: var(--dark-gray);
+    font-size: var(--font-size-sm);
+}
+
+.wine-list {
+    margin-bottom: var(--spacing-md);
+}
+
+.wine-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px dashed var(--medium-gray);
+}
+
+.wine-item:last-child {
+    border-bottom: none;
+}
+
+.wine-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+}
+
+.wine-details {
+    flex: 1;
+}
+
+.wine-name {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.wine-description {
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+}
+
+.proposal-price {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin: var(--spacing-md) 0;
+}
+
+.price-amount {
+    color: var(--primary-color);
+}
+
+.select-proposal-btn {
+    width: 100%;
+}
+
+.selected-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    transform: rotate(5deg);
+}
+
+/* 完了画面 */
+.completion-container {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.completion-icon {
+    font-size: 5rem;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.completion-message {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--dark-gray);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .ai-welcome-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .ai-avatar-large {
+        margin-right: 0;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wine-proposal-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .onboarding-progress {
+        overflow-x: auto;
+        padding-bottom: var(--spacing-sm);
+    }
+    
+    .progress-step {
+        min-width: 80px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .form-col-4,
+    .form-col-6,
+    .form-col-8 {
+        flex: 1;
+    }
+    
+    .wine-allocation-table {
+        font-size: 0.875rem;
+    }
+    
+    .uploaded-photos {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .element-tags {
+        gap: 0.25rem;
+    }
+    
+    .element-tag {
+        font-size: 0.6875rem;
+        padding: 0.1875rem 0.375rem;
+    }
+}
+
+/* 追加フォームスタイル */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.form-section-title {
+    margin: 0 0 1.5rem 0;
+    color: var(--secondary-color);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-col-4 {
+    flex: 0 0 33.333333%;
+}
+
+.form-col-6 {
+    flex: 0 0 50%;
+}
+
+.form-col-8 {
+    flex: 0 0 66.666667%;
+}
+
+.form-label-sm {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: var(--dark-gray);
+}
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.form-table th,
+.form-table td {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.form-table th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.form-input-sm {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.form-input-sm:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(136, 69, 145, 0.2);
+}
+
+.form-input-sm.error {
+    border-color: #dc2626;
+}
+
+.wine-allocation-table {
+    overflow-x: auto;
+}
+
+.form-radio-group,
+.form-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-radio,
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.form-radio input,
+.form-checkbox input {
+    margin: 0;
+}
+
+.form-radio span,
+.form-checkbox span {
+    color: var(--dark-gray);
+    font-size: var(--font-size-md);
+}
+
+/* 写真アップロード */
+.photo-upload-area {
+    margin-bottom: 1.5rem;
+}
+
+.photo-upload-box {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    background-color: #f8fafc;
+}
+
+.photo-upload-box:hover {
+    border-color: var(--primary-color);
+    background-color: #f1f5f9;
+}
+
+.photo-upload-box.dragover {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 77, 0, 0.1);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #64748b;
+}
+
+.upload-text strong {
+    display: block;
+    font-size: 1.125rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.upload-text p {
+    color: #64748b;
+    margin: 0.5rem 0;
+}
+
+.upload-text small {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.uploaded-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.uploaded-photo {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.uploaded-photo img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.remove-photo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(220, 38, 38, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* メニュー入力 */
+.signature-dishes-section {
+    margin-bottom: 1.5rem;
+}
+
+.dishes-list {
+    margin-bottom: 1rem;
+}
+
+.dish-input-group {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.dish-input-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.dish-input-header h4 {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 1.125rem;
+}
+
+.dish-elements-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.dish-element-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.dish-element-card h5 {
+    margin: 0 0 1rem 0;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.element-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.element-group {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1rem;
+}
+
+.element-group:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.element-label {
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.875rem;
+}
+
+.element-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.element-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.element-tag:hover {
+    background: #e2e8f0;
+}
+
+.element-tag input:checked + span {
+    background: var(--primary-color);
+    color: white;
+}
+
+.element-tag input {
+    margin: 0;
+}

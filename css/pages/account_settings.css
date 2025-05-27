@@ -1,0 +1,782 @@
+/* アカウント設定ページ専用スタイル */
+
+/* 設定ページのレイアウト */
+.settings-container {
+    display: flex;
+    gap: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.settings-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.settings-content {
+    flex: 1;
+    min-width: 0; /* フレックスアイテムのオーバーフローを防ぐ */
+}
+
+/* サイドバーナビゲーション */
+.settings-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.settings-nav-item {
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.settings-nav-item:last-child {
+    border-bottom: none;
+}
+
+.settings-nav-link {
+    display: block;
+    padding: var(--spacing-md);
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.settings-nav-link:hover {
+    background-color: var(--gray-50);
+    color: var(--primary-color);
+}
+
+.settings-nav-item.active .settings-nav-link {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left: 3px solid var(--primary-color);
+}
+
+/* セクション管理 */
+.settings-section {
+    display: none;
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.settings-section.active {
+    display: block;
+}
+
+.section-title {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+    color: var(--gray-900);
+    border-bottom: 2px solid var(--gray-100);
+    padding-bottom: var(--spacing-md);
+}
+
+.form-section-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--gray-800);
+}
+
+/* プラン情報表示 */
+.current-plan {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--gray-200);
+}
+
+.plan-info {
+    margin-bottom: var(--spacing-md);
+}
+
+.plan-name {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.plan-price {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+}
+
+.plan-period {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.plan-features {
+    margin-bottom: var(--spacing-md);
+}
+
+.plan-features h4 {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-800);
+}
+
+.plan-features ul {
+    padding-left: var(--spacing-lg);
+    color: var(--gray-700);
+}
+
+.plan-features li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* 支払い方法カード */
+.payment-card {
+    background-color: var(--gray-50);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--gray-200);
+}
+
+.card-brand {
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-number {
+    color: var(--gray-600);
+    font-family: monospace;
+}
+
+/* カードヘッダー */
+.card-header {
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+    border-bottom: 1px solid var(--gray-100);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+    margin: 0;
+}
+
+/* カスタムフォーム要素のオーバーライド */
+.form-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-radio-group {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+/* settings専用のチェックボックスラベル */
+.form-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-weight: 500;
+    color: var(--gray-800);
+    cursor: pointer;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    transition: all var(--transition-normal);
+    background: linear-gradient(135deg, var(--gray-50), var(--white));
+    border: 2px solid transparent;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.form-checkbox-group label:hover {
+    background: linear-gradient(135deg, var(--white), var(--gray-50));
+    border-color: var(--gray-200);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.form-checkbox-group label:has(input:checked) {
+    background: linear-gradient(135deg, rgba(255, 77, 0, 0.05), rgba(255, 77, 0, 0.02));
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 20px rgba(255, 77, 0, 0.1);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* settings専用のラジオボタンラベル */
+.form-radio-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-weight: 500;
+    color: var(--gray-800);
+    cursor: pointer;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    transition: all var(--transition-normal);
+    background: linear-gradient(135deg, var(--gray-50), var(--white));
+    border: 2px solid transparent;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    flex: 1;
+    min-width: 160px;
+    justify-content: center;
+    text-align: center;
+}
+
+.form-radio-group label:hover {
+    background: linear-gradient(135deg, var(--white), var(--gray-50));
+    border-color: var(--gray-200);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.form-radio-group label:has(input:checked) {
+    background: linear-gradient(135deg, rgba(255, 77, 0, 0.05), rgba(255, 77, 0, 0.02));
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 20px rgba(255, 77, 0, 0.1);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* カスタムチェックボックス・ラジオボタンの隠し */
+.form-checkbox-group input[type="checkbox"],
+.form-radio-group input[type="radio"] {
+    display: none;
+}
+
+/* カスタムチェックボックス */
+.form-checkbox-group label .custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-300);
+    border-radius: 4px;
+    background-color: var(--white);
+    transition: all var(--transition-normal);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.form-checkbox-group label:has(input:checked) .custom-checkbox {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
+}
+
+.form-checkbox-group label .custom-checkbox::after {
+    content: '✓';
+    color: var(--white);
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.form-checkbox-group label:has(input:checked) .custom-checkbox::after {
+    opacity: 1;
+}
+
+/* カスタムラジオボタン */
+.form-radio-group label .custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-300);
+    border-radius: 50%;
+    background-color: var(--white);
+    transition: all var(--transition-normal);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-right: var(--spacing-sm);
+}
+
+.form-radio-group label:has(input:checked) .custom-radio {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
+}
+
+.form-radio-group label .custom-radio::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0;
+    transition: all var(--transition-fast);
+    transform: scale(0);
+}
+
+.form-radio-group label:has(input:checked) .custom-radio::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* メニュー更新アクション */
+.menu-update-actions {
+    background-color: var(--gray-50);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    margin-top: var(--spacing-lg);
+    border: 1px solid var(--gray-200);
+}
+
+.update-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.last-update {
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+/* モーダル関連スタイル */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    margin: 5vh auto;
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+
+.modal-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray-50);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--gray-500);
+    padding: var(--spacing-xs);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--gray-700);
+    background-color: var(--gray-100);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    background-color: var(--gray-50);
+}
+
+/* ローディングアニメーション */
+.proposal-loading {
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.ai-thinking {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.ai-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: var(--spacing-md);
+    border: 3px solid var(--secondary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.thinking-animation {
+    display: flex;
+    gap: 6px;
+}
+
+.thinking-dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    animation: thinking 1.5s infinite;
+}
+
+.thinking-dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.thinking-dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes thinking {
+    0%, 80%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.loading-text {
+    font-size: var(--font-size-lg);
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+/* ワイン提案カード */
+.wine-proposal-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.wine-proposal-card {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.wine-proposal-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.wine-proposal-card.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.wine-proposal-card.selected::before {
+    content: '✓';
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.proposal-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-subtitle {
+    font-size: var(--font-size-md);
+    color: var(--gray-600);
+    margin: 0;
+}
+
+.wine-list {
+    margin-bottom: var(--spacing-lg);
+}
+
+.wine-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-fast);
+}
+
+.wine-proposal-card:hover .wine-item,
+.wine-proposal-card.selected .wine-item {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.wine-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.wine-details {
+    flex: 1;
+}
+
+.wine-name {
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+    font-size: var(--font-size-md);
+}
+
+.wine-description {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+    margin-bottom: 4px;
+}
+
+.wine-pairing {
+    font-size: var(--font-size-sm);
+    color: var(--primary-color);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.proposal-price {
+    text-align: right;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+}
+
+.proposal-price span:first-child {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+    margin-right: var(--spacing-sm);
+}
+
+.price-amount {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+/* AIプロンプトボックス */
+.ai-prompt-box {
+    background: linear-gradient(135deg, var(--secondary-light), var(--primary-light));
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    border: 1px solid var(--gray-200);
+}
+
+.ai-prompt-title {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-md);
+}
+
+.ai-avatar-inline {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: var(--spacing-sm);
+    border: 2px solid var(--secondary-color);
+}
+
+.ai-prompt-content {
+    color: var(--gray-800);
+    line-height: 1.6;
+    font-size: var(--font-size-md);
+}
+
+/* ユーティリティクラス */
+.mt-4 {
+    margin-top: var(--spacing-lg);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+    .settings-container {
+        gap: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+    
+    .settings-sidebar {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .settings-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm);
+    }
+    
+    .settings-sidebar {
+        width: 100%;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .settings-nav {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .settings-nav-item {
+        border-bottom: none;
+        border-right: 1px solid var(--gray-200);
+        flex-shrink: 0;
+    }
+    
+    .settings-nav-item:last-child {
+        border-right: none;
+    }
+    
+    .settings-nav-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .settings-section {
+        padding: var(--spacing-lg);
+    }
+    
+    .form-checkbox-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-radio-group {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .modal-container {
+        width: 95%;
+        margin: 2.5vh auto;
+        max-height: 95vh;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: var(--font-size-xl);
+    }
+    
+    .proposal-title {
+        font-size: var(--font-size-md);
+    }
+    
+    .wine-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wine-icon {
+        align-self: center;
+    }
+}

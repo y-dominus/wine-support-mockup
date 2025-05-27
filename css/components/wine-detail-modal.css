@@ -1,0 +1,245 @@
+/* ワイン詳細モーダルの共通スタイル */
+
+.wine-detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.wine-detail-modal.active {
+    display: flex;
+}
+
+.wine-detail-modal-content {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.wine-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--background-light);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.wine-detail-title {
+    margin: 0;
+    color: var(--text-color);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.wine-detail-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wine-detail-close:hover {
+    background: var(--background-light);
+    color: var(--text-color);
+}
+
+.wine-detail-body {
+    padding: var(--spacing-lg);
+}
+
+.wine-detail-main {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.wine-image-container {
+    flex-shrink: 0;
+}
+
+.wine-image {
+    width: 120px;
+    height: 300px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    padding: var(--spacing-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.wine-image.red {
+    background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+}
+
+.wine-image.white {
+    background: linear-gradient(135deg, #F5F5DC 0%, #FFFACD 100%);
+    color: var(--text-color);
+    border: 2px solid #DDD;
+}
+
+.wine-image.sparkling {
+    background: linear-gradient(135deg, #FFD700 0%, #FFF8DC 100%);
+    color: var(--text-color);
+    border: 2px solid #DDD;
+}
+
+.wine-image.rose {
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+}
+
+.wine-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
+}
+
+.wine-label-text {
+    position: relative;
+    z-index: 1;
+    font-size: var(--font-size-sm);
+    line-height: 1.2;
+}
+
+.wine-detail-info {
+    flex: 1;
+}
+
+.wine-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.wine-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.wine-detail-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.wine-detail-value {
+    color: var(--text-color);
+    font-weight: var(--font-weight-medium);
+}
+
+.wine-detail-description {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-lg);
+}
+
+.wine-detail-description h5 {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--text-color);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+}
+
+.wine-detail-description p {
+    color: var(--text-color-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.wine-detail-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    background: var(--background-light);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+/* 在庫ステータス表示 */
+.stock-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.stock-status-badge.good {
+    background: #d4edda;
+    color: #155724;
+}
+
+.stock-status-badge.low {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.stock-status-badge.critical {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.stock-status-badge.out {
+    background: #f5c6cb;
+    color: #721c24;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .wine-detail-modal-content {
+        width: 95%;
+        margin: var(--spacing-md);
+    }
+    
+    .wine-detail-main {
+        flex-direction: column;
+    }
+    
+    .wine-image {
+        width: 100px;
+        height: 200px;
+        align-self: center;
+    }
+    
+    .wine-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wine-detail-footer {
+        flex-direction: column;
+    }
+}

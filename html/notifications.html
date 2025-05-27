@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/tables.css">
+    <script defer src="../js/main.js"></script>
+    <script defer src="../js/common_parts.js"></script>
+    <script defer src="../js/ai_simulator.js"></script>
+    <script defer src="../js/utils.js"></script>
+    <script defer src="../js/components/notifications.js"></script>
+    <link rel="stylesheet" href="../css/components/notifications.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>お知らせ</h1>
+            </div>
+            
+            <div class="ai-message-container">
+                <div id="ai-message-area" class="ai-message">
+                    <!-- AIメッセージがここに表示されます -->
+                    <img src="../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                    <span class="ai-text">最新のお知らせをご確認ください。重要なシステム更新やワイン情報、キャンペーンなど、お役立ち情報をまとめています。何かご質問があれば、お気軽にお尋ねくださいね。</span>
+                </div>
+            </div>
+            
+            <div class="notifications-container">
+                <div class="notifications-filters">
+                    <button class="notification-filter active" data-filter="all">すべて</button>
+                    <button class="notification-filter" data-filter="system">システム</button>
+                    <button class="notification-filter" data-filter="campaign">キャンペーン</button>
+                    <button class="notification-filter" data-filter="wine-info">ワイン情報</button>
+                    <button class="notification-filter" data-filter="event">イベント</button>
+                </div>
+                
+                <div class="notifications-actions">
+                    <button id="mark-all-read" class="btn btn-sm btn-outline-primary">すべて既読にする</button>
+                </div>
+                
+                <div class="notifications-list">
+                    <!-- システム通知 -->
+                    <div class="notification-item unread" data-category="system">
+                        <div class="notification-icon">🔔</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category system">システム</span>
+                                <span class="notification-time">2025/05/22 10:30</span>
+                            </div>
+                            <div class="notification-title">システムメンテナンスのお知らせ</div>
+                            <div class="notification-text">5月25日（日）午前2時から5時まで、システムメンテナンスを実施いたします。メンテナンス中はサービスをご利用いただけません。ご了承ください。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- キャンペーン通知 -->
+                    <div class="notification-item unread" data-category="campaign">
+                        <div class="notification-icon">🎉</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category campaign">キャンペーン</span>
+                                <span class="notification-time">2025/05/21 15:45</span>
+                            </div>
+                            <div class="notification-title">夏のワイン特別キャンペーン開始</div>
+                            <div class="notification-text">6月1日から7月31日まで、夏にぴったりの白ワインとロゼワインが10%オフでご購入いただけます。この機会にぜひご利用ください。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- ワイン情報通知 -->
+                    <div class="notification-item" data-category="wine-info">
+                        <div class="notification-icon">🍷</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category wine-info">ワイン情報</span>
+                                <span class="notification-time">2025/05/20 09:15</span>
+                            </div>
+                            <div class="notification-title">新ヴィンテージワインが入荷しました</div>
+                            <div class="notification-text">2022年ヴィンテージの新しいワインが入荷しました。特にボルドー地方の赤ワインは高評価を得ており、おすすめです。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- イベント通知 -->
+                    <div class="notification-item" data-category="event">
+                        <div class="notification-icon">📅</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category event">イベント</span>
+                                <span class="notification-time">2025/05/18 13:20</span>
+                            </div>
+                            <div class="notification-title">オンラインワイン試飲会のご案内</div>
+                            <div class="notification-text">6月5日（木）20時より、オンラインでのワイン試飲会を開催します。プロのソムリエが厳選したワインについて解説します。参加をご希望の方は、こちらからお申し込みください。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- システム通知 -->
+                    <div class="notification-item" data-category="system">
+                        <div class="notification-icon">🔔</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category system">システム</span>
+                                <span class="notification-time">2025/05/15 11:00</span>
+                            </div>
+                            <div class="notification-title">新機能のお知らせ</div>
+                            <div class="notification-text">ワイン管理機能がアップデートされました。在庫の一括登録や複数条件での検索が可能になりました。詳しくはヘルプページをご確認ください。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- ワイン情報通知 -->
+                    <div class="notification-item" data-category="wine-info">
+                        <div class="notification-icon">🍷</div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-category wine-info">ワイン情報</span>
+                                <span class="notification-time">2025/05/12 16:30</span>
+                            </div>
+                            <div class="notification-title">おすすめワインリストの更新</div>
+                            <div class="notification-text">季節に合わせたおすすめワインリストを更新しました。初夏に楽しめる軽やかな赤ワインや爽やかな白ワインをピックアップしています。</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="notifications-pagination">
+                    <button class="btn btn-sm btn-light disabled">&laquo; 前へ</button>
+                    <div class="page-numbers">
+                        <button class="btn btn-sm btn-primary">1</button>
+                        <button class="btn btn-sm btn-light">2</button>
+                        <button class="btn btn-sm btn-light">3</button>
+                    </div>
+                    <button class="btn btn-sm btn-light">次へ &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // カテゴリフィルター
+            const filterButtons = document.querySelectorAll('.notification-filter');
+            const notificationItems = document.querySelectorAll('.notification-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // アクティブクラスの切り替え
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // 通知アイテムのフィルタリング
+                    notificationItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // すべて既読にするボタン
+            const markAllReadBtn = document.getElementById('mark-all-read');
+            markAllReadBtn.addEventListener('click', function() {
+                const unreadItems = document.querySelectorAll('.notification-item.unread');
+                unreadItems.forEach(item => {
+                    item.classList.remove('unread');
+                });
+                
+                // バッジカウントを0にする（実際のアプリでは必要に応じて）
+                // updateBadgeCount(0);
+                
+                alert('すべてのお知らせを既読にしました');
+            });
+            
+            // 通知アイテムのクリックイベント
+            notificationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 未読状態を解除
+                    this.classList.remove('unread');
+                    
+                    // 実際のアプリでは、ここで通知の詳細を表示したり、
+                    // サーバーに既読状態を送信したりする処理を追加
+                    
+                    // モックアップの場合はアラートで代用
+                    const title = this.querySelector('.notification-title').textContent;
+                    alert(`「${title}」を既読にしました`);
+                });
+            });
+            
+            // ページネーションボタン
+            const paginationButtons = document.querySelectorAll('.notifications-pagination .btn:not(.disabled)');
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 実際のアプリではページ切り替え処理を実装
+                    // モックアップでは何もしない
+                    if (!this.classList.contains('btn-primary')) {
+                        alert('ページ切り替え機能はモックアップでは動作しません');
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        /* お知らせページ専用のスタイル */
+        .notifications-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-xl);
+            overflow: hidden;
+        }
+        
+        .notifications-filters {
+            display: flex;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--medium-gray);
+            overflow-x: auto;
+            gap: var(--spacing-sm);
+        }
+        
+        .notification-filter {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: var(--light-gray);
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+        }
+        
+        .notification-filter:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+        }
+        
+        .notification-filter.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .notifications-actions {
+            padding: 0 var(--spacing-md) var(--spacing-md);
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .notifications-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            display: flex;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--light-gray);
+            transition: background-color var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .notification-item.unread {
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+        }
+        
+        .notification-item.unread:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+        }
+        
+        .notification-icon {
+            margin-right: var(--spacing-sm);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: var(--font-size-lg);
+        }
+        
+        .notification-item.unread .notification-icon {
+            background-color: rgba(var(--primary-color-rgb), 0.2);
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+        
+        .notification-time {
+            font-size: var(--font-size-xs);
+            color: #6c757d;
+        }
+        
+        .notification-text {
+            font-size: var(--font-size-sm);
+            color: var(--dark-gray);
+        }
+        
+        .notification-category {
+            display: inline-block;
+            font-size: var(--font-size-xs);
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: var(--light-gray);
+        }
+        
+        .notification-category.system {
+            background-color: #e2f0fd;
+            color: #0d6efd;
+        }
+        
+        .notification-category.campaign {
+            background-color: #fff3cd;
+            color: #ffc107;
+        }
+        
+        .notification-category.wine-info {
+            background-color: #d1e7dd;
+            color: #198754;
+        }
+        
+        .notification-category.event {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        
+        .notifications-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .page-numbers {
+            display: flex;
+            gap: 5px;
+            margin: 0 var(--spacing-sm);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .notification-icon {
+                width: 32px;
+                height: 32px;
+                font-size: var(--font-size-md);
+            }
+            
+            .notification-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .notification-time {
+                margin-top: 2px;
+            }
+        }
+    </style>
+</body>
+</html>

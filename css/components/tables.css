@@ -1,0 +1,279 @@
+/* テーブルスタイル */
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: var(--white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+th, td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+th {
+    background-color: var(--light-gray);
+    font-weight: bold;
+    color: var(--dark-gray);
+    white-space: nowrap;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: rgba(245, 245, 245, 0.5);
+}
+
+/* テーブルバリエーション */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-bordered {
+    border: 1px solid var(--medium-gray);
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid var(--medium-gray);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-compact th,
+.table-compact td {
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+/* セルの状態 */
+.cell-success {
+    color: #28a745;
+}
+
+.cell-warning {
+    color: #ffc107;
+}
+
+.cell-danger {
+    color: #dc3545;
+}
+
+.cell-info {
+    color: #17a2b8;
+}
+
+/* テーブルアクション */
+.table-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/* レスポンシブテーブル */
+@media (max-width: 768px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table-responsive > table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+/* ワインテーブル専用スタイル */
+.wine-table {
+    margin-bottom: var(--spacing-lg);
+}
+
+.wine-table th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.wine-name-cell {
+    display: flex;
+    align-items: center;
+}
+
+.wine-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: var(--spacing-xs);
+}
+
+.wine-color.red {
+    background-color: #8B0000;
+}
+
+.wine-color.white {
+    background-color: #F0E68C;
+}
+
+.wine-color.rose {
+    background-color: #FFB6C1;
+}
+
+.wine-color.sparkling {
+    background-color: #F5F5DC;
+    border: 1px solid #D4AF37;
+}
+
+.wine-color.dessert {
+    background-color: #DAA520;
+}
+
+.stock-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+}
+
+.stock-status.good {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.stock-status.low {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.stock-status.critical {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.stock-status.none {
+    background-color: #f5f5f5;
+    color: #6c757d;
+}
+
+/* テーブルページネーション */
+.table-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-md);
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+    margin: 0 var(--spacing-sm);
+}
+
+/* データなし表示 */
+.no-data-message {
+    text-align: center;
+    padding: var(--spacing-lg);
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* テーブルソート */
+.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+.sortable::after {
+    content: '⇅';
+    position: absolute;
+    right: var(--spacing-xs);
+    color: #6c757d;
+    opacity: 0.5;
+}
+
+.sortable.asc::after {
+    content: '▲';
+    opacity: 1;
+}
+
+.sortable.desc::after {
+    content: '▼';
+    opacity: 1;
+}
+
+/* テーブルフィルター */
+.table-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+/* テーブル内のバッジ */
+.table-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    background-color: #e9ecef;
+    color: #212529;
+    margin-right: 4px;
+}
+
+.table-badge-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.table-badge-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+/* テーブル内のチェックボックス */
+.checkbox-cell {
+    width: 40px;
+    text-align: center;
+}
+
+.checkbox-header {
+    width: 40px;
+    text-align: center;
+}
+
+/* テーブル展開行 */
+.expandable-row {
+    cursor: pointer;
+}
+
+.expandable-row.expanded {
+    background-color: #f8f9fa;
+}
+
+.expandable-content {
+    display: none;
+    background-color: #f8f9fa;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.expandable-row.expanded + .expandable-content {
+    display: table-row;
+}

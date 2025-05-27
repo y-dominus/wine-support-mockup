@@ -1,0 +1,250 @@
+/* ==============================================
+   ダッシュボード アラート v2 - シンプル&クリーン
+   ============================================== */
+
+/* 1. アラートセクション全体 - 競合スタイルをオーバーライド */
+.sommia-alert-section {
+    margin: 20px 0 !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+/* 2. メインアラートコンテナ - 薄い紫背景 */
+.sommia-alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px 20px 20px;
+    background: linear-gradient(135deg, 
+        rgba(136, 69, 145, 0.05) 0%, 
+        rgba(185, 90, 157, 0.08) 100%);
+    border: 1px solid rgba(136, 69, 145, 0.15);
+    border-left: 4px solid #884591;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(136, 69, 145, 0.1);
+    position: relative;
+    min-height: 64px;
+}
+
+/* 3. アバター部分 */
+.sommia-avatar-container {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.sommia-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #884591;
+    object-fit: cover;
+}
+
+/* アバター名を表示 */
+.sommia-name {
+    color: #884591;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1;
+}
+
+/* 4. メッセージ部分 */
+.sommia-message-container {
+    flex: 1;
+    min-width: 0; /* flexboxのテキスト省略対策 */
+    margin-right: 140px; /* ボタンエリア分のマージンを確保 */
+}
+
+.sommia-message-header {
+    margin-bottom: 4px;
+}
+
+.sommia-message-type {
+    display: inline-block;
+    background: #884591;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sommia-message-text {
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.sommia-message-text strong {
+    color: #884591;
+    font-weight: 700;
+}
+
+/* 5. アクションボタン部分 - 右側に配置 */
+.sommia-alert-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-self: flex-start;
+    margin-top: 24px;
+}
+
+.sommia-alert-actions .btn {
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background-color: white !important;
+}
+
+.sommia-alert-actions .btn-primary {
+    border-color: #884591 !important;
+    color: white !important;
+    background-color: #884591 !important;
+}
+
+.sommia-alert-actions .btn-primary:hover {
+    background-color: #663366 !important;
+    border-color: #663366 !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(136, 69, 145, 0.2);
+}
+
+.sommia-alert-actions .btn-outline-secondary {
+    border-color: #B95A9D !important;
+    color: #B95A9D !important;
+    background-color: white !important;
+}
+
+.sommia-alert-actions .btn-outline-secondary:hover {
+    background-color: #B95A9D !important;
+    border-color: #B95A9D !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(185, 90, 157, 0.2);
+}
+
+/* 6. 閉じるボタン */
+.alert-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.alert-close-btn:hover {
+    background: rgba(107, 114, 128, 0.2);
+    color: #374151;
+}
+
+/* 7. レスポンシブ調整 */
+@media (max-width: 768px) {
+    .sommia-alert-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 16px 60px 16px; /* 下部にボタンスペース確保 */
+        text-align: center;
+    }
+    
+    .sommia-message-container {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .sommia-alert-actions {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 16px;
+        align-self: center;
+    }
+    
+    .alert-close-btn {
+        top: 8px;
+        right: 8px;
+    }
+}
+
+/* 8. 重要度バリエーション */
+.sommia-alert-content.severity-high {
+    border-left-color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.15);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
+}
+
+.sommia-alert-content.severity-high .sommia-message-type {
+    background: #f59e0b;
+}
+
+.sommia-alert-content.severity-medium {
+    border-left-color: #884591;
+    border-color: rgba(136, 69, 145, 0.15);
+    box-shadow: 0 2px 8px rgba(136, 69, 145, 0.08);
+}
+
+.sommia-alert-content.severity-medium .sommia-message-type {
+    background: #884591;
+}
+
+/* 9. アニメーション無効化対応 */
+@media (prefers-reduced-motion: reduce) {
+    .sommia-alert-content,
+    .sommia-alert-actions .btn,
+    .alert-close-btn {
+        transition: none;
+    }
+}
+
+/* 10. ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    .sommia-alert-content {
+        background: linear-gradient(135deg, 
+            rgba(136, 69, 145, 0.15) 0%, 
+            rgba(185, 90, 157, 0.18) 100%);
+        border-color: rgba(136, 69, 145, 0.3);
+    }
+    
+    .sommia-message-text {
+        color: #d1d5db;
+    }
+    
+    .alert-close-btn {
+        background: rgba(136, 69, 145, 0.2);
+        color: #B95A9D;
+    }
+    
+    .alert-close-btn:hover {
+        background: rgba(136, 69, 145, 0.3);
+        color: #d1d5db;
+    }
+}

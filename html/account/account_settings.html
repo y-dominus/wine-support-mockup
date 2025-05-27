@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント設定 - WineSupport</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/components/modals.css">
+    <link rel="stylesheet" href="../../css/pages/mypage.css">
+    <link rel="stylesheet" href="../../css/pages/account_settings.css">
+</head>
+<body>
+    <!-- ヘッダー読み込み -->
+    <div id="header-placeholder"></div>
+    
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="container">
+            <!-- AIメッセージエリア -->
+            <div id="ai-message-area"></div>
+            
+            <div class="settings-container">
+                <!-- サイドバーナビゲーション -->
+                <aside class="settings-sidebar">
+                    <nav>
+                        <ul class="settings-nav">
+                            <li class="settings-nav-item active">
+                                <a href="#profile" class="settings-nav-link">プロフィール設定</a>
+                            </li>
+                            <li class="settings-nav-item">
+                                <a href="#plan" class="settings-nav-link">プラン・課金管理</a>
+                            </li>
+                            <li class="settings-nav-item">
+                                <a href="#notification" class="settings-nav-link">通知設定</a>
+                            </li>
+                            <li class="settings-nav-item">
+                                <a href="#menu-info" class="settings-nav-link">メニュー情報更新</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+                
+                <!-- 設定コンテンツエリア -->
+                <div class="settings-content">
+                    <!-- プロフィール設定セクション -->
+                    <section id="profile" class="settings-section active">
+                        <h2 class="section-title">プロフィール設定</h2>
+                        
+                        <div class="card">
+                            <form id="profile-form">
+                                <div class="form-group">
+                                    <label for="store-name" class="form-label">店舗名 <span class="required">*</span></label>
+                                    <input type="text" id="store-name" class="form-control" value="Osteria da Marco" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="owner-name" class="form-label">代表者名</label>
+                                    <input type="text" id="owner-name" class="form-control" value="佐藤 太郎">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">電話番号</label>
+                                    <input type="tel" id="phone" class="form-control" value="03-1234-5678">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label">メールアドレス <span class="required">*</span></label>
+                                    <input type="email" id="email" class="form-control" value="info@osteria-da-marco.jp" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="address" class="form-label">住所</label>
+                                    <input type="text" id="address" class="form-control" value="東京都渋谷区恵比寿1-2-3">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="business-hours" class="form-label">営業時間</label>
+                                    <input type="text" id="business-hours" class="form-control" value="17:30-23:00">
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">設定を保存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    <!-- プラン・課金管理セクション -->
+                    <section id="plan" class="settings-section">
+                        <h2 class="section-title">プラン・課金管理</h2>
+                        
+                        <!-- 現在のプラン -->
+                        <div class="current-plan card">
+                            <h3 class="form-section-title">現在のプラン</h3>
+                            
+                            <div class="plan-info">
+                                <div class="plan-name">スタンダードプラン</div>
+                                <div class="plan-price">¥29,800 / 月</div>
+                                <div class="plan-period">次回請求日: 2024年6月15日</div>
+                            </div>
+                            
+                            <div class="plan-features">
+                                <h4>プラン内容</h4>
+                                <ul>
+                                    <li>月間50本までのワイン提案</li>
+                                    <li>在庫管理機能</li>
+                                    <li>売上分析レポート</li>
+                                    <li>メニュー生成機能</li>
+                                    <li>メールサポート</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-light">プラン変更</button>
+                                <button class="btn btn-danger">解約手続き</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 支払い方法 -->
+                        <div class="card">
+                            <h3 class="form-section-title">支払い方法</h3>
+                            
+                            <div class="payment-card">
+                                <div class="card-brand">Visa</div>
+                                <div class="card-number">**** **** **** 1234</div>
+                                <div>有効期限: 12/28</div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-light">支払い方法を変更</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 請求履歴 -->
+                        <div class="card">
+                            <h3 class="form-section-title">請求履歴</h3>
+                            
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>請求日</th>
+                                            <th>プラン</th>
+                                            <th>金額</th>
+                                            <th>ステータス</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2024年5月15日</td>
+                                            <td>スタンダードプラン</td>
+                                            <td>¥29,800</td>
+                                            <td><span class="badge badge-success">支払い完了</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-light">領収書</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2024年4月15日</td>
+                                            <td>スタンダードプラン</td>
+                                            <td>¥29,800</td>
+                                            <td><span class="badge badge-success">支払い完了</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-light">領収書</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2024年3月15日</td>
+                                            <td>スタンダードプラン</td>
+                                            <td>¥29,800</td>
+                                            <td><span class="badge badge-success">支払い完了</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-light">領収書</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- 通知設定セクション -->
+                    <section id="notification" class="settings-section">
+                        <h2 class="section-title">通知設定</h2>
+                        
+                        <div class="card">
+                            <form id="notification-form">
+                                <div class="form-group">
+                                    <h3 class="form-section-title">メール通知</h3>
+                                    <div class="form-checkbox-group">
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" checked>
+                                            <span class="checkbox-label">在庫不足アラート</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" checked>
+                                            <span class="checkbox-label">新しいワイン提案</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox">
+                                            <span class="checkbox-label">売上レポート（月次）</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" checked>
+                                            <span class="checkbox-label">システムメンテナンス情報</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox">
+                                            <span class="checkbox-label">マーケティング情報</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <h3 class="form-section-title">通知タイミング</h3>
+                                    <div class="form-radio-group">
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="timing" value="realtime" checked>
+                                            <span class="radio-label">リアルタイム</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="timing" value="daily">
+                                            <span class="radio-label">1日1回まとめて</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="timing" value="weekly">
+                                            <span class="radio-label">週1回まとめて</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">設定を保存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    <!-- メニュー情報更新セクション -->
+                    <section id="menu-info" class="settings-section">
+                        <h2 class="section-title">メニュー情報更新</h2>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">店舗メニュー情報</h3>
+                                <p class="card-subtitle">最新のメニュー情報を入力することで、より精度の高いワイン提案を受けることができます</p>
+                            </div>
+                            
+                            <form id="menu-form">
+                                <div class="form-group">
+                                    <label class="form-label">料理ジャンル <span class="required">*</span></label>
+                                    <div class="form-checkbox-group">
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="italian" checked>
+                                            <span class="checkbox-label">イタリアン</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="french">
+                                            <span class="checkbox-label">フレンチ</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="japanese">
+                                            <span class="checkbox-label">和食</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="spanish">
+                                            <span class="checkbox-label">スペイン料理</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="american">
+                                            <span class="checkbox-label">アメリカン</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-checkbox"></div>
+                                            <input type="checkbox" value="asian">
+                                            <span class="checkbox-label">アジア料理</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="signature-dishes" class="form-label">シグネチャー料理</label>
+                                    <textarea id="signature-dishes" class="form-control" rows="3" placeholder="代表的な料理や人気メニューを入力してください">手作りパスタ、薪窯ピザ、リゾット、カルパッチョ、ティラミス</textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">価格帯</label>
+                                    <div class="form-radio-group">
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="price-range" value="casual">
+                                            <span class="radio-label">カジュアル（~3,000円）</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="price-range" value="mid-range" checked>
+                                            <span class="radio-label">ミドル（3,000~8,000円）</span>
+                                        </label>
+                                        <label>
+                                            <div class="custom-radio"></div>
+                                            <input type="radio" name="price-range" value="fine-dining">
+                                            <span class="radio-label">ファインダイニング（8,000円~）</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="target-customers" class="form-label">ターゲット客層</label>
+                                    <input type="text" id="target-customers" class="form-control" value="30-50代のカップル、記念日利用">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="atmosphere" class="form-label">店舗の雰囲気・コンセプト</label>
+                                    <textarea id="atmosphere" class="form-control" rows="2" placeholder="店舗の雰囲気やコンセプトを入力してください">本格的なイタリアンを気軽に楽しめる、アットホームな雰囲気のオステリア</textarea>
+                                </div>
+                                
+                                <div class="menu-update-actions">
+                                    <div class="update-info">
+                                        <span class="last-update">最終更新: 2024年5月20日</span>
+                                        <span>更新回数: 今月3回</span>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">メニュー情報を保存</button>
+                                        <button type="button" class="btn btn-secondary" id="generate-wine-proposal">新しいワイン提案を生成</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- ワイン提案生成モーダル -->
+    <div id="wine-proposal-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container modal-lg">
+            <div class="modal-header">
+                <h3>新しいワイン提案</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- ローディング状態 -->
+                <div id="proposal-loading" class="proposal-loading">
+                    <div class="ai-thinking">
+                        <img src="../../sommia.png" alt="Sommia" class="ai-avatar">
+                        <div class="thinking-animation">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                        </div>
+                    </div>
+                    <p class="loading-text">最新のメニュー情報を基に、最適なワイン構成を提案しています...</p>
+                </div>
+                
+                <!-- 提案結果 -->
+                <div id="proposal-result" style="display: none;">
+                    <p>更新されたメニュー情報に基づいて、以下のワイン構成プランを提案いたします：</p>
+                    
+                    <div class="wine-proposal-cards">
+                        <!-- ワイン提案1 -->
+                        <div class="wine-proposal-card" id="modal-proposal-1">
+                            <div class="proposal-header">
+                                <h4 class="proposal-title">リニューアルプラン A</h4>
+                                <p class="proposal-subtitle">バランス重視の定番構成</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">キャンティ・クラシコ</div>
+                                        <div class="wine-description">イタリア産 | ミディアムボディ | 赤</div>
+                                        <div class="wine-pairing">→ パスタ・肉料理との相性◎</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ピノ・グリージョ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | 白</div>
+                                        <div class="wine-pairing">→ 魚介料理・前菜に最適</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">プロセッコ・ディ・ヴァルドッビアーデネ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                        <div class="wine-pairing">→ 食前・デザートに</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>想定仕入れ価格：</span>
+                                <span class="price-amount">¥45,000</span>
+                            </div>
+                        </div>
+                        
+                        <!-- ワイン提案2 -->
+                        <div class="wine-proposal-card" id="modal-proposal-2">
+                            <div class="proposal-header">
+                                <h4 class="proposal-title">リニューアルプラン B</h4>
+                                <p class="proposal-subtitle">コストパフォーマンス重視</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">モンテプルチアーノ・ダブルッツォ</div>
+                                        <div class="wine-description">イタリア産 | ミディアムボディ | 赤</div>
+                                        <div class="wine-pairing">→ ピザ・肉料理に合う</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">トレッビアーノ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | 白</div>
+                                        <div class="wine-pairing">→ 軽い前菜・サラダと</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">プロセッコ・ヴァルドッビアーデネ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                        <div class="wine-pairing">→ アンティパストとの組み合わせ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>想定仕入れ価格：</span>
+                                <span class="price-amount">¥65,000</span>
+                            </div>
+                        </div>
+                        
+                        <!-- ワイン提案3 -->
+                        <div class="wine-proposal-card" id="modal-proposal-3">
+                            <div class="proposal-header">
+                                <h4 class="proposal-title">リニューアルプラン C</h4>
+                                <p class="proposal-subtitle">プレミアム・マリアージュ重視</p>
+                            </div>
+                            
+                            <div class="wine-list">
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">バルバレスコ DOCG</div>
+                                        <div class="wine-description">イタリア産 | フルボディ | 赤</div>
+                                        <div class="wine-pairing">→ 高級肉料理のマリアージュ</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍷</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">ソアーヴェ・クラッシコ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | 白</div>
+                                        <div class="wine-pairing">→ 繊細な魚介料理に</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-item">
+                                    <div class="wine-icon">🍾</div>
+                                    <div class="wine-details">
+                                        <div class="wine-name">トレント DOC スプマンテ</div>
+                                        <div class="wine-description">イタリア産 | 辛口 | スパークリング</div>
+                                        <div class="wine-pairing">→ 特別な日の乾杯に</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="proposal-price">
+                                <span>想定仕入れ価格：</span>
+                                <span class="price-amount">¥135,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-prompt-box mt-4">
+                        <div class="ai-prompt-title">
+                            <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                            Sommiaからのアドバイス
+                        </div>
+                        <div class="ai-prompt-content">
+                            更新されたメニュー情報に基づいて、イタリアンの特色を活かしたワイン構成を提案しました。どのプランもお店のシグネチャー料理との相性を重視しています。気に入ったプランがあれば、マイセラーに追加して発注することができます！
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" id="close-proposal-modal">閉じる</button>
+                <button class="btn btn-primary" id="apply-proposal" style="display: none;">選択したプランを適用</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- フッター読み込み -->
+    <div id="footer-placeholder"></div>
+    
+    <!-- JavaScript -->
+    <script src="../../js/common_parts.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/ai_simulator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - initializing settings page');
+            
+            // 設定ナビゲーションの切り替え
+            const navLinks = document.querySelectorAll('.settings-nav-link');
+            const sections = document.querySelectorAll('.settings-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    // アクティブなナビアイテムを更新
+                    document.querySelector('.settings-nav-item.active').classList.remove('active');
+                    this.closest('.settings-nav-item').classList.add('active');
+                    
+                    // セクションの表示を切り替え
+                    const targetId = this.getAttribute('href');
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.querySelector(targetId).classList.add('active');
+                });
+            });
+            
+            // ワイン提案生成機能の初期化
+            initializeWineProposalGenerator();
+            
+            // フォーム送信イベント
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    if (this.id === 'menu-form') {
+                        alert('メニュー情報を保存しました。「新しいワイン提案を生成」ボタンから最新のメニューに基づいた提案を受けることができます。');
+                        // 最終更新日を更新
+                        const lastUpdateSpan = document.querySelector('.last-update');
+                        if (lastUpdateSpan) {
+                            const today = new Date();
+                            lastUpdateSpan.textContent = `最終更新: ${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+                        }
+                    } else {
+                        alert('設定を保存しました（モックアップのため実際には反映されません）');
+                    }
+                });
+            });
+            
+            // AIメッセージの表示
+            try {
+                if (typeof displayAiMessage === 'function') {
+                    displayAiMessage('account', 'settings', null, '#ai-message-area');
+                }
+            } catch (e) {
+                console.error('AI message display error:', e);
+            }
+        });
+        
+        // ワイン提案生成機能の初期化
+        function initializeWineProposalGenerator() {
+            const generateProposalBtn = document.getElementById('generate-wine-proposal');
+            const proposalModal = document.getElementById('wine-proposal-modal');
+            const proposalLoading = document.getElementById('proposal-loading');
+            const proposalResult = document.getElementById('proposal-result');
+            const closeModalBtn = document.getElementById('close-proposal-modal');
+            const modalClose = document.querySelector('#wine-proposal-modal .modal-close');
+            const applyProposalBtn = document.getElementById('apply-proposal');
+            
+            console.log('Initializing wine proposal generator, elements found:', {
+                generateProposalBtn: !!generateProposalBtn,
+                proposalModal: !!proposalModal,
+                proposalLoading: !!proposalLoading,
+                proposalResult: !!proposalResult
+            });
+            
+            // 提案生成ボタンのクリックイベント
+            if (generateProposalBtn) {
+                generateProposalBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    console.log('Generate wine proposal button clicked');
+                    
+                    if (proposalModal) {
+                        proposalModal.style.display = 'block';
+                        if (proposalLoading) proposalLoading.style.display = 'block';
+                        if (proposalResult) proposalResult.style.display = 'none';
+                        
+                        // 3秒後に結果を表示（AI処理をシミュレート）
+                        setTimeout(() => {
+                            if (proposalLoading) proposalLoading.style.display = 'none';
+                            if (proposalResult) proposalResult.style.display = 'block';
+                        }, 3000);
+                    }
+                });
+            } else {
+                console.error('Generate wine proposal button not found');
+            }
+            
+            // モーダルを閉じる関数
+            function closeModal() {
+                if (proposalModal) {
+                    proposalModal.style.display = 'none';
+                    if (proposalLoading) proposalLoading.style.display = 'block';
+                    if (proposalResult) proposalResult.style.display = 'none';
+                    // 選択状態をリセット
+                    document.querySelectorAll('.wine-proposal-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    if (applyProposalBtn) applyProposalBtn.style.display = 'none';
+                }
+            }
+            
+            // モーダルを閉じるイベント
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+            
+            // モーダル外クリックで閉じる
+            if (proposalModal) {
+                proposalModal.addEventListener('click', function(event) {
+                    if (event.target === proposalModal) {
+                        closeModal();
+                    }
+                });
+            }
+            
+            // ワイン提案カードの選択
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.wine-proposal-card')) {
+                    const card = event.target.closest('.wine-proposal-card');
+                    
+                    // 他のカードの選択を解除
+                    document.querySelectorAll('.wine-proposal-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    
+                    // 選択されたカードをハイライト
+                    card.classList.add('selected');
+                    
+                    // 適用ボタンを表示
+                    if (applyProposalBtn) applyProposalBtn.style.display = 'block';
+                }
+            });
+            
+            // プラン適用ボタン
+            if (applyProposalBtn) {
+                applyProposalBtn.addEventListener('click', function() {
+                    const selectedCard = document.querySelector('.wine-proposal-card.selected');
+                    if (selectedCard) {
+                        const planTitle = selectedCard.querySelector('.proposal-title').textContent;
+                        alert(`${planTitle}を適用しました。マイセラーページで新しいワイン構成を確認し、発注を行ってください。`);
+                        closeModal();
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

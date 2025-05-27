@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/forms.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="login-container">
+                <div class="ai-message-container">
+                    <div id="ai-message-area" class="ai-message">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-small">
+                        <span class="ai-text">お帰りなさい！今日はどんなワインの魔法をかけましょうか？</span>
+                    </div>
+                </div>
+                
+                <div class="login-form-container">
+                    <div class="login-form-header">
+                        <h1>ログイン</h1>
+                        <p>ワイサポにログインして、ワイン管理を始めましょう</p>
+                    </div>
+                    
+                    <form id="login-form" action="../dashboard.html" class="login-form">
+                        <div class="form-group">
+                            <label for="login-email" class="form-label">メールアドレス</label>
+                            <input type="email" id="login-email" name="email" class="form-input" required placeholder="your-email@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password" class="form-label">パスワード</label>
+                            <input type="password" id="login-password" name="password" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-checkbox">
+                                <input type="checkbox" name="remember-me">
+                                <span>ログイン状態を維持する</span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-block">ログイン</button>
+                        </div>
+                    </form>
+                    
+                    <div class="login-links">
+                        <a href="#" class="login-link">パスワードをお忘れですか？</a>
+                        <div class="login-separator">または</div>
+                        <p class="login-signup-text">アカウントをお持ちでない方は</p>
+                        <a href="../onboarding/0_welcome_ai.html" class="btn btn-outline-primary btn-block">新規登録</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // ページ読み込み時にAIのメッセージを表示
+        window.addEventListener('DOMContentLoaded', function() {
+            try {
+                if (typeof displayAiMessage === 'function') {
+                    // アカウント用のメッセージを追加（ai_simulator.jsに実際のメッセージを追加する必要があります）
+                    displayAiMessage('account', 'login', null, '#ai-message-area');
+                }
+            } catch (e) {
+                console.error('AI message display error:', e);
+            }
+            
+            // ログインフォームの送信処理
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // 実際のアプリケーションではここで認証処理を行います
+                // このモックアップでは、直接ダッシュボードにリダイレクトします
+                window.location.href = '../dashboard.html';
+            });
+        });
+    </script>
+    
+    <style>
+        /* ログイン画面用のスタイル */
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .login-form-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-xl);
+        }
+        
+        .login-form-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .login-form-header h1 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .login-form {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-block {
+            width: 100%;
+            margin-top: var(--spacing-md);
+        }
+        
+        .login-links {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+        
+        .login-link {
+            display: block;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .login-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--dark-gray);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .login-separator::before,
+        .login-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .login-separator::before {
+            margin-right: var(--spacing-md);
+        }
+        
+        .login-separator::after {
+            margin-left: var(--spacing-md);
+        }
+        
+        .login-signup-text {
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-gray);
+        }
+    </style>
+</body>
+</html>

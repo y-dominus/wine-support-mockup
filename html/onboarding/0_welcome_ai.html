@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワイサポへようこそ | Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/onboarding_flow.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">メニュー情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">5</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">6</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-welcome-container">
+                        <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-large">
+                        <div class="ai-welcome-message">
+                            <h1>ワイサポへようこそ！</h1>
+                            <div id="ai-message-area" class="ai-message-large">
+                                <!-- AIメッセージがここに表示されます -->
+                                <span class="ai-text">こんにちは！ワイン畑の妖精、ソムリエAIのSommiaです。ゲストさん。ワイサポへようこそ！あなたのレストランにぴったりのワイン選び、喜んでお手伝いします！まずはお店のことを教えていただけますか？</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-features">
+                        <h2>ワイサポでできること</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🍷</div>
+                                <h3>最適なワイン選定</h3>
+                                <p>あなたのお店の料理メニューに合わせた、最適なワイン選びをAIがサポート。お客様満足度アップに貢献します。</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📊</div>
+                                <h3>在庫管理の効率化</h3>
+                                <p>ワインの在庫状況をリアルタイムで把握。過不足のない在庫管理で、経営効率アップをサポートします。</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📱</div>
+                                <h3>簡単操作</h3>
+                                <p>専門知識がなくても、AIアシスタント「Sommia」が丁寧にガイド。誰でも簡単に使いこなせます。</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📈</div>
+                                <h3>売上分析・提案</h3>
+                                <p>ワイン販売の傾向を分析し、売上アップにつながる提案をAIが行います。戦略的なワイン販売を実現。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="onboarding-actions">
+                        <a href="1_store_info_form.html" class="btn btn-primary btn-lg">利用開始</a>
+                        <div class="login-link-container">
+                            <p>すでにアカウントをお持ちの方は<a href="../account/login.html">こちら</a>からログイン</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+</body>
+</html>
