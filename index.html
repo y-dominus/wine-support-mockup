@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ワイサポ - ワイン畑の妖精Sommiaがサポートするワインマネジメントシステム</title>
+    <meta name="description" content="レストランのワイン選定、在庫管理、発注業務をAIがサポートします。">
+    <link rel="icon" href="./assets/images/favicon.ico">
     <style>
         /* 基本スタイル */
         * {
@@ -212,6 +214,8 @@
             margin: var(--spacing-xs);
             position: relative;
             overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .btn::before {
@@ -300,15 +304,89 @@
                 box-shadow: 0 8px 20px rgba(136, 69, 145, 0.4);
             }
         }
+
+        /* フッター情報 */
+        .footer-info {
+            margin-top: var(--spacing-2xl);
+            text-align: center;
+            color: var(--gray-600);
+            font-size: var(--font-size-sm);
+        }
+
+        .footer-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* 公開情報バナー */
+        .demo-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: var(--spacing-md);
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-size: var(--font-size-sm);
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+
+        .redirect-page {
+            padding-top: calc(var(--spacing-xl) + 60px); /* バナー分の余白 */
+        }
+
+        /* モバイル最適化 */
+        @media (max-width: 768px) {
+            .redirect-box h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                min-width: 200px;
+                padding: 14px 24px;
+            }
+            
+            .ai-message {
+                padding: var(--spacing-lg);
+            }
+            
+            .demo-banner {
+                font-size: 0.8rem;
+                padding: var(--spacing-sm);
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- デモ版バナー -->
+    <div class="demo-banner">
+        <div class="demo-banner-content">
+            <span>🚧 これはモックアップ版です - GitHub Pages で公開中</span>
+            <a href="https://github.com/your-username/wine-support-mockup" target="_blank" style="color: white; text-decoration: underline;">GitHubリポジトリ</a>
+        </div>
+    </div>
+
     <main class="redirect-page">
         <div class="container">
             <div class="ai-message-container">
                 <div id="ai-message-area" class="ai-message">
                     <div class="ai-avatar-container">
-                        <img src="sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar">
+                        <img src="./sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA1NiA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjgiIGN5PSIyOCIgcj0iMjgiIGZpbGw9IiM4ODQ1OTEiLz4KPHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSIxMiIgeT0iMTIiPgo8cGF0aCBkPSJNMTYgNEMxMC40NzcgNCA2IDguNDc3IDYgMTRTMTAuNDc3IDI0IDE2IDI0UzI2IDE5LjUyMyAyNiAxNFMyMS41MjMgNCAxNiA0WiIgZmlsbD0iI0ZGRiIvPgo8cGF0aCBkPSJNMTIgMTJIMjAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDE2IDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iOCIgeT0iMTQiPgo8cGF0aCBkPSJNMiA0QzIgMi4zNDMgNC40NzcgMSA3LjUgMVMxMyAyLjM0MyAxMyA0UzEwLjUyMyA3IDcuNSA3UzIgNS42NTcgMiA0WiIgZmlsbD0iIzMzMyIvPgo8L3N2Zz4KPC9zdmc+KTsn">
                         <span class="ai-name">Sommia</span>
                     </div>
                     <span class="ai-text">ワイサポ モックアップ版へようこそ！ワインの選定、在庫管理、販促何でもお任せください！</span>
@@ -320,9 +398,18 @@
                 <h1>ワイサポ</h1>
                 <p>レストランのワイン選定、在庫管理、発注業務をAIがサポートします。</p>
                 <div class="button-container">
-                    <a href="html/onboarding/0_welcome_ai.html" class="btn btn-primary">はじめて利用する</a>
-                    <a href="html/dashboard.html" class="btn btn-secondary">ログイン</a>
+                    <a href="./html/onboarding/0_welcome_ai.html" class="btn btn-primary">はじめて利用する</a>
+                    <a href="./html/dashboard.html" class="btn btn-secondary">ログイン</a>
                 </div>
+            </div>
+
+            <div class="footer-info">
+                <p>
+                    🍷 <strong>ワイサポ</strong> - ワイン畑の妖精 Sommia がサポートするワインマネジメントシステム<br>
+                    <a href="https://github.com/your-username/wine-support-mockup" target="_blank">GitHub</a> | 
+                    <a href="https://github.com/your-username/wine-support-mockup/issues" target="_blank">フィードバック</a> | 
+                    <a href="./README.md" target="_blank">ドキュメント</a>
+                </p>
             </div>
         </div>
     </main>
@@ -337,6 +424,105 @@
                 }, 400);
             }
         }
+
+        // GitHub Pages 用の環境検出
+        function initializeGitHubPages() {
+            // 現在のURLを確認してGitHub Pagesかどうか判定
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            
+            if (isGitHubPages) {
+                // GitHub Pages 用の設定
+                console.log('🚀 GitHub Pages で実行中');
+                
+                // デモバナーのリンクを更新
+                const demoLink = document.querySelector('.demo-banner a');
+                if (demoLink && demoLink.href.includes('your-username')) {
+                    const pathParts = window.location.pathname.split('/');
+                    const repoName = pathParts[1] || 'wine-support-mockup';
+                    const username = window.location.hostname.split('.')[0];
+                    demoLink.href = `https://github.com/${username}/${repoName}`;
+                }
+                
+                // フッターリンクも更新
+                const footerLinks = document.querySelectorAll('.footer-info a');
+                footerLinks.forEach(link => {
+                    if (link.href.includes('your-username')) {
+                        const pathParts = window.location.pathname.split('/');
+                        const repoName = pathParts[1] || 'wine-support-mockup';
+                        const username = window.location.hostname.split('.')[0];
+                        link.href = link.href.replace('your-username', username).replace('wine-support-mockup', repoName);
+                    }
+                });
+            } else {
+                // ローカル環境では特別な処理なし
+                console.log('💻 ローカル環境で実行中');
+            }
+        }
+
+        // アクセシビリティとUX改善
+        function enhanceUX() {
+            // キーボードナビゲーション
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAlert();
+                }
+            });
+
+            // パフォーマンス改善のための画像遅延読み込み
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+
+            // アニメーション設定の尊重
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (prefersReducedMotion.matches) {
+                document.documentElement.style.setProperty('--animation-duration', '0s');
+            }
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeGitHubPages();
+            enhanceUX();
+            
+            // PWA風の体験
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.log('Service Worker registration failed:', err);
+                });
+            }
+        });
+
+        // エラーハンドリング
+        window.addEventListener('error', function(event) {
+            console.error('ページエラー:', event.error);
+        });
+
+        // 分析用（必要に応じて）
+        function trackEvent(eventName, properties = {}) {
+            // GitHub Pages では分析は実装しない
+            console.log('Event:', eventName, properties);
+        }
+
+        // ボタンクリック追跡
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.btn')) {
+                trackEvent('button_click', {
+                    button_text: e.target.textContent.trim(),
+                    button_href: e.target.href
+                });
+            }
+        });
     </script>
 </body>
 </html>

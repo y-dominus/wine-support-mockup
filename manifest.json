@@ -1,0 +1,84 @@
+{
+  "name": "ワイサポ - Wine Support System",
+  "short_name": "ワイサポ",
+  "description": "ワイン畑の妖精Sommiaがサポートするワインマネジメントシステム",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF4D00",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "lang": "ja",
+  "categories": ["business", "productivity", "food"],
+  "icons": [
+    {
+      "src": "./sommia.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/images/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./assets/images/screenshot-dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "ダッシュボード画面"
+    },
+    {
+      "src": "./assets/images/screenshot-mobile.png", 
+      "sizes": "375x812",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "モバイル表示"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ダッシュボード",
+      "short_name": "ダッシュボード",
+      "description": "売上統計とKPI確認",
+      "url": "./html/dashboard.html",
+      "icons": [
+        {
+          "src": "./sommia.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "マイセラー",
+      "short_name": "在庫管理",
+      "description": "ワイン在庫の確認と管理",
+      "url": "./html/my_cellar/my_cellar.html",
+      "icons": [
+        {
+          "src": "./sommia.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "AI最適化",
+      "short_name": "最適化",
+      "description": "Sommia AIによるワイン最適化提案",
+      "url": "./html/wine_optimization.html",
+      "icons": [
+        {
+          "src": "./sommia.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

@@ -1,0 +1,55 @@
+# GitHub Pages 設定
+title: ワイサポ - Wine Support Mockup
+description: ワイン畑の妖精Sommiaがサポートするワインマネジメントシステムのモックアップ版
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Include files
+include:
+  - _*
+  - .htaccess
+
+# Exclude files
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Plugin settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Additional settings
+future: false
+unpublished: false
+safe: true
+lsi: false
+incremental: false
+
+# Markdown settings
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+
+# Collections (if needed in future)
+collections_dir: collections
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"

@@ -1,216 +1,449 @@
-/**
- * 共通パーツ（ヘッダー・フッター）の定義とDOM挿入
- */
-
-// ページ読み込み時に実行
-document.addEventListener('DOMContentLoaded', function() {
-    // ヘッダーとフッターを挿入
-    insertHeader();
-    insertFooter();
-    
-    // 通知スタイルシートの追加
-    if (!document.querySelector('link[href*="notifications.css"]')) {
-        const notificationsStyle = document.createElement('link');
-        notificationsStyle.rel = 'stylesheet';
-        notificationsStyle.href = calculateRelativePath() + 'css/components/notifications.css';
-        document.head.appendChild(notificationsStyle);
+// 共通パーツの管理
+class CommonParts {
+    constructor() {
+        this.isGitHubPages = window.location.hostname.includes('github.io');
+        this.basePath = this.isGitHubPages ? this.getBasePath() : '';
     }
-    
-    // ログアウトトーストメッセージのチェック
-    checkLogoutToast();
-});
 
-/**
- * ヘッダーをDOMに挿入
- */
-function insertHeader() {
-    const headerPlaceholder = document.getElementById('header-placeholder');
-    if (!headerPlaceholder) return;
-    
-    // 現在のページに対する相対パスを計算
-    const relativePath = calculateRelativePath();
-    
-    // ヘッダーHTMLの構築
-    const headerHTML = `
-        <header>
-            <div class="container header-container">
-                <div class="logo-container">
-                    <a href="${relativePath}html/dashboard.html">
-                    <img src="${relativePath}assets/images/winesupport_logo.png" alt="ワイサポ" class="logo">
-                    </a>
-                </div>
-                <nav>
-                    <div class="main-nav-container">
-                        <!-- テキストナビゲーション -->
-                        <ul class="main-nav">
-                            <li class="nav-item">
-                                <a href="${relativePath}html/dashboard.html" class="nav-link nav-button">トップ</a>
-                            </li>
-                            <li class="nav-divider"></li>
-                            <li class="nav-item">
-                                <a href="${relativePath}html/my_cellar/my_cellar.html" class="nav-link nav-button">マイセラー</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="${relativePath}html/products/product_list.html" class="nav-link nav-button">商品一覧</a>
-                            </li>
-                            <li class="nav-divider"></li>
-                            <li class="nav-item">
-                                <a href="${relativePath}html/account/mypage.html" class="nav-link nav-button">マイページ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="${relativePath}html/account/login.html" class="nav-link logout-button" onclick="showLogoutToast(event)">ログアウト</a>
-                            </li>
-                        </ul>
-                        
-                        <!-- アイコンナビゲーション -->
-                        <ul class="icon-nav">
-                            <li class="icon-nav-item">
-                                <a href="${relativePath}html/notifications.html" class="icon-nav-link notification-link" title="お知らせ">
-                                    <span class="icon-badge">3</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                                </a>
-                            </li>
-                            <li class="icon-nav-item">
-                                <a href="${relativePath}html/cart.html" class="icon-nav-link" title="カート">
-                                    <span class="icon-badge">2</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                                </a>
-                            </li>
-                            <li class="icon-nav-item">
-                                <a href="${relativePath}html/products/product_list.html" class="icon-nav-link" title="検索">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                </a>
-                            </li>
-                        </ul>
+    getBasePath() {
+        const pathParts = window.location.pathname.split('/');
+        return pathParts.length > 2 ? '/' + pathParts[1] : '';
+    }
+
+    // ヘッダーHTMLを生成
+    generateHeader() {
+        return `
+        <header class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <img src="${this.getImagePath('assets/images/winesupport_logo.png')}" alt="ワイサポ" class="logo" onerror="this.style.display='none'">
+                        <span class="logo-text">ワイサポ</span>
                     </div>
-                </nav>
+                    <nav class="main-nav">
+                        <a href="${this.getPagePath('dashboard.html')}" class="nav-link">
+                            <span class="nav-icon">📊</span>
+                            ダッシュボード
+                        </a>
+                        <a href="${this.getPagePath('my_cellar/my_cellar.html')}" class="nav-link">
+                            <span class="nav-icon">🍷</span>
+                            マイセラー
+                        </a>
+                        <a href="${this.getPagePath('products/product_list.html')}" class="nav-link">
+                            <span class="nav-icon">📦</span>
+                            商品リスト
+                        </a>
+                        <a href="${this.getPagePath('orders/order_history.html')}" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            注文履歴
+                        </a>
+                        <a href="${this.getPagePath('reports/sales_history.html')}" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            レポート
+                        </a>
+                    </nav>
+                    <div class="user-section">
+                        <button class="notification-btn" onclick="toggleNotifications()">
+                            <span class="notification-icon">🔔</span>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="user-menu">
+                            <img src="${this.getImagePath('sommia.png')}" alt="ユーザー" class="user-avatar" onerror="this.style.display='none'">
+                            <div class="user-dropdown">
+                                <a href="${this.getPagePath('account/mypage.html')}">マイページ</a>
+                                <a href="${this.getPagePath('account/account_settings.html')}">設定</a>
+                                <a href="${this.getPagePath('../index.html')}">ログアウト</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
-    `;
-    
-    // ヘッダーをDOMに挿入
-    headerPlaceholder.outerHTML = headerHTML;
-}
+        <style>
+        .main-header {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            gap: 2rem;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF4D00, #884591);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .main-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #4b5563;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: #f3f4f6;
+            color: #FF4D00;
+        }
+        
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .notification-btn:hover {
+            background: #f3f4f6;
+        }
+        
+        .notification-icon {
+            font-size: 1.2rem;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            min-width: 1.2rem;
+            text-align: center;
+        }
+        
+        .user-menu {
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            min-width: 150px;
+            display: none;
+        }
+        
+        .user-menu:hover .user-dropdown {
+            display: block;
+        }
+        
+        .user-dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #4b5563;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+        
+        .user-dropdown a:hover {
+            background: #f3f4f6;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+        </style>
+        `;
+    }
 
-/**
- * フッターをDOMに挿入
- */
-function insertFooter() {
-    const footerPlaceholder = document.getElementById('footer-placeholder');
-    if (!footerPlaceholder) return;
-    
-    // 現在のページに対する相対パスを計算
-    const relativePath = calculateRelativePath();
-    
-    // フッターHTMLの構築
-    const footerHTML = `
-        <footer>
-            <div class="container footer-container">
-                <div class="footer-links">
-                    <a href="#" class="footer-link">利用規約</a>
-                    <a href="#" class="footer-link">プライバシーポリシー</a>
-                    <a href="#" class="footer-link">ヘルプ</a>
-                    <a href="#" class="footer-link">お問い合わせ</a>
+    // フッターHTMLを生成
+    generateFooter() {
+        return `
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>ワイサポ</h3>
+                        <p>ワイン畑の妖精Sommiaがサポートする<br>ワインマネジメントシステム</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>機能</h4>
+                        <ul>
+                            <li><a href="${this.getPagePath('my_cellar/my_cellar.html')}">在庫管理</a></li>
+                            <li><a href="${this.getPagePath('products/product_list.html')}">商品検索</a></li>
+                            <li><a href="${this.getPagePath('wine_optimization.html')}">AI最適化</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>サポート</h4>
+                        <ul>
+                            <li><a href="#" onclick="alert('モックアップ版のため実装されていません')">ヘルプ</a></li>
+                            <li><a href="#" onclick="alert('モックアップ版のため実装されていません')">お問い合わせ</a></li>
+                            <li><a href="${this.getGitHubUrl()}" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Sommia AI</h4>
+                        <div class="sommia-footer">
+                            <img src="${this.getImagePath('sommia.png')}" alt="Sommia" class="sommia-avatar-footer" onerror="this.style.display='none'">
+                            <p>24時間あなたのワイン業務をサポートします</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="copyright">
-                    &copy; 2025 ワイサポ All Rights Reserved.
+                <div class="footer-bottom">
+                    <p>&copy; 2024 ワイサポ (Wine Support System) - モックアップ版</p>
+                    ${this.isGitHubPages ? '<p class="demo-notice">🚧 これはGitHub Pagesで公開されているデモ版です</p>' : ''}
                 </div>
             </div>
         </footer>
-    `;
-    
-    // フッターをDOMに挿入
-    footerPlaceholder.outerHTML = footerHTML;
-}
-
-/**
- * 現在のページに対するルートディレクトリへの相対パスを計算
- * @returns {string} 相対パス
- */
-function calculateRelativePath() {
-    const currentPath = window.location.pathname;
-    
-    // パスの深さに基づいて相対パスを構築
-    // 例: /html/account/settings.html なら ../../ を返す
-    
-    // htmlディレクトリ内のファイルの場合
-    if (currentPath.includes('/html/')) {
-        const parts = currentPath.split('/');
-        const depth = parts.length - (currentPath.endsWith('/') ? 1 : 0);
-        
-        // ルートからの深さに応じて ../ を連結
-        if (depth > 2) { // html/page.html より深い場合
-            return '../'.repeat(depth - 2);
-        } else {
-            return '../';
+        <style>
+        .main-footer {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            margin-top: 4rem;
         }
-    }
-    
-    // ルートディレクトリの場合
-    return '';
-}
-
-/**
- * ログアウトトーストメッセージを表示
- */
-function showLogoutToast(event) {
-    // ログアウトフラグをセッションストレージに保存
-    sessionStorage.setItem('showLogoutToast', 'true');
-    
-    // すぐにページ遷移（デフォルトのリンク動作を許可）
-    return true;
-}
-
-/**
- * ページ読み込み時にログアウトトーストメッセージをチェック
- */
-function checkLogoutToast() {
-    // ログアウトフラグをチェック
-    if (sessionStorage.getItem('showLogoutToast') === 'true') {
-        // フラグを削除
-        sessionStorage.removeItem('showLogoutToast');
         
-        // 少し遅延してからトーストを表示（ページ読み込みが完了してから）
-        setTimeout(() => {
-            displayLogoutToast();
-        }, 100);
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-section h3 {
+            background: linear-gradient(135deg, #FF4D00, #884591);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h4 {
+            color: #f3f4f6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section p {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #FF4D00;
+        }
+        
+        .sommia-footer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .sommia-avatar-footer {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #FF4D00;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #4b5563;
+            padding: 2rem 0;
+            text-align: center;
+            color: #9ca3af;
+        }
+        
+        .demo-notice {
+            color: #fbbf24;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .sommia-footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        </style>
+        `;
+    }
+
+    // パスヘルパー関数
+    getImagePath(imagePath) {
+        const currentPath = window.location.pathname;
+        const isInSubfolder = currentPath.includes('/html/');
+        
+        if (isInSubfolder) {
+            return '../' + imagePath;
+        }
+        return './' + imagePath;
+    }
+
+    getPagePath(pagePath) {
+        const currentPath = window.location.pathname;
+        const isInSubfolder = currentPath.includes('/html/');
+        
+        if (isInSubfolder) {
+            // すでにhtmlフォルダ内にいる場合
+            if (pagePath.startsWith('../')) {
+                return pagePath;
+            }
+            return './' + pagePath;
+        }
+        // ルートにいる場合
+        return './html/' + pagePath;
+    }
+
+    getGitHubUrl() {
+        if (this.isGitHubPages) {
+            const pathParts = window.location.pathname.split('/');
+            const repoName = pathParts[1] || 'wine-support-mockup';
+            const username = window.location.hostname.split('.')[0];
+            return `https://github.com/${username}/${repoName}`;
+        }
+        return 'https://github.com/your-username/wine-support-mockup';
+    }
+
+    // ヘッダーとフッターを挿入
+    init() {
+        // ヘッダーの挿入
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        if (headerPlaceholder) {
+            headerPlaceholder.innerHTML = this.generateHeader();
+            this.setActiveNavLink();
+        }
+
+        // フッターの挿入
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            footerPlaceholder.innerHTML = this.generateFooter();
+        }
+
+        // その他の初期化
+        this.setupEventListeners();
+    }
+
+    // アクティブなナビゲーションリンクを設定
+    setActiveNavLink() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            if (link.href && currentPath.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // イベントリスナーの設定
+    setupEventListeners() {
+        // 通知ボタンの処理
+        window.toggleNotifications = () => {
+            alert('通知機能はモックアップ版のため実装されていません');
+        };
+
+        // エラーハンドリング
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[href="#"]')) {
+                e.preventDefault();
+                alert('この機能はモックアップ版のため実装されていません');
+            }
+        });
     }
 }
 
-/**
- * 実際にトーストメッセージを表示する関数
- */
-function displayLogoutToast() {
-    // トーストメッセージを表示
-    const toast = document.createElement('div');
-    toast.className = 'logout-toast';
-    toast.innerHTML = `
-        <div class="toast-content">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16,17 21,12 16,7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
-            <span>ログアウトしました</span>
-        </div>
-    `;
-    
-    document.body.appendChild(toast);
-    
-    // アニメーションで表示
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-    
-    // 3秒後に非表示アニメーション開始
-    setTimeout(() => {
-        toast.classList.add('hide');
-    }, 3000);
-    
-    // アニメーション完了後に要素を削除
-    setTimeout(() => {
-        if (document.body.contains(toast)) {
-            document.body.removeChild(toast);
-        }
-    }, 3500);
-}
+// DOM読み込み完了後に初期化
+document.addEventListener('DOMContentLoaded', () => {
+    const commonParts = new CommonParts();
+    commonParts.init();
+});
+
+// グローバルに利用可能にする
+window.CommonParts = CommonParts;

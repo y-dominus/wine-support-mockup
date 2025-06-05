@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - ページが見つかりません | ワイサポ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF4D00;
+            --secondary-color: #884591;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-900);
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .sommia-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .sommia-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary-color);
+        }
+
+        .sommia-message {
+            flex: 1;
+        }
+
+        .sommia-name {
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .sommia-text {
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #e04400);
+            color: white;
+            box-shadow: 0 2px 4px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 77, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--primary-color);
+        }
+
+        .helpful-links {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .helpful-links h3 {
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-card {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+            text-decoration: none;
+            color: var(--gray-700);
+            transition: all 0.2s ease;
+        }
+
+        .link-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .link-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .link-description {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: 1.5rem;
+            }
+
+            .sommia-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-title">ページが見つかりません</h1>
+        <p class="error-message">
+            申し訳ありませんが、お探しのページは存在しないか、移動された可能性があります。
+        </p>
+
+        <div class="sommia-section">
+            <img src="./sommia.png" alt="Sommia" class="sommia-avatar" onerror="this.style.display='none'">
+            <div class="sommia-message">
+                <div class="sommia-name">Sommia より</div>
+                <div class="sommia-text">
+                    お探しのページが見つからないようですね。ダッシュボードから始めて、必要な機能を見つけてみてください！
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="./" class="btn btn-primary">🏠 ホームに戻る</a>
+            <a href="./html/dashboard.html" class="btn btn-secondary">📊 ダッシュボード</a>
+        </div>
+
+        <div class="helpful-links">
+            <h3>🔗 役立つリンク</h3>
+            <div class="links-grid">
+                <a href="./html/my_cellar/my_cellar.html" class="link-card">
+                    <span class="link-icon">🍷</span>
+                    <div class="link-title">マイセラー</div>
+                    <div class="link-description">ワイン在庫の管理</div>
+                </a>
+                <a href="./html/products/product_list.html" class="link-card">
+                    <span class="link-icon">📦</span>
+                    <div class="link-title">商品リスト</div>
+                    <div class="link-description">ワイン商品の検索</div>
+                </a>
+                <a href="./html/wine_optimization.html" class="link-card">
+                    <span class="link-icon">🤖</span>
+                    <div class="link-title">AI最適化</div>
+                    <div class="link-description">Sommiaの改善提案</div>
+                </a>
+                <a href="./html/reports/sales_history.html" class="link-card">
+                    <span class="link-icon">📈</span>
+                    <div class="link-title">売上レポート</div>
+                    <div class="link-description">売上分析と履歴</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL修正の試み
+        function attemptRedirect() {
+            const currentPath = window.location.pathname;
+            const possiblePaths = [
+                currentPath.replace('.html', ''),
+                currentPath + '.html',
+                './html/' + currentPath.split('/').pop(),
+                './' + currentPath.split('/').pop()
+            ];
+
+            // 実際のリダイレクトは行わず、提案として表示
+            console.log('🔍 可能なパス:', possiblePaths);
+        }
+
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', attemptRedirect);
+
+        // エラー報告機能（モックアップ用）
+        function reportError() {
+            const errorInfo = {
+                url: window.location.href,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('📝 エラー情報:', errorInfo);
+            alert('エラー情報がコンソールに記録されました（モックアップ版）');
+        }
+
+        // キーボードショートカット
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'h' || e.key === 'H') {
+                window.location.href = './';
+            } else if (e.key === 'd' || e.key === 'D') {
+                window.location.href = './html/dashboard.html';
+            }
+        });
+
+        // GitHub Pages 環境検出
+        if (window.location.hostname.includes('github.io')) {
+            console.log('🚀 GitHub Pages環境で実行中');
+            
+            // GitHub Issues へのリンクを動的生成
+            const pathParts = window.location.pathname.split('/');
+            const repoName = pathParts[1] || 'wine-support-mockup';
+            const username = window.location.hostname.split('.')[0];
+            const issueUrl = `https://github.com/${username}/${repoName}/issues`;
+            
+            // フィードバックリンクを追加
+            const feedbackLink = document.createElement('div');
+            feedbackLink.style.marginTop = '2rem';
+            feedbackLink.innerHTML = `
+                <p style="color: var(--gray-600); font-size: 0.9rem;">
+                    問題を報告する: <a href="${issueUrl}" target="_blank" style="color: var(--primary-color);">GitHub Issues</a>
+                </p>
+            `;
+            document.querySelector('.error-container').appendChild(feedbackLink);
+        }
+    </script>
+</body>
+</html>
