@@ -1,0 +1,549 @@
+/* 商品一覧ページ用スタイル */
+
+/* スマートカートシステム */
+.smart-cart-container {
+    position: fixed;
+    top: 70px; /* ヘッダー高さ64px + 余白6px */
+    right: -400px; /* 初期状態では隠す */
+    width: 380px;
+    max-height: calc(100vh - 80px);
+    background: var(--white);
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: 1050; /* ヘッダーより高く、モーダルより低く */
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.smart-cart-container.open {
+    right: 0;
+}
+
+.smart-cart-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--light-gray);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border-radius: var(--border-radius-lg) 0 0 0;
+}
+
+.smart-cart-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.cart-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+}
+
+.cart-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.smart-cart-body {
+    flex: 1;
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.smart-cart-empty {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    color: #6c757d;
+}
+
+.empty-cart-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.smart-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.smart-cart-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--light-gray);
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease;
+    animation: slideInRight 0.3s ease;
+}
+
+.smart-cart-item:hover {
+    background: #f0f0f0;
+    transform: translateX(-2px);
+}
+
+.cart-item-info {
+    flex: 1;
+    margin-right: var(--spacing-sm);
+}
+
+.cart-item-name {
+    font-weight: 600;
+    color: var(--dark-gray);
+    font-size: var(--font-size-sm);
+    line-height: 1.3;
+    margin-bottom: var(--spacing-xs);
+}
+
+.cart-item-details {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    color: #6c757d;
+}
+
+.cart-item-quantity {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 2px 6px;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.cart-item-remove {
+    background: #ff4757;
+    color: var(--white);
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.cart-item-remove:hover {
+    background: #ff3742;
+    transform: scale(1.1);
+}
+
+.smart-cart-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--light-gray);
+    background: #fafafa;
+}
+
+.cart-summary-totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--white);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--light-gray);
+}
+
+.cart-total-items,
+.cart-total-price {
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.cart-total-price {
+    font-size: var(--font-size-lg);
+    color: var(--primary-color);
+}
+
+.cart-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.cart-clear-btn {
+    flex: 1;
+    background: #6c757d;
+    color: var(--white);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cart-clear-btn:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.cart-checkout-btn {
+    flex: 2;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: var(--white);
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.cart-checkout-btn:hover {
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* フローティングカートボタン */
+.floating-cart-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    z-index: 1040; /* スマートカートより低く */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.floating-cart-btn:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.floating-cart-btn.has-items {
+    animation: pulse 2s infinite;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: var(--white);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 12px;
+    min-width: 20px;
+    text-align: center;
+    animation: bounceIn 0.5s ease;
+}
+
+/* インラインカートサマリー（デスクトップ用）- 完全に非表示 */
+.inline-cart-summary {
+    display: none !important;
+}
+
+/* インラインカート関連の全てのスタイルを無効化 */
+.inline-cart-summary,
+.inline-cart-header,
+.inline-cart-title,
+.cart-collapse-btn,
+.inline-cart-items,
+.inline-cart-item,
+.inline-item-name,
+.inline-item-quantity,
+.inline-item-remove,
+.inline-cart-footer,
+.inline-cart-totals,
+.inline-total-items,
+.inline-total-price,
+.inline-cart-actions {
+    display: none !important;
+}
+
+/* アニメーション */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+/* 数量選択のハイライト効果 */
+.wine-card.has-selection {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.wine-card.has-selection .wine-actions {
+    background: rgba(var(--primary-color-rgb), 0.05);
+}
+
+/* テーブル行のハイライト */
+.wine-table tbody tr.has-selection {
+    background: rgba(var(--primary-color-rgb), 0.05);
+    border-left: 3px solid var(--primary-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+    .smart-cart-container {
+        width: 320px;
+        right: -320px;
+        top: 70px; /* タブレットでも適切な位置を維持 */
+    }
+    
+    .sommia-recommendation {
+        bottom: 110px; /* タブレットでの位置調整 */
+        right: 15px;
+        max-width: 280px;
+        min-width: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .smart-cart-container {
+        width: 100%;
+        right: -100%;
+        top: 64px; /* モバイルではヘッダーと緊接 */
+        max-height: calc(100vh - 70px);
+        border-radius: 0;
+    }
+    
+    .smart-cart-header {
+        border-radius: 0;
+    }
+    
+    .floating-cart-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .sommia-recommendation {
+        bottom: 90px; /* モバイルでの位置調整 */
+        right: 10px;
+        left: 10px; /* 左右の余白を確保 */
+        max-width: none;
+        min-width: auto;
+        padding: var(--spacing-md);
+    }
+    
+    .sommia-rec-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .sommia-rec-avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .sommia-rec-title {
+        font-size: var(--font-size-sm);
+    }
+    
+    .sommia-rec-text {
+        font-size: var(--font-size-sm);
+        text-align: center;
+    }
+}
+
+/* 古いカートサマリーを隠す */
+.cart-summary-block {
+    display: none !important;
+}
+
+/* product_list.cssで定義されている古いカート関連スタイルも隠す */
+.cart-summary-block,
+.cart-summary-header,
+.cart-summary-title,
+.cart-clear-btn:not(.smart-cart-container .cart-clear-btn),
+.cart-summary-content,
+.cart-items,
+.cart-item:not(.smart-cart-item):not(.inline-cart-item),
+.cart-total {
+    display: none !important;
+}
+
+/* 商品カードの改善 */
+.quantity-controls {
+    transition: all 0.2s ease;
+}
+
+.quantity-controls:focus-within {
+    transform: scale(1.05);
+}
+
+.quantity-input {
+    transition: all 0.2s ease;
+}
+
+.quantity-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Sommiaの推奨表示 - 位置とサイズを全面的に改善 */
+.sommia-recommendation {
+    position: fixed;
+    bottom: 140px; /* フローティングカート(56px) + 余白(84px) */
+    right: 20px;
+    max-width: 300px;
+    min-width: 280px;
+    background: var(--white);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: 0 8px 25px rgba(136, 69, 145, 0.25), 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1030;
+    transform: translateX(110%); /* 完全に画面外に */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 4px solid var(--secondary-color); /* 上部に強調線 */
+}
+
+.sommia-recommendation.show {
+    transform: translateX(0);
+    animation: slideInBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* スライドイン時のバウンスアニメーション */
+@keyframes slideInBounce {
+    0% {
+        transform: translateX(110%);
+        opacity: 0;
+    }
+    60% {
+        transform: translateX(-8px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sommia-rec-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(136, 69, 145, 0.15);
+}
+
+.sommia-rec-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(136, 69, 145, 0.2);
+}
+
+.sommia-rec-title {
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: var(--font-size-md);
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(136, 69, 145, 0.1);
+}
+
+.sommia-rec-text {
+    font-size: var(--font-size-md);
+    color: var(--dark-gray);
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 0;
+}
+
+.sommia-rec-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(136, 69, 145, 0.1);
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.sommia-rec-close:hover {
+    background: rgba(136, 69, 145, 0.2);
+    color: var(--secondary-hover);
+    opacity: 1;
+    transform: scale(1.1);
+}

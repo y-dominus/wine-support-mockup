@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="../../css/components/wine-detail-modal.css">
     <link rel="stylesheet" href="../../css/pages/my_cellar.css">
     <link rel="stylesheet" href="../../css/pages/product_list.css">
-    <link rel="stylesheet" href="../../css/pages/product_list_enhanced.css">
     <script defer src="../../js/main.js"></script>
     <script defer src="../../js/common_parts.js"></script>
     <script defer src="../../js/ai_simulator.js"></script>
@@ -39,7 +38,32 @@
                 </div>
             </div>
             
-            <!-- スマートインラインカートサマリーは削除しました - 横からのウィジェットのみ使用 -->
+            <!-- カートサマリー -->
+            <div class="cart-summary-block" id="cart-summary" style="display: none;">
+                <div class="cart-summary-header">
+                    <h3 class="cart-summary-title">🛍️ 選択中のワイン</h3>
+                    <button class="cart-clear-btn" onclick="clearCart()">全てクリア</button>
+                </div>
+                <div class="cart-summary-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- 選択されたワインがここに表示されます -->
+                    </div>
+                    <div class="cart-total">
+                        <div class="cart-total-info">
+                            <span class="cart-total-items">合計: <span id="total-items">0</span>本</span>
+                            <span class="cart-total-price">金額: <span id="total-price">¥0</span></span>
+                        </div>
+                        <button class="btn btn-primary cart-add-btn" onclick="addAllToCart()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            カートに追加
+                        </button>
+                    </div>
+                </div>
+            </div>
             
             <div class="cellar-filters">
                 <div class="filter-group">
@@ -103,7 +127,7 @@
                 <!-- ワインカードリスト -->
                 <div class="wine-grid">
                     <!-- ワインカード 1: キャンティ -->
-                    <div class="wine-card" id="wine-card-1">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle red">
@@ -127,14 +151,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="1">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(1, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-1" value="0" min="0" max="2" onchange="updateCart(1)">
+                                <input type="number" class="quantity-input" id="quantity-1" value="0" min="0" max="2">
                                 <button class="quantity-btn plus" onclick="changeQuantity(1, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 2: ソーヴィニヨン・ブラン -->
-                    <div class="wine-card" id="wine-card-2">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle white">
@@ -158,14 +182,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="2">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(2, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-2" value="0" min="0" max="1" onchange="updateCart(2)">
+                                <input type="number" class="quantity-input" id="quantity-2" value="0" min="0" max="1">
                                 <button class="quantity-btn plus" onclick="changeQuantity(2, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 3: プロセッコ -->
-                    <div class="wine-card" id="wine-card-3">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle sparkling">
@@ -188,14 +212,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="3">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(3, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-3" value="0" min="0" max="5" onchange="updateCart(3)">
+                                <input type="number" class="quantity-input" id="quantity-3" value="0" min="0" max="5">
                                 <button class="quantity-btn plus" onclick="changeQuantity(3, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 4: メルロー -->
-                    <div class="wine-card" id="wine-card-4">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle red">
@@ -219,14 +243,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="4">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(4, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-4" value="0" min="0" max="3" onchange="updateCart(4)">
+                                <input type="number" class="quantity-input" id="quantity-4" value="0" min="0" max="3">
                                 <button class="quantity-btn plus" onclick="changeQuantity(4, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 5: シャルドネ -->
-                    <div class="wine-card" id="wine-card-5">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle white">
@@ -249,14 +273,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="5">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(5, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-5" value="0" min="0" max="4" onchange="updateCart(5)">
+                                <input type="number" class="quantity-input" id="quantity-5" value="0" min="0" max="4">
                                 <button class="quantity-btn plus" onclick="changeQuantity(5, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 6: バローロ -->
-                    <div class="wine-card" id="wine-card-6">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle red">
@@ -279,14 +303,14 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="6">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(6, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-6" value="0" min="0" max="6" onchange="updateCart(6)">
+                                <input type="number" class="quantity-input" id="quantity-6" value="0" min="0" max="6">
                                 <button class="quantity-btn plus" onclick="changeQuantity(6, 1)">+</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ワインカード 7: プイィ・フュメ -->
-                    <div class="wine-card" id="wine-card-7">
+                    <div class="wine-card">
                         <div class="wine-label">
                             <div class="wine-bottle-placeholder">
                                 <div class="wine-bottle white">
@@ -309,7 +333,7 @@
                             <button class="btn btn-sm btn-outline-primary wine-detail-btn" data-wine-id="7">詳細</button>
                             <div class="quantity-controls">
                                 <button class="quantity-btn minus" onclick="changeQuantity(7, -1)">-</button>
-                                <input type="number" class="quantity-input" id="quantity-7" value="0" min="0" max="4" onchange="updateCart(7)">
+                                <input type="number" class="quantity-input" id="quantity-7" value="0" min="0" max="4">
                                 <button class="quantity-btn plus" onclick="changeQuantity(7, 1)">+</button>
                             </div>
                         </div>
@@ -332,7 +356,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr id="wine-row-1">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color red"></div>
@@ -347,7 +371,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(1, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-1" value="0" min="0" max="2" onchange="updateCart(1)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-1" value="0" min="0" max="2">
                                         <button class="quantity-btn plus" onclick="changeQuantity(1, 1)">+</button>
                                     </div>
                                 </td>
@@ -357,7 +381,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-2">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color white"></div>
@@ -372,7 +396,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(2, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-2" value="0" min="0" max="1" onchange="updateCart(2)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-2" value="0" min="0" max="1">
                                         <button class="quantity-btn plus" onclick="changeQuantity(2, 1)">+</button>
                                     </div>
                                 </td>
@@ -382,7 +406,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-3">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color sparkling"></div>
@@ -397,7 +421,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(3, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-3" value="0" min="0" max="5" onchange="updateCart(3)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-3" value="0" min="0" max="5">
                                         <button class="quantity-btn plus" onclick="changeQuantity(3, 1)">+</button>
                                     </div>
                                 </td>
@@ -407,7 +431,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-4">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color red"></div>
@@ -422,7 +446,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(4, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-4" value="0" min="0" max="3" onchange="updateCart(4)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-4" value="0" min="0" max="3">
                                         <button class="quantity-btn plus" onclick="changeQuantity(4, 1)">+</button>
                                     </div>
                                 </td>
@@ -432,7 +456,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-5">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color white"></div>
@@ -447,7 +471,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(5, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-5" value="0" min="0" max="4" onchange="updateCart(5)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-5" value="0" min="0" max="4">
                                         <button class="quantity-btn plus" onclick="changeQuantity(5, 1)">+</button>
                                     </div>
                                 </td>
@@ -457,7 +481,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-6">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color red"></div>
@@ -472,7 +496,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(6, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-6" value="0" min="0" max="6" onchange="updateCart(6)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-6" value="0" min="0" max="6">
                                         <button class="quantity-btn plus" onclick="changeQuantity(6, 1)">+</button>
                                     </div>
                                 </td>
@@ -482,7 +506,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr id="wine-row-7">
+                            <tr>
                                 <td>
                                     <div class="wine-name-cell">
                                         <div class="wine-color white"></div>
@@ -497,7 +521,7 @@
                                 <td>
                                     <div class="quantity-controls table-quantity">
                                         <button class="quantity-btn minus" onclick="changeQuantity(7, -1)">-</button>
-                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-7" value="0" min="0" max="4" onchange="updateCart(7)">
+                                        <input type="number" class="quantity-input table-quantity-input" id="table-quantity-7" value="0" min="0" max="4">
                                         <button class="quantity-btn plus" onclick="changeQuantity(7, 1)">+</button>
                                     </div>
                                 </td>
@@ -513,57 +537,6 @@
             </div>
         </div>
     </main>
-    
-    <!-- フローティングカートボタン -->
-    <button class="floating-cart-btn" id="floating-cart-btn" onclick="toggleSmartCart()" style="display: none;">
-        🛍️
-        <div class="cart-badge" id="cart-badge">0</div>
-    </button>
-    
-    <!-- スマートカートサイドバー -->
-    <div class="smart-cart-container" id="smart-cart">
-        <div class="smart-cart-header">
-            <h3 class="smart-cart-title">
-                選択中のワイン
-                <button class="cart-toggle-btn" onclick="toggleSmartCart()">×</button>
-            </h3>
-        </div>
-        <div class="smart-cart-body" id="smart-cart-body">
-            <div class="smart-cart-empty">
-                <div class="empty-cart-icon">🍷</div>
-                <p>ワインを選択してください</p>
-            </div>
-        </div>
-        <div class="smart-cart-footer" id="smart-cart-footer" style="display: none;">
-            <div class="cart-summary-totals">
-                <div class="cart-total-items">合計: <span id="smart-total-items">0</span>本</div>
-                <div class="cart-total-price">金額: <span id="smart-total-price">¥0</span></div>
-            </div>
-            <div class="cart-actions">
-                <button class="cart-clear-btn" onclick="clearCart()">クリア</button>
-                <button class="cart-checkout-btn" onclick="addAllToCart()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    カートに追加
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Sommiaの推奨 -->
-    <div class="sommia-recommendation" id="sommia-recommendation">
-        <button class="sommia-rec-close" onclick="hideSommiaRecommendation()">×</button>
-        <div class="sommia-rec-header">
-            <img src="../../sommia.png" alt="Sommia" class="sommia-rec-avatar">
-            <h4 class="sommia-rec-title">Sommiaのおすすめ</h4>
-        </div>
-        <div class="sommia-rec-text" id="sommia-rec-text">
-            <!-- 推奨メッセージがここに動的に表示されます -->
-        </div>
-    </div>
     
     <div id="footer-placeholder"></div>
     
@@ -581,17 +554,6 @@
         
         // カート状態管理
         let cart = {};
-        let isSmartCartOpen = false;
-        let isInlineCartCollapsed = false;
-        
-        // Sommiaの推奨メッセージ
-        const sommiaRecommendations = [
-            "これらのワインは相性が良いですね！",
-            "バランスの取れた選択です。お客様に喜んでいただけるでしょう。",
-            "この組み合わせなら、幅広いお料理に対応できますね。",
-            "品質とコストパフォーマンスを考えた素晴らしい選択です！",
-            "季節に合った素敵なセレクションですね。"
-        ];
         
         // AIメッセージを閉じる関数
         function dismissAiMessage(button) {
@@ -602,6 +564,7 @@
                     const container = messageElement.closest('.ai-message-container');
                     if (container) {
                         container.style.display = 'none';
+                        // ローカルストレージに閉じた状態を保存
                         localStorage.setItem('product-list-ai-message-dismissed', 'true');
                     }
                 }, 300);
@@ -639,11 +602,8 @@
             updateCart(wineId);
         }
         
-        // カート更新（スクロール位置を保持）
+        // カート更新
         function updateCart(wineId) {
-            // 現在のスクロール位置を保存
-            const scrollPosition = window.pageYOffset;
-            
             const quantityInput = document.getElementById(`quantity-${wineId}`);
             const quantity = parseInt(quantityInput.value) || 0;
             
@@ -653,66 +613,27 @@
                 delete cart[wineId];
             }
             
-            // UI更新
-            updateAllCartDisplays();
-            updateWineCardSelection(wineId, quantity);
-            
-            // スクロール位置を復元
-            window.scrollTo(0, scrollPosition);
-            
-            // Sommia推奨の表示判定
-            checkSommiaRecommendation();
+            updateCartDisplay();
         }
         
-        // ワインカードの選択状態更新
-        function updateWineCardSelection(wineId, quantity) {
-            const wineCard = document.getElementById(`wine-card-${wineId}`);
-            const wineRow = document.getElementById(`wine-row-${wineId}`);
+        // カート表示更新
+        function updateCartDisplay() {
+            const cartSummary = document.getElementById('cart-summary');
+            const cartItems = document.getElementById('cart-items');
+            const totalItems = document.getElementById('total-items');
+            const totalPrice = document.getElementById('total-price');
             
-            if (quantity > 0) {
-                wineCard?.classList.add('has-selection');
-                wineRow?.classList.add('has-selection');
-            } else {
-                wineCard?.classList.remove('has-selection');
-                wineRow?.classList.remove('has-selection');
-            }
-        }
-        
-        // 全カート表示の更新（インラインカートを除く）
-        function updateAllCartDisplays() {
-            updateSmartCartDisplay();
-            updateFloatingCartButton();
-            // updateInlineCartDisplay(); // インラインカートは削除したためコメントアウト
-        }
-        
-        // インラインカート表示更新（無効化）
-        function updateInlineCartDisplay() {
-            // インラインカートは削除したため、何もしない
-            return;
-        }
-        
-        // スマートカート表示更新
-        function updateSmartCartDisplay() {
-            const smartCartBody = document.getElementById('smart-cart-body');
-            const smartCartFooter = document.getElementById('smart-cart-footer');
-            const totalItems = document.getElementById('smart-total-items');
-            const totalPrice = document.getElementById('smart-total-price');
-            
-            const cartCount = Object.keys(cart).length;
-            
-            if (cartCount === 0) {
-                smartCartBody.innerHTML = `
-                    <div class="smart-cart-empty">
-                        <div class="empty-cart-icon">🍷</div>
-                        <p>ワインを選択してください</p>
-                    </div>
-                `;
-                smartCartFooter.style.display = 'none';
+            // カートが空の場合
+            if (Object.keys(cart).length === 0) {
+                cartSummary.style.display = 'none';
                 return;
             }
             
-            // アイテム表示
-            let itemsHtml = '<div class="smart-cart-items">';
+            // カート表示
+            cartSummary.style.display = 'block';
+            
+            // カートアツム表示
+            let itemsHtml = '';
             let totalCount = 0;
             let totalAmount = 0;
             
@@ -723,56 +644,29 @@
                 totalAmount += subtotal;
                 
                 itemsHtml += `
-                    <div class="smart-cart-item">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${wine.name}</div>
-                            <div class="cart-item-details">
-                                <span class="cart-item-quantity">${quantity}本</span>
-                                <span class="cart-item-price">¥${subtotal.toLocaleString()}</span>
-                            </div>
-                        </div>
+                    <div class="cart-item">
+                        <span class="cart-item-name">${wine.name}</span>
+                        <span class="cart-item-quantity">${quantity}本</span>
+                        <span class="cart-item-price">¥${subtotal.toLocaleString()}</span>
                         <button class="cart-item-remove" onclick="removeFromCart(${wineId})">×</button>
                     </div>
                 `;
             });
             
-            itemsHtml += '</div>';
-            smartCartBody.innerHTML = itemsHtml;
-            
-            // フッター表示
-            smartCartFooter.style.display = 'block';
+            cartItems.innerHTML = itemsHtml;
             totalItems.textContent = totalCount;
             totalPrice.textContent = `¥${totalAmount.toLocaleString()}`;
-        }
-        
-        // フローティングカートボタン更新
-        function updateFloatingCartButton() {
-            const floatingBtn = document.getElementById('floating-cart-btn');
-            const cartBadge = document.getElementById('cart-badge');
-            
-            const cartCount = Object.keys(cart).length;
-            
-            if (cartCount > 0) {
-                floatingBtn.style.display = 'flex';
-                floatingBtn.classList.add('has-items');
-                cartBadge.textContent = cartCount;
-            } else {
-                floatingBtn.style.display = 'none';
-                floatingBtn.classList.remove('has-items');
-            }
         }
         
         // カートから削除
         function removeFromCart(wineId) {
             delete cart[wineId];
-            // 数量入力をリセット
+            // グリッドとテーブルの数量入力をリセット
             const gridInput = document.getElementById(`quantity-${wineId}`);
             const tableInput = document.getElementById(`table-quantity-${wineId}`);
             if (gridInput) gridInput.value = 0;
             if (tableInput) tableInput.value = 0;
-            
-            updateAllCartDisplays();
-            updateWineCardSelection(wineId, 0);
+            updateCartDisplay();
         }
         
         // カートクリア
@@ -782,17 +676,7 @@
             document.querySelectorAll('.quantity-input').forEach(input => {
                 input.value = 0;
             });
-            
-            // 全ての選択状態をリセット
-            document.querySelectorAll('.wine-card').forEach(card => {
-                card.classList.remove('has-selection');
-            });
-            document.querySelectorAll('.wine-table tbody tr').forEach(row => {
-                row.classList.remove('has-selection');
-            });
-            
-            updateAllCartDisplays();
-            hideSommiaRecommendation();
+            updateCartDisplay();
         }
         
         // カートに追加
@@ -802,67 +686,9 @@
                 return;
             }
             
-            const totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-            alert(`${Object.keys(cart).length}種類、合計${totalItems}本のワインをカートに追加しました！`);
+            // 実際のアプリではここでカートに追加処理
+            alert(`${Object.keys(cart).length}種類のワインをカートに追加しました！`);
             clearCart();
-        }
-        
-        // スマートカートの開閉
-        function toggleSmartCart() {
-            const smartCart = document.getElementById('smart-cart');
-            isSmartCartOpen = !isSmartCartOpen;
-            
-            if (isSmartCartOpen) {
-                smartCart.classList.add('open');
-            } else {
-                smartCart.classList.remove('open');
-            }
-        }
-        
-        // インラインカートの折りたたみ（無効化）
-        function toggleInlineCart() {
-            // インラインカートは削除したため、何もしない
-            return;
-        }
-        
-        // Sommia推奨の表示判定 - より適切なタイミングに調整
-        function checkSommiaRecommendation() {
-            const cartCount = Object.keys(cart).length;
-            
-            // 2種類以上選択した時に30%の確率で推奨表示（より適切なタイミング）
-            if (cartCount >= 2 && Math.random() < 0.3) {
-                // 既に表示中でない場合のみ表示
-                const recommendation = document.getElementById('sommia-recommendation');
-                if (!recommendation.classList.contains('show')) {
-                    setTimeout(() => showSommiaRecommendation(), 800); // 少し遅延して表示
-                }
-            }
-        }
-        
-        // Sommia推奨の表示 - アニメーション改善
-        function showSommiaRecommendation() {
-            const recommendation = document.getElementById('sommia-recommendation');
-            const recText = document.getElementById('sommia-rec-text');
-            
-            // ランダムな推奨メッセージを選択
-            const randomMessage = sommiaRecommendations[Math.floor(Math.random() * sommiaRecommendations.length)];
-            recText.textContent = randomMessage;
-            
-            recommendation.classList.add('show');
-            
-            // 6秒後に自動で非表示（少し長めに）
-            setTimeout(() => {
-                hideSommiaRecommendation();
-            }, 6000);
-        }
-        
-        // Sommia推奨の非表示 - アニメーション改善
-        function hideSommiaRecommendation() {
-            const recommendation = document.getElementById('sommia-recommendation');
-            if (recommendation.classList.contains('show')) {
-                recommendation.style.transition = 'transform 0.3s ease-out';
-                recommendation.classList.remove('show');
-            }
         }
         
         // ビュー切り替え
@@ -888,6 +714,7 @@
         
         // フィルター機能
         document.getElementById('apply-filters').addEventListener('click', function() {
+            // 実際のアプリケーションではここでフィルタリング処理を行う
             console.log('Filters applied');
         });
         
@@ -899,26 +726,29 @@
         
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
+            // AIメッセージの表示状態をチェック
             checkAiMessageDisplay();
+            
             setupViewToggle();
             
-            // スマートカート外クリックで閉じる
-            document.addEventListener('click', function(event) {
-                const smartCart = document.getElementById('smart-cart');
-                const floatingBtn = document.getElementById('floating-cart-btn');
-                
-                if (isSmartCartOpen && 
-                    !smartCart.contains(event.target) && 
-                    !floatingBtn.contains(event.target)) {
-                    toggleSmartCart();
-                }
+            // グリッドビューの数量入力の直接変更を監視
+            document.querySelectorAll('.wine-grid .quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const wineId = this.id.replace('quantity-', '');
+                    const tableInput = document.getElementById(`table-quantity-${wineId}`);
+                    if (tableInput) tableInput.value = this.value;
+                    updateCart(wineId);
+                });
             });
             
-            // ESCキーでスマートカートを閉じる
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && isSmartCartOpen) {
-                    toggleSmartCart();
-                }
+            // テーブルビューの数量入力の直接変更を監視
+            document.querySelectorAll('.wine-inventory .quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const wineId = this.id.replace('table-quantity-', '');
+                    const gridInput = document.getElementById(`quantity-${wineId}`);
+                    if (gridInput) gridInput.value = this.value;
+                    updateCart(wineId);
+                });
             });
         });
     </script>

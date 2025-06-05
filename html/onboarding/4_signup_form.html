@@ -46,12 +46,12 @@
                     <div class="progress-line"></div>
                     <div class="progress-step completed">
                         <div class="step-number">5</div>
-                        <div class="step-label">ワイン提案</div>
+                        <div class="step-label">看板メニュー</div>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step completed">
                         <div class="step-number">6</div>
-                        <div class="step-label">レポート確認</div>
+                        <div class="step-label">ワイン提案</div>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step active">
@@ -75,19 +75,19 @@
                     </div>
                     
                     <div class="onboarding-form">
-                        <form id="signup-form" action="5_initial_order_confirmation.html">
+                        <form id="signup-form">
                             <div class="form-row">
                                 <div class="form-col-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">お名前 <span class="required">*</span></label>
-                                        <input type="text" id="name" name="name" class="form-input" required placeholder="例：山田 太郎">
+                                        <label for="name" class="form-label">お名前</label>
+                                        <input type="text" id="name" name="name" class="form-input" placeholder="例：山田 太郎">
                                     </div>
                                 </div>
                                 
                                 <div class="form-col-6">
                                     <div class="form-group">
-                                        <label for="position" class="form-label">役職 <span class="required">*</span></label>
-                                        <select id="position" name="position" class="form-select" required>
+                                        <label for="position" class="form-label">役職</label>
+                                        <select id="position" name="position" class="form-select">
                                             <option value="">選択してください</option>
                                             <option value="owner">オーナー</option>
                                             <option value="manager">店長</option>
@@ -101,23 +101,23 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="email" class="form-label">メールアドレス <span class="required">*</span></label>
-                                <input type="email" id="email" name="email" class="form-input" required placeholder="例：your-email@example.com">
+                                <label for="email" class="form-label">メールアドレス</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="例：your-email@example.com">
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-col-6">
                                     <div class="form-group">
-                                        <label for="password" class="form-label">パスワード <span class="required">*</span></label>
-                                        <input type="password" id="password" name="password" class="form-input" required placeholder="8文字以上で入力">
+                                        <label for="password" class="form-label">パスワード</label>
+                                        <input type="password" id="password" name="password" class="form-input" placeholder="8文字以上で入力">
                                         <div class="form-hint">8文字以上、英数字を含む組み合わせで設定してください</div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-col-6">
                                     <div class="form-group">
-                                        <label for="password-confirm" class="form-label">パスワード（確認） <span class="required">*</span></label>
-                                        <input type="password" id="password-confirm" name="password-confirm" class="form-input" required placeholder="同じパスワードを入力">
+                                        <label for="password-confirm" class="form-label">パスワード（確認）</label>
+                                        <input type="password" id="password-confirm" name="password-confirm" class="form-input" placeholder="同じパスワードを入力">
                                     </div>
                                 </div>
                             </div>
@@ -147,14 +147,14 @@
                             
                             <div class="form-group">
                                 <label class="form-checkbox">
-                                    <input type="checkbox" name="terms" required>
-                                    <span><a href="#" target="_blank">利用規約</a>と<a href="#" target="_blank">プライバシーポリシー</a>に同意します</span>
+                                    <input type="checkbox" name="terms">
+                                    <span><a href="#" target="_blank">利用規約</a>と<a href="#" target="_blank">プライバシーポリシー</a>に同意します（任意）</span>
                                 </label>
                             </div>
                             
                             <div class="form-actions">
-                                <a href="3_wine_report.html" class="btn btn-outline-primary">戻る</a>
-                                <button type="submit" class="btn btn-primary">登録して利用開始</button>
+                            <a href="3_wine_menu_proposal.html" class="btn btn-outline-primary">戻る</a>
+                            <button type="submit" class="btn btn-primary">登録して利用開始</button>
                             </div>
                         </form>
                     </div>
@@ -166,40 +166,65 @@
     <div id="footer-placeholder"></div>
     
     <script>
-        // パスワード確認の検証
+        // モックアップ用のシンプルなバリデーション
         document.addEventListener('DOMContentLoaded', function() {
             const signupForm = document.getElementById('signup-form');
             const password = document.getElementById('password');
             const passwordConfirm = document.getElementById('password-confirm');
             
             signupForm.addEventListener('submit', function(event) {
-                // パスワードの一致チェック
-                if (password.value !== passwordConfirm.value) {
-                    event.preventDefault();
-                    
+                event.preventDefault(); // デフォルトのフォーム送信を停止
+                
+                // パスワードが入力されている場合のみ一致チェック
+                if (password.value && passwordConfirm.value && password.value !== passwordConfirm.value) {
                     // エラーメッセージ表示
                     let errorElement = passwordConfirm.nextElementSibling;
                     if (!errorElement || !errorElement.classList.contains('error-message')) {
                         errorElement = document.createElement('div');
                         errorElement.className = 'error-message';
+                        errorElement.style.cssText = 'color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;';
                         passwordConfirm.parentNode.insertBefore(errorElement, passwordConfirm.nextSibling);
                     }
                     
                     errorElement.textContent = 'パスワードが一致しません';
                     errorElement.style.display = 'block';
                     
-                    passwordConfirm.classList.add('error');
-                    password.classList.add('error');
+                    passwordConfirm.style.borderColor = '#ef4444';
+                    password.style.borderColor = '#ef4444';
+                    
+                    return; // エラーがある場合は処理を終了
                 }
+                
+                // フォームデータを保存（モックアップ用）
+                const formData = {
+                    name: document.getElementById('name').value,
+                    position: document.getElementById('position').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    notifications: {
+                        email: document.querySelector('input[name="notification-email"]').checked,
+                        recommendation: document.querySelector('input[name="notification-recommendation"]').checked,
+                        promotion: document.querySelector('input[name="notification-promotion"]').checked
+                    },
+                    termsAccepted: document.querySelector('input[name="terms"]').checked,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // ローカルストレージに保存
+                localStorage.setItem('signupData', JSON.stringify(formData));
+                
+                // 次のページへ遷移
+                window.location.href = '5_initial_order_confirmation.html';
             });
             
             // パスワード入力時のリアルタイム検証
             passwordConfirm.addEventListener('input', function() {
                 if (password.value && passwordConfirm.value) {
                     if (password.value !== passwordConfirm.value) {
-                        passwordConfirm.classList.add('error');
+                        passwordConfirm.style.borderColor = '#ef4444';
                     } else {
-                        passwordConfirm.classList.remove('error');
+                        passwordConfirm.style.borderColor = '';
+                        password.style.borderColor = '';
                         
                         // エラーメッセージがあれば非表示
                         const errorElement = passwordConfirm.nextElementSibling;

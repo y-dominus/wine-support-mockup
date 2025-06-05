@@ -6,6 +6,31 @@
     position: relative;
 }
 
+/* 境界線付きフォームグループ */
+.form-group-bordered {
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all var(--transition-normal);
+}
+
+.form-group-bordered:hover {
+    border-color: var(--gray-300);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.form-group-bordered:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 0 0 4px rgba(255, 77, 0, 0.1),
+        0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
 /* ラベル */
 .form-label {
     display: block;
@@ -13,6 +38,16 @@
     margin-bottom: var(--spacing-sm);
     color: var(--gray-800);
     font-size: var(--font-size-md);
+    letter-spacing: 0.01em;
+}
+
+/* サブラベル */
+.form-sublabel {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    color: var(--gray-600);
+    font-size: var(--font-size-sm);
     letter-spacing: 0.01em;
 }
 
@@ -66,6 +101,70 @@
     min-height: 120px;
     resize: vertical;
     line-height: 1.6;
+}
+
+/* 郵便番号入力グループ */
+.postal-code-input-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+}
+
+.postal-code-input-group .form-input {
+    flex: 1;
+}
+
+.postal-code-input-group .btn {
+    white-space: nowrap;
+    position: relative;
+    min-width: 100px;
+}
+
+.postal-code-input-group .btn-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 住所候補リスト */
+.address-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.address-suggestion-item {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    border-bottom: 1px solid var(--gray-100);
+    font-size: var(--font-size-sm);
+}
+
+.address-suggestion-item:hover {
+    background-color: var(--gray-50);
+}
+
+.address-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.address-suggestion-item.selected {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
 /* フローティングラベル風エフェクト */
@@ -136,7 +235,7 @@
 .form-hint {
     font-size: var(--font-size-sm);
     color: var(--gray-600);
-    margin-top: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
     font-weight: 500;
 }
 
@@ -179,7 +278,7 @@
     flex-shrink: 0;
 }
 
-.custom-checkbox input[type=\"checkbox\"] {
+.custom-checkbox input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     width: 100%;
@@ -203,7 +302,7 @@
     justify-content: center;
 }
 
-.custom-checkbox input[type=\"checkbox\"]:checked ~ .checkmark {
+.custom-checkbox input[type="checkbox"]:checked ~ .checkmark {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
@@ -219,11 +318,11 @@
     transition: transform var(--transition-fast);
 }
 
-.custom-checkbox input[type=\"checkbox\"]:checked ~ .checkmark::after {
+.custom-checkbox input[type="checkbox"]:checked ~ .checkmark::after {
     transform: rotate(45deg) scale(1);
 }
 
-.custom-checkbox input[type=\"checkbox\"]:focus ~ .checkmark {
+.custom-checkbox input[type="checkbox"]:focus ~ .checkmark {
     box-shadow: 
         0 0 0 4px rgba(255, 77, 0, 0.1),
         0 4px 12px rgba(0, 0, 0, 0.1);
@@ -269,7 +368,7 @@
     flex-shrink: 0;
 }
 
-.custom-radio input[type=\"radio\"] {
+.custom-radio input[type="radio"] {
     position: absolute;
     opacity: 0;
     width: 100%;
@@ -293,7 +392,7 @@
     justify-content: center;
 }
 
-.custom-radio input[type=\"radio\"]:checked ~ .radiomark {
+.custom-radio input[type="radio"]:checked ~ .radiomark {
     border-color: var(--primary-color);
     box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
 }
@@ -308,11 +407,11 @@
     transition: transform var(--transition-fast);
 }
 
-.custom-radio input[type=\"radio\"]:checked ~ .radiomark::after {
+.custom-radio input[type="radio"]:checked ~ .radiomark::after {
     transform: scale(1);
 }
 
-.custom-radio input[type=\"radio\"]:focus ~ .radiomark {
+.custom-radio input[type="radio"]:focus ~ .radiomark {
     box-shadow: 
         0 0 0 4px rgba(255, 77, 0, 0.1),
         0 4px 12px rgba(0, 0, 0, 0.1);
@@ -441,6 +540,62 @@
     border-top: 2px solid var(--gray-100);
 }
 
+/* テーブル形式の入力 */
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.form-table th {
+    background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-800);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.form-table td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--white);
+}
+
+.form-table tr:last-child td {
+    border-bottom: none;
+}
+
+.form-input-sm {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    border-radius: var(--border-radius-sm);
+    width: 100%;
+    max-width: 120px;
+}
+
+/* フォーム行・列レイアウト */
+.form-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.form-col-4 {
+    flex: 0 0 33.333333%;
+}
+
+.form-col-6 {
+    flex: 0 0 50%;
+}
+
+.form-col-8 {
+    flex: 0 0 66.666667%;
+}
+
 /* アニメーション */
 @keyframes inputFocus {
     0% { transform: scale(1); }
@@ -453,6 +608,45 @@
 .form-select:focus,
 .form-textarea:focus {
     animation: inputFocus 0.3s ease-out;
+}
+
+/* 自動入力されたフィールドのスタイル */
+.form-input.auto-filled {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.02), var(--white));
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* ボタンの無効状態 */
+.btn.btn-disabled,
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 成功メッセージのアニメーション */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }
 
 /* レスポンシブ */
@@ -485,5 +679,26 @@
     .form-select,
     .form-textarea {
         padding: 14px 16px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .form-col-4,
+    .form-col-6,
+    .form-col-8 {
+        flex: 1;
+    }
+    
+    .postal-code-input-group {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .postal-code-input-group .btn {
+        width: 100%;
+        min-width: unset;
     }
 }

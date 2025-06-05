@@ -213,10 +213,21 @@
     margin-bottom: var(--spacing-sm);
 }
 
+.wine-card-footer {
+    margin-top: var(--spacing-sm);
+}
+
 .wine-card-price {
     font-size: var(--font-size-lg);
     font-weight: bold;
     color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.wine-purchase-price {
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+    font-style: italic;
 }
 
 /* メニュー設定 */
@@ -605,6 +616,220 @@
     flex-shrink: 0;
 }
 
+/* 価格設定ステップ */
+.pricing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-md);
+}
+
+.bulk-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.wine-pricing-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.wine-pricing-card {
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.wine-pricing-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.wine-pricing-info {
+    margin-left: var(--spacing-md);
+}
+
+.wine-pricing-info h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    color: var(--dark-gray);
+}
+
+.wine-origin {
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+}
+
+.wine-pricing-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.pricing-group {
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    background-color: #fafafa;
+}
+
+.pricing-group h5 {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--dark-gray);
+    font-size: var(--font-size-md);
+}
+
+.pricing-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.pricing-label {
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.input-prefix,
+.input-suffix {
+    background-color: var(--light-gray);
+    padding: 0 var(--spacing-sm);
+    border: 1px solid var(--medium-gray);
+    font-size: var(--font-size-sm);
+    color: var(--dark-gray);
+    line-height: 1.5;
+}
+
+.input-prefix {
+    border-right: none;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+}
+
+.input-suffix {
+    border-left: none;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+}
+
+.input-group .form-input {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    min-width: 100px;
+}
+
+.input-group .form-input:first-child {
+    border-left: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+}
+
+.input-group .form-input:last-child {
+    border-right: 1px solid var(--medium-gray);
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+}
+
+.glass-toggle {
+    margin-bottom: var(--spacing-sm);
+}
+
+.glass-controls {
+    opacity: 0.5;
+    transition: opacity var(--transition-normal);
+}
+
+.glass-controls.enabled {
+    opacity: 1;
+}
+
+/* 他社ワイン */
+.external-wines-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.no-external-wines {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: #6c757d;
+}
+
+.no-data-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.no-data-text {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.no-data-subtext {
+    font-size: var(--font-size-sm);
+}
+
+.external-wine-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--spacing-md);
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
+    background: var(--white);
+}
+
+.external-wine-info {
+    flex: 1;
+}
+
+.external-wine-info h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    color: var(--dark-gray);
+}
+
+.external-wine-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+}
+
+.external-wine-pricing {
+    font-size: var(--font-size-sm);
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.wine-description {
+    font-size: var(--font-size-sm);
+    color: #6c757d;
+    font-style: italic;
+}
+
+.external-wine-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0;
+}
+
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
     .progress-steps {
@@ -663,5 +888,22 @@
     .completion-stats {
         flex-direction: column;
         gap: var(--spacing-md);
+    }
+    
+    .wine-pricing-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .bulk-actions {
+        flex-wrap: wrap;
+    }
+    
+    .external-wine-card {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .external-wine-actions {
+        align-self: flex-end;
     }
 }

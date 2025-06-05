@@ -1,9 +1,10 @@
 /**
- * ワインメニュー生成機能のJavaScript
+ * ワインメニュー生成機能のJavaScript - 統合版
  */
 
 // グローバル変数
 let selectedWines = [];
+let externalWines = [];
 let currentStep = 1;
 let selectedTemplate = '';
 let menuSettings = {
@@ -14,13 +15,13 @@ let menuSettings = {
 
 // サンプルワインデータ（実際はAPIから取得）
 const wineData = [
-    { id: 1, name: 'キャンティ クラシコ リゼルヴァ', type: 'red', origin: 'イタリア・トスカーナ', price: 8000, vintage: '2019', grape: 'サンジョヴェーゼ', stock: 2 },
-    { id: 2, name: 'ソーヴィニヨン・ブラン', type: 'white', origin: 'ニュージーランド・マールボロ', price: 7000, vintage: '2022', grape: 'ソーヴィニヨン・ブラン', stock: 1 },
-    { id: 3, name: 'プロセッコ', type: 'sparkling', origin: 'イタリア・ヴェネト', price: 6000, vintage: '2021', grape: 'グレラ', stock: 5 },
-    { id: 4, name: 'メルロー', type: 'red', origin: 'チリ・セントラルバレー', price: 6000, vintage: '2020', grape: 'メルロー', stock: 3 },
-    { id: 5, name: 'シャルドネ', type: 'white', origin: 'カリフォルニア・ナパバレー', price: 7000, vintage: '2021', grape: 'シャルドネ', stock: 4 },
-    { id: 6, name: 'バローロ', type: 'red', origin: 'イタリア・ピエモンテ', price: 12000, vintage: '2018', grape: 'ネッビオーロ', stock: 6 },
-    { id: 7, name: 'プイィ・フュメ', type: 'white', origin: 'フランス・ロワール', price: 10000, vintage: '2020', grape: 'ソーヴィニヨン・ブラン', stock: 4 }
+    { id: 1, name: 'キャンティ クラシコ リゼルヴァ', type: 'red', origin: 'イタリア・トスカーナ', price: 8000, vintage: '2019', grape: 'サンジョヴェーゼ', stock: 2, purchasePrice: 4000 },
+    { id: 2, name: 'ソーヴィニヨン・ブラン', type: 'white', origin: 'ニュージーランド・マールボロ', price: 7000, vintage: '2022', grape: 'ソーヴィニヨン・ブラン', stock: 1, purchasePrice: 3500 },
+    { id: 3, name: 'プロセッコ', type: 'sparkling', origin: 'イタリア・ヴェネト', price: 6000, vintage: '2021', grape: 'グレラ', stock: 5, purchasePrice: 3000 },
+    { id: 4, name: 'メルロー', type: 'red', origin: 'チリ・セントラルバレー', price: 6000, vintage: '2020', grape: 'メルロー', stock: 3, purchasePrice: 3000 },
+    { id: 5, name: 'シャルドネ', type: 'white', origin: 'カリフォルニア・ナパバレー', price: 7000, vintage: '2021', grape: 'シャルドネ', stock: 4, purchasePrice: 3500 },
+    { id: 6, name: 'バローロ', type: 'red', origin: 'イタリア・ピエモンテ', price: 12000, vintage: '2018', grape: 'ネッビオーロ', stock: 6, purchasePrice: 6000 },
+    { id: 7, name: 'プイィ・フュメ', type: 'white', origin: 'フランス・ロワール', price: 10000, vintage: '2020', grape: 'ソーヴィニヨン・ブラン', stock: 4, purchasePrice: 5000 }
 ];
 
 // ページ読み込み時の初期化
@@ -36,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 各機能の初期化
     initializeWineSelection();
+    initializePricingStep();
+    initializeExternalWines();
     initializeStepNavigation();
     initializeMenuSettings();
     initializeTemplateSelection();
@@ -76,7 +79,7 @@ function initializeWineSelection() {
 }
 
 /**
- * ワイン選択グリッドのレンダリング
+ * ワイン選択グリッドのレンダリング（統一版）
  */
 function renderWineSelectionGrid(filterType = 'all') {
     const grid = document.getElementById('wine-selection-grid');
@@ -93,11 +96,14 @@ function renderWineSelectionGrid(filterType = 'all') {
             <div class="wine-card-details">
                 ${wine.origin} | ${wine.vintage}年 | ${wine.grape}
             </div>
-            <div class="wine-card-price">¥${wine.price.toLocaleString()}</div>
+            <div class="wine-card-footer">
+                <div class="wine-card-price">販売価格: ¥${wine.price.toLocaleString()}</div>
+                <div class="wine-purchase-price">仕入価格: ¥${wine.purchasePrice.toLocaleString()}</div>
+            </div>
         </div>
     `).join('');
     
-    // ワインカードのクリックイベント
+    // ワインカードのクリックイベント（統一版）
     grid.querySelectorAll('.wine-selection-card').forEach(card => {
         card.addEventListener('click', function() {
             const wineId = parseInt(this.getAttribute('data-wine-id'));
@@ -114,7 +120,7 @@ function filterWineSelection(filterType) {
 }
 
 /**
- * ワイン選択のトグル
+ * ワイン選択のトグル（統一版）
  */
 function toggleWineSelection(wineId) {
     const index = selectedWines.indexOf(wineId);
@@ -155,7 +161,7 @@ function clearWineSelection() {
 }
 
 /**
- * 選択UIの更新
+ * 選択UIの更新（統一版）
  */
 function updateSelectionUI() {
     // 選択数の更新
@@ -186,6 +192,403 @@ function validateStep1() {
 }
 
 /**
+ * 価格設定ステップの初期化
+ */
+function initializePricingStep() {
+    // 価格設定関連
+    document.getElementById('apply-markup')?.addEventListener('click', showMarkupModal);
+    document.getElementById('enable-all-glass')?.addEventListener('click', () => toggleAllGlass(true));
+    document.getElementById('disable-all-glass')?.addEventListener('click', () => toggleAllGlass(false));
+    
+    // マークアップモーダル
+    document.getElementById('apply-markup-confirm')?.addEventListener('click', applyMarkup);
+    document.querySelectorAll('input[name="markup-method"]').forEach(radio => {
+        radio.addEventListener('change', updateMarkupMethod);
+    });
+    document.getElementById('markup-percent')?.addEventListener('input', updateMarkupPreview);
+    document.getElementById('markup-amount')?.addEventListener('input', updateMarkupPreview);
+}
+
+/**
+ * 価格設定画面のレンダリング
+ */
+function renderPricingStep() {
+    const pricingList = document.getElementById('wine-pricing-list');
+    if (!pricingList) return;
+    
+    if (selectedWines.length === 0) {
+        pricingList.innerHTML = '<div class="no-data-text">ワインを選択してください</div>';
+        return;
+    }
+    
+    const pricingHtml = selectedWines.map(wineId => {
+        const wine = wineData.find(w => w.id === wineId);
+        if (!wine) return '';
+        
+        const defaultBottlePrice = wine.purchasePrice * 2; // デフォルト2倍
+        const defaultGlassPrice = Math.round(defaultBottlePrice / 5); // ボトル価格の1/5
+        
+        return `
+            <div class="wine-pricing-card" data-wine-id="${wineId}">
+                <div class="wine-pricing-header">
+                    <div class="wine-type-indicator ${wine.type}"></div>
+                    <div class="wine-pricing-info">
+                        <h4>${wine.name}</h4>
+                        <div class="wine-origin">${wine.origin} | 仕入価格: ¥${wine.purchasePrice.toLocaleString()}</div>
+                    </div>
+                </div>
+                <div class="wine-pricing-controls">
+                    <div class="pricing-group">
+                        <h5>ボトル価格</h5>
+                        <div class="pricing-row">
+                            <span class="pricing-label">販売価格:</span>
+                            <div class="input-group">
+                                <span class="input-prefix">¥</span>
+                                <input type="number" class="form-input bottle-price" value="${defaultBottlePrice}" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pricing-group">
+                        <h5>グラス提供</h5>
+                        <div class="glass-toggle">
+                            <input type="checkbox" id="glass-${wineId}" class="glass-checkbox">
+                            <label for="glass-${wineId}">グラスでも提供</label>
+                        </div>
+                        <div class="glass-controls">
+                            <div class="pricing-row">
+                                <span class="pricing-label">グラス価格:</span>
+                                <div class="input-group">
+                                    <span class="input-prefix">¥</span>
+                                    <input type="number" class="form-input glass-price" value="${defaultGlassPrice}" min="0" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    pricingList.innerHTML = pricingHtml;
+    
+    // グラス提供チェックボックスのイベント
+    pricingList.querySelectorAll('.glass-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const card = e.target.closest('.wine-pricing-card');
+            const glassControls = card.querySelector('.glass-controls');
+            const glassPriceInput = card.querySelector('.glass-price');
+            
+            if (e.target.checked) {
+                glassControls.classList.add('enabled');
+                glassPriceInput.disabled = false;
+            } else {
+                glassControls.classList.remove('enabled');
+                glassPriceInput.disabled = true;
+            }
+        });
+    });
+}
+
+/**
+ * 全グラス提供の切り替え
+ */
+function toggleAllGlass(enable) {
+    document.querySelectorAll('.glass-checkbox').forEach(checkbox => {
+        checkbox.checked = enable;
+        checkbox.dispatchEvent(new Event('change'));
+    });
+}
+
+/**
+ * マークアップモーダルの表示
+ */
+function showMarkupModal() {
+    showModal('markup-modal');
+    updateMarkupPreview();
+}
+
+/**
+ * マークアップ方法の更新
+ */
+function updateMarkupMethod() {
+    const method = document.querySelector('input[name="markup-method"]:checked')?.value;
+    const percentageGroup = document.getElementById('markup-percentage-group');
+    const fixedGroup = document.getElementById('markup-fixed-group');
+    
+    if (method === 'percentage') {
+        percentageGroup.style.display = 'block';
+        fixedGroup.style.display = 'none';
+    } else {
+        percentageGroup.style.display = 'none';
+        fixedGroup.style.display = 'block';
+    }
+    
+    updateMarkupPreview();
+}
+
+/**
+ * マークアッププレビューの更新
+ */
+function updateMarkupPreview() {
+    const method = document.querySelector('input[name="markup-method"]:checked')?.value;
+    const exampleCost = 4000;
+    let resultPrice;
+    
+    if (method === 'percentage') {
+        const percent = parseInt(document.getElementById('markup-percent')?.value) || 200;
+        resultPrice = Math.round(exampleCost * percent / 100);
+    } else {
+        const amount = parseInt(document.getElementById('markup-amount')?.value) || 3000;
+        resultPrice = exampleCost + amount;
+    }
+    
+    const previewElement = document.getElementById('markup-preview-price');
+    if (previewElement) {
+        previewElement.textContent = `¥${resultPrice.toLocaleString()}`;
+    }
+}
+
+/**
+ * マークアップの適用
+ */
+function applyMarkup() {
+    const method = document.querySelector('input[name="markup-method"]:checked')?.value;
+    const percent = parseInt(document.getElementById('markup-percent')?.value) || 200;
+    const amount = parseInt(document.getElementById('markup-amount')?.value) || 3000;
+    
+    document.querySelectorAll('.wine-pricing-card').forEach(card => {
+        const wineId = parseInt(card.dataset.wineId);
+        const wine = wineData.find(w => w.id === wineId);
+        if (!wine) return;
+        
+        const bottlePriceInput = card.querySelector('.bottle-price');
+        const glassPriceInput = card.querySelector('.glass-price');
+        
+        let newBottlePrice;
+        if (method === 'percentage') {
+            newBottlePrice = Math.round(wine.purchasePrice * percent / 100);
+        } else {
+            newBottlePrice = wine.purchasePrice + amount;
+        }
+        
+        bottlePriceInput.value = newBottlePrice;
+        glassPriceInput.value = Math.round(newBottlePrice / 5);
+    });
+    
+    closeModal('markup-modal');
+}
+
+/**
+ * 他社ワイン機能の初期化
+ */
+function initializeExternalWines() {
+    // 他社ワイン関連
+    document.getElementById('add-external-wine')?.addEventListener('click', showExternalWineModal);
+    document.getElementById('save-external-wine')?.addEventListener('click', saveExternalWine);
+    
+    // 他社ワインモーダル
+    document.getElementById('external-glass-available')?.addEventListener('change', (e) => {
+        const glassPriceGroup = document.querySelector('.glass-price-group');
+        if (glassPriceGroup) {
+            glassPriceGroup.style.display = e.target.checked ? 'block' : 'none';
+        }
+    });
+    
+    // モーダル閉じる
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const modal = e.target.closest('.modal');
+            if (modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+}
+
+/**
+ * 他社ワインモーダルの表示
+ */
+function showExternalWineModal() {
+    const form = document.getElementById('external-wine-form');
+    if (form) {
+        form.reset();
+    }
+    const glassPriceGroup = document.querySelector('.glass-price-group');
+    if (glassPriceGroup) {
+        glassPriceGroup.style.display = 'none';
+    }
+    showModal('external-wine-modal');
+}
+
+/**
+ * 他社ワインの保存
+ */
+function saveExternalWine() {
+    const name = document.getElementById('external-wine-name')?.value.trim();
+    const type = document.getElementById('external-wine-type')?.value;
+    const origin = document.getElementById('external-wine-origin')?.value.trim();
+    const bottlePrice = parseInt(document.getElementById('external-bottle-price')?.value);
+    const glassAvailable = document.getElementById('external-glass-available')?.checked;
+    const glassPrice = parseInt(document.getElementById('external-glass-price')?.value) || 0;
+    const description = document.getElementById('external-wine-description')?.value.trim();
+    
+    if (!name || !bottlePrice) {
+        alert('ワイン名とボトル価格は必須です。');
+        return;
+    }
+    
+    const externalWine = {
+        id: Date.now(),
+        name,
+        type,
+        origin: origin || '産地未指定',
+        bottlePrice,
+        glassAvailable,
+        glassPrice: glassAvailable ? glassPrice : 0,
+        description,
+        isExternal: true
+    };
+    
+    externalWines.push(externalWine);
+    renderExternalWinesList();
+    closeModal('external-wine-modal');
+}
+
+/**
+ * 他社ワインリストのレンダリング
+ */
+function renderExternalWinesList() {
+    const list = document.getElementById('external-wines-list');
+    if (!list) return;
+    
+    if (externalWines.length === 0) {
+        list.innerHTML = `
+            <div class="no-external-wines">
+                <div class="no-data-icon">🍷</div>
+                <div class="no-data-text">他社ワインが追加されていません</div>
+                <div class="no-data-subtext">「ワインを追加」ボタンから他社ワインを追加できます</div>
+            </div>
+        `;
+        return;
+    }
+    
+    const winesHtml = externalWines.map(wine => `
+        <div class="external-wine-card" data-wine-id="${wine.id}">
+            <div class="external-wine-info">
+                <h4>${wine.name}</h4>
+                <div class="external-wine-meta">
+                    <span class="wine-type-indicator ${wine.type}"></span>
+                    <span>${getWineTypeText(wine.type)}</span>
+                    <span>|</span>
+                    <span>${wine.origin}</span>
+                </div>
+                <div class="external-wine-pricing">
+                    <span>ボトル: ¥${wine.bottlePrice.toLocaleString()}</span>
+                    ${wine.glassAvailable ? `<span>| グラス: ¥${wine.glassPrice.toLocaleString()}</span>` : ''}
+                </div>
+                ${wine.description ? `<div class="wine-description">${wine.description}</div>` : ''}
+            </div>
+            <div class="external-wine-actions">
+                <button class="btn btn-sm btn-outline-secondary" onclick="editExternalWine(${wine.id})">編集</button>
+                <button class="btn btn-sm btn-light" onclick="removeExternalWine(${wine.id})">削除</button>
+            </div>
+        </div>
+    `).join('');
+    
+    list.innerHTML = winesHtml;
+}
+
+/**
+ * 他社ワインの削除
+ */
+function removeExternalWine(wineId) {
+    if (confirm('この他社ワインを削除しますか？')) {
+        externalWines = externalWines.filter(wine => wine.id !== wineId);
+        renderExternalWinesList();
+    }
+}
+
+/**
+ * 他社ワインの編集
+ */
+function editExternalWine(wineId) {
+    const wine = externalWines.find(w => w.id === wineId);
+    if (!wine) return;
+    
+    // フォームに現在の値を設定
+    document.getElementById('external-wine-name').value = wine.name;
+    document.getElementById('external-wine-type').value = wine.type;
+    document.getElementById('external-wine-origin').value = wine.origin;
+    document.getElementById('external-bottle-price').value = wine.bottlePrice;
+    document.getElementById('external-glass-available').checked = wine.glassAvailable;
+    document.getElementById('external-glass-price').value = wine.glassPrice;
+    document.getElementById('external-wine-description').value = wine.description;
+    
+    // グラス価格フィールドの表示/非表示
+    const glassPriceGroup = document.querySelector('.glass-price-group');
+    if (glassPriceGroup) {
+        glassPriceGroup.style.display = wine.glassAvailable ? 'block' : 'none';
+    }
+    
+    // 編集モードとして保存ボタンを変更
+    const saveButton = document.getElementById('save-external-wine');
+    if (saveButton) {
+        saveButton.textContent = '更新';
+        saveButton.onclick = () => updateExternalWine(wineId);
+    }
+    
+    showModal('external-wine-modal');
+}
+
+/**
+ * 他社ワインの更新
+ */
+function updateExternalWine(wineId) {
+    const wine = externalWines.find(w => w.id === wineId);
+    if (!wine) return;
+    
+    const name = document.getElementById('external-wine-name')?.value.trim();
+    const bottlePrice = parseInt(document.getElementById('external-bottle-price')?.value);
+    
+    if (!name || !bottlePrice) {
+        alert('ワイン名とボトル価格は必須です。');
+        return;
+    }
+    
+    // ワイン情報を更新
+    wine.name = name;
+    wine.type = document.getElementById('external-wine-type')?.value;
+    wine.origin = document.getElementById('external-wine-origin')?.value.trim() || '産地未指定';
+    wine.bottlePrice = bottlePrice;
+    wine.glassAvailable = document.getElementById('external-glass-available')?.checked;
+    wine.glassPrice = wine.glassAvailable ? (parseInt(document.getElementById('external-glass-price')?.value) || 0) : 0;
+    wine.description = document.getElementById('external-wine-description')?.value.trim();
+    
+    renderExternalWinesList();
+    closeModal('external-wine-modal');
+    
+    // 保存ボタンを元に戻す
+    const saveButton = document.getElementById('save-external-wine');
+    if (saveButton) {
+        saveButton.textContent = '追加';
+        saveButton.onclick = () => saveExternalWine();
+    }
+}
+
+/**
+ * ワイン種類テキストの取得
+ */
+function getWineTypeText(type) {
+    const typeMap = {
+        'red': '赤ワイン',
+        'white': '白ワイン',
+        'sparkling': 'スパークリング',
+        'rose': 'ロゼワイン'
+    };
+    return typeMap[type] || type;
+}
+
+/**
  * ステップナビゲーションの初期化
  */
 function initializeStepNavigation() {
@@ -193,7 +596,7 @@ function initializeStepNavigation() {
     document.querySelectorAll('.btn-next').forEach(btn => {
         btn.addEventListener('click', function() {
             const nextStep = parseInt(this.getAttribute('data-next'));
-            if (nextStep) {
+            if (nextStep && validateCurrentStep()) {
                 goToStep(nextStep);
             }
         });
@@ -211,14 +614,36 @@ function initializeStepNavigation() {
 }
 
 /**
+ * 現在のステップの検証
+ */
+function validateCurrentStep() {
+    switch (currentStep) {
+        case 1:
+            return selectedWines.length > 0;
+        case 2:
+            // 価格が全て設定されているかチェック
+            const bottlePrices = document.querySelectorAll('.bottle-price');
+            return Array.from(bottlePrices).every(input => parseInt(input.value) > 0);
+        default:
+            return true;
+    }
+}
+
+/**
  * 指定ステップに移動
  */
 function goToStep(step) {
     // 現在のステップを非表示
-    document.getElementById(`step-${currentStep}`).style.display = 'none';
+    const currentStepElement = document.getElementById(`step-${currentStep}`);
+    if (currentStepElement) {
+        currentStepElement.style.display = 'none';
+    }
     
     // 新しいステップを表示
-    document.getElementById(`step-${step}`).style.display = 'block';
+    const nextStepElement = document.getElementById(`step-${step}`);
+    if (nextStepElement) {
+        nextStepElement.style.display = 'block';
+    }
     
     // ステップインジケーターを更新
     updateStepIndicator(step);
@@ -251,24 +676,30 @@ function updateStepIndicator(activeStep) {
 function handleStepChange(step) {
     switch (step) {
         case 2:
-            initializeStep2();
+            renderPricingStep();
             break;
         case 3:
-            // テンプレート選択ステップ
+            renderExternalWinesList();
             break;
         case 4:
-            loadRestaurantInfo();
+            initializeStep4();
             break;
         case 5:
+            // テンプレート選択
+            break;
+        case 6:
+            loadRestaurantInfo();
+            break;
+        case 7:
             generateMenuPreview();
             break;
     }
 }
 
 /**
- * ステップ2の初期化
+ * ステップ4（順番・設定）の初期化
  */
-function initializeStep2() {
+function initializeStep4() {
     // カスタム順序設定の表示/非表示
     const sortOrderInputs = document.querySelectorAll('input[name="sort-order"]');
     const customOrderSection = document.getElementById('custom-order-section');
@@ -276,10 +707,14 @@ function initializeStep2() {
     sortOrderInputs.forEach(input => {
         input.addEventListener('change', function() {
             if (this.value === 'custom') {
-                customOrderSection.style.display = 'block';
-                renderSortableWineList();
+                if (customOrderSection) {
+                    customOrderSection.style.display = 'block';
+                    renderSortableWineList();
+                }
             } else {
-                customOrderSection.style.display = 'none';
+                if (customOrderSection) {
+                    customOrderSection.style.display = 'none';
+                }
             }
             menuSettings.sortOrder = this.value;
         });
@@ -390,7 +825,7 @@ function initializeMenuSettings() {
  */
 function initializeTemplateSelection() {
     const templateCards = document.querySelectorAll('.template-card');
-    const step3NextBtn = document.getElementById('step3-next');
+    const step5NextBtn = document.getElementById('step5-next');
     
     templateCards.forEach(card => {
         card.addEventListener('click', function() {
@@ -402,8 +837,8 @@ function initializeTemplateSelection() {
             selectedTemplate = this.getAttribute('data-template');
             
             // 次へボタンを有効化
-            if (step3NextBtn) {
-                step3NextBtn.disabled = false;
+            if (step5NextBtn) {
+                step5NextBtn.disabled = false;
             }
         });
     });
@@ -417,7 +852,7 @@ function initializeCustomization() {
     initializeLogoUpload();
     
     // フォーム入力の保存
-    const formInputs = document.querySelectorAll('#step-4 input, #step-4 textarea');
+    const formInputs = document.querySelectorAll('#step-6 input, #step-6 textarea');
     formInputs.forEach(input => {
         input.addEventListener('change', saveCustomizationData);
     });
@@ -489,9 +924,11 @@ function handleLogoFile(file) {
         const uploadArea = document.getElementById('logo-upload-area');
         const logoPreview = document.getElementById('logo-preview');
         
-        logoPreviewImage.src = e.target.result;
-        uploadArea.style.display = 'none';
-        logoPreview.style.display = 'block';
+        if (logoPreviewImage && uploadArea && logoPreview) {
+            logoPreviewImage.src = e.target.result;
+            uploadArea.style.display = 'none';
+            logoPreview.style.display = 'block';
+        }
     };
     reader.readAsDataURL(file);
 }
@@ -504,16 +941,20 @@ function loadRestaurantInfo() {
     const savedInfo = JSON.parse(localStorage.getItem('restaurantInfo') || '{}');
     
     if (savedInfo.name) {
-        document.getElementById('restaurant-name').value = savedInfo.name;
+        const nameInput = document.getElementById('restaurant-name');
+        if (nameInput) nameInput.value = savedInfo.name;
     }
     if (savedInfo.subtitle) {
-        document.getElementById('restaurant-subtitle').value = savedInfo.subtitle;
+        const subtitleInput = document.getElementById('restaurant-subtitle');
+        if (subtitleInput) subtitleInput.value = savedInfo.subtitle;
     }
     if (savedInfo.address) {
-        document.getElementById('restaurant-address').value = savedInfo.address;
+        const addressInput = document.getElementById('restaurant-address');
+        if (addressInput) addressInput.value = savedInfo.address;
     }
     if (savedInfo.phone) {
-        document.getElementById('restaurant-phone').value = savedInfo.phone;
+        const phoneInput = document.getElementById('restaurant-phone');
+        if (phoneInput) phoneInput.value = savedInfo.phone;
     }
 }
 
@@ -600,7 +1041,7 @@ function generateMenuPreview() {
  * 選択されたワインデータの取得
  */
 function getSelectedWinesData() {
-    return wineData.filter(wine => selectedWines.includes(wine.id));
+    return wineData.filter(wine => selectedWines.includes(wine.id)).concat(externalWines);
 }
 
 /**
@@ -609,11 +1050,11 @@ function getSelectedWinesData() {
 function sortWines(wines) {
     switch (menuSettings.sortOrder) {
         case 'price-asc':
-            return wines.sort((a, b) => a.price - b.price);
+            return wines.sort((a, b) => (a.price || a.bottlePrice) - (b.price || b.bottlePrice));
         case 'price-desc':
-            return wines.sort((a, b) => b.price - a.price);
+            return wines.sort((a, b) => (b.price || b.bottlePrice) - (a.price || a.bottlePrice));
         case 'popularity':
-            return wines.sort((a, b) => b.stock - a.stock); // 在庫数を人気の指標として使用
+            return wines.sort((a, b) => (b.stock || 0) - (a.stock || 0)); // 在庫数を人気の指標として使用
         case 'custom':
             return menuSettings.customOrder.map(id => wines.find(wine => wine.id === id)).filter(Boolean);
         case 'type-price':
@@ -623,7 +1064,7 @@ function sortWines(wines) {
                     const typeOrder = ['sparkling', 'white', 'rose', 'red'];
                     return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
                 }
-                return a.price - b.price;
+                return (a.price || a.bottlePrice) - (b.price || b.bottlePrice);
             });
     }
 }
@@ -713,16 +1154,17 @@ function generateWineItem(wine) {
     
     let details = [];
     if (displayOptions.includes('origin')) details.push(wine.origin);
-    if (displayOptions.includes('vintage')) details.push(`${wine.vintage}年`);
-    if (displayOptions.includes('grape')) details.push(wine.grape);
+    if (displayOptions.includes('vintage') && wine.vintage) details.push(`${wine.vintage}年`);
+    if (displayOptions.includes('grape') && wine.grape) details.push(wine.grape);
     
     const detailsText = details.join(' | ');
+    const price = wine.price || wine.bottlePrice;
     
     return `
         <div class="wine-item">
             <div class="wine-main">
                 <div class="wine-name">${wine.name}</div>
-                <div class="wine-price">¥${wine.price.toLocaleString()}</div>
+                <div class="wine-price">¥${price.toLocaleString()}</div>
             </div>
             ${detailsText ? `<div class="wine-details">${detailsText}</div>` : ''}
             ${generateSommiaComment(wine)}
@@ -747,8 +1189,7 @@ function generateSommiaComment(wine) {
         7: 'ミネラル感豊かで、魚料理との相性が素晴らしいです。'
     };
     
-    const comment = comments[wine.id];
-    if (!comment) return '';
+    const comment = comments[wine.id] || wine.description || 'Sommiaおすすめの一本です。';
     
     return `<div class="sommia-comment">🍷 Sommia: ${comment}</div>`;
 }
@@ -775,16 +1216,6 @@ function generateMenuFooter(restaurantInfo) {
 function downloadMenuPDF() {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
-    
-    // メニューの内容をPDFに変換（簡易実装）
-    const menuElement = document.getElementById('menu-preview');
-    
-    // html2canvasが利用できる場合の実装（実際の環境では追加のライブラリが必要）
-    // html2canvas(menuElement).then(canvas => {
-    //     const imgData = canvas.toDataURL('image/png');
-    //     pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
-    //     pdf.save('wine-menu.pdf');
-    // });
     
     // 簡易実装：テキストベースのPDF生成
     generateTextBasedPDF(pdf);
@@ -820,12 +1251,14 @@ function generateTextBasedPDF(pdf) {
         typeWines.forEach(wine => {
             pdf.setFontSize(12);
             pdf.text(`${wine.name}`, 25, yPosition);
-            pdf.text(`¥${wine.price.toLocaleString()}`, 180, yPosition, { align: 'right' });
+            const price = wine.price || wine.bottlePrice;
+            pdf.text(`¥${price.toLocaleString()}`, 180, yPosition, { align: 'right' });
             yPosition += 6;
             
             if (menuSettings.displayOptions.includes('origin')) {
                 pdf.setFontSize(10);
-                pdf.text(`${wine.origin} | ${wine.vintage}年`, 30, yPosition);
+                const details = wine.origin + (wine.vintage ? ` | ${wine.vintage}年` : '');
+                pdf.text(details, 30, yPosition);
                 yPosition += 5;
             }
             
@@ -858,7 +1291,7 @@ function generateTextBasedPDF(pdf) {
  */
 function printMenu() {
     const printWindow = window.open('', '_blank');
-    const menuHTML = document.getElementById('menu-preview').innerHTML;
+    const menuHTML = document.getElementById('menu-preview')?.innerHTML || '';
     
     printWindow.document.write(`
         <!DOCTYPE html>
@@ -912,14 +1345,18 @@ function completeGeneration() {
     }
     
     // 完了統計の更新
-    document.getElementById('final-wine-count').textContent = selectedWines.length;
-    document.getElementById('final-template').textContent = getTemplateDisplayName(selectedTemplate);
+    const finalWineCountElement = document.getElementById('final-wine-count');
+    const finalTemplateElement = document.getElementById('final-template');
+    
+    if (finalWineCountElement) {
+        finalWineCountElement.textContent = selectedWines.length + externalWines.length;
+    }
+    if (finalTemplateElement) {
+        finalTemplateElement.textContent = getTemplateDisplayName(selectedTemplate);
+    }
     
     // 完了モーダルを表示
-    const modal = document.getElementById('completion-modal');
-    if (modal) {
-        modal.classList.add('active');
-    }
+    showModal('completion-modal');
 }
 
 /**
@@ -928,6 +1365,7 @@ function completeGeneration() {
 function saveMenuTemplate() {
     const template = {
         selectedWines: selectedWines,
+        externalWines: externalWines,
         menuSettings: menuSettings,
         selectedTemplate: selectedTemplate,
         restaurantInfo: JSON.parse(localStorage.getItem('restaurantInfo') || '{}'),
@@ -948,6 +1386,28 @@ function getTemplateDisplayName(template) {
         'bistro': 'ビストロ'
     };
     return names[template] || template;
+}
+
+/**
+ * モーダルの表示
+ */
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/**
+ * モーダルの非表示
+ */
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 }
 
 // AIシミュレーター用のメッセージ追加

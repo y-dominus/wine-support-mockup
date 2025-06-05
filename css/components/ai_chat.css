@@ -389,21 +389,22 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
-    background: linear-gradient(135deg, rgba(136, 69, 145, 0.03), rgba(185, 90, 157, 0.05));
-    border: 1px solid rgba(136, 69, 145, 0.08);
-    border-left: 3px solid var(--secondary-color);
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 16px 20px; /* パディングを少し増やして読みやすく */
+    background: linear-gradient(135deg, rgba(136, 69, 145, 0.05), rgba(185, 90, 157, 0.08));
+    border: 1px solid rgba(136, 69, 145, 0.12);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 10px;
+    margin-bottom: 24px; /* 下の余白を統一 */
     position: relative;
     transition: all 0.2s ease;
 }
 
 .ai-page-message:hover,
 .ai-message:not(.redirect-page .ai-message):hover {
-    border-left-width: 4px;
-    box-shadow: 0 2px 8px rgba(136, 69, 145, 0.1);
-    background: linear-gradient(135deg, rgba(136, 69, 145, 0.05), rgba(185, 90, 157, 0.08));
+    border-left-width: 5px;
+    box-shadow: 0 3px 12px rgba(136, 69, 145, 0.15);
+    background: linear-gradient(135deg, rgba(136, 69, 145, 0.08), rgba(185, 90, 157, 0.12));
+    transform: translateX(2px); /* ホバー時に少し動かす */
 }
 
 .ai-page-message .ai-avatar-container,
@@ -431,35 +432,36 @@
 .ai-message:not(.redirect-page .ai-message) .ai-text {
     flex: 1;
     color: var(--gray-700, #374151);
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 15px; /* フォントサイズを少し大きく */
+    line-height: 1.5; /* 行間を広げて読みやすく */
     font-weight: 500;
     margin: 0;
 }
 
 /* コンパクトメッセージ用閉じるボタン */
 .ai-message:not(.redirect-page .ai-message) .ai-close {
-    width: 20px;
-    height: 20px;
+    width: 24px; /* サイズを少し大きくしてクリックしやすく */
+    height: 24px;
     border-radius: 50%;
-    background: rgba(136, 69, 145, 0.1);
+    background: rgba(136, 69, 145, 0.08);
     border: none;
     color: var(--secondary-color);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .ai-message:not(.redirect-page .ai-message) .ai-close:hover {
     opacity: 1;
-    background: rgba(136, 69, 145, 0.15);
-    transform: scale(1.1);
+    background: rgba(136, 69, 145, 0.2);
+    transform: scale(1.15);
+    color: var(--secondary-hover); /* ホバー時の色を濃く */
 }
 
 /* 3. フォーム要素のサイズバランス調整 */
@@ -530,21 +532,56 @@
 @media (max-width: 768px) {
     .ai-alert-message {
         padding: var(--spacing-md);
-        flex-direction: column;
-        text-align: center;
+        margin-bottom: var(--spacing-lg);
     }
     
     .ai-alert-message .ai-text {
         font-size: var(--font-size-md);
+        text-align: center;
     }
     
-    .ai-page-message {
-        padding: var(--spacing-sm) var(--spacing-md);
+    .ai-page-message,
+    .ai-message:not(.redirect-page .ai-message) {
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
     }
     
-    .ai-page-message .ai-avatar {
-        width: 35px;
-        height: 35px;
+    .ai-page-message .ai-avatar,
+    .ai-message:not(.redirect-page .ai-message) .ai-avatar,
+    .ai-avatar-small {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .ai-page-message .ai-text,
+    .ai-message:not(.redirect-page .ai-message) .ai-text {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .ai-message:not(.redirect-page .ai-message) .ai-close {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+    }
+}
+
+/* 超小画面用の追加調整 */
+@media (max-width: 480px) {
+    .ai-message:not(.redirect-page .ai-message) {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+    
+    .ai-message:not(.redirect-page .ai-message) .ai-text {
+        font-size: 13px;
+    }
+    
+    .ai-message:not(.redirect-page .ai-message) .ai-avatar,
+    .ai-avatar-small {
+        width: 28px;
+        height: 28px;
     }
 }
 

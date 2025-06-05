@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // パフォーマンスチャートの初期化
     initializePerformanceChart();
     
-    // モーダル機能の初期化
-    initializeModal();
-    
     // アクションボタンの初期化
     initializeActionButtons();
     
@@ -96,95 +93,14 @@ function initializePerformanceChart() {
     });
 }
 
-/**
- * モーダル機能の初期化
- */
-function initializeModal() {
-    const modal = document.getElementById('execution-modal');
-    const executeBtn = document.getElementById('execute-plan');
-    const confirmBtn = document.getElementById('confirm-execution');
-    const closeButtons = document.querySelectorAll('.modal-close');
-    
-    if (!modal || !executeBtn) {
-        console.warn('モーダルまたは実行ボタンが見つかりません');
-        return;
-    }
-    
-    // モーダルを初期状態に設定
-    modal.style.display = 'none';
-    modal.classList.remove('active');
-    
-    // 実行ボタンクリック時
-    executeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('実行ボタンがクリックされました');
-        
-        // モーダルを表示
-        modal.style.display = 'block';
-        modal.classList.add('active');
-        
-        // bodyのスクロールを無効化
-        document.body.style.overflow = 'hidden';
-    });
-    
-    // 確認ボタンクリック時
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const gradualExecution = document.getElementById('gradual-execution')?.checked || false;
-            const autoOrder = document.getElementById('auto-order')?.checked || false;
-            
-            console.log('最適化プランを実行します:', { gradualExecution, autoOrder });
-            
-            // モーダルを閉じる
-            closeModal();
-            
-            // 最適化プランを実行
-            executeOptimizationPlan(gradualExecution, autoOrder);
-        });
-    }
-    
-    // モーダルを閉じるボタン
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            closeModal();
-        });
-    });
-    
-    // オーバーレイクリックで閉じる
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal || e.target.classList.contains('modal-overlay')) {
-            closeModal();
-        }
-    });
-    
-    // ESCキーで閉じる
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-    
-    /**
-     * モーダルを閉じる内部関数
-     */
-    function closeModal() {
-        modal.style.display = 'none';
-        modal.classList.remove('active');
-        
-        // bodyのスクロールを有効化
-        document.body.style.overflow = '';
-    }
-}
+
 
 /**
  * アクションボタンの初期化
  */
 function initializeActionButtons() {
     const saveBtn = document.getElementById('save-analysis');
-    const skipBtn = document.getElementById('skip-optimization');
+    const addToCartBtn = document.getElementById('add-to-cart');
     
     if (saveBtn) {
         saveBtn.addEventListener('click', function() {
@@ -192,37 +108,84 @@ function initializeActionButtons() {
         });
     }
     
-    if (skipBtn) {
-        skipBtn.addEventListener('click', function() {
-            skipOptimization();
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function(e) {
+            // リンクのデフォルト動作を防ぐ
+            e.preventDefault();
+            
+            // 推奨銘柄をカートに追加
+            addRecommendedWinesToCart();
+            
+            // 少し遅延してからカートページに移動
+            setTimeout(() => {
+                window.location.href = 'cart.html?optimization=true';
+            }, 1000);
         });
     }
 }
 
 /**
- * 最適化プランの実行
+ * 推奨銘柄をカートに追加
  */
-function executeOptimizationPlan(gradual, autoOrder) {
-    // 実行オプションに基づいた処理
-    const executionType = gradual ? '段階的実行' : '一括実行';
-    const orderType = autoOrder ? '自動発注あり' : '手動発注';
+function addRecommendedWinesToCart() {
+    // 推奨銘柄のデータ
+    const recommendedWines = [
+        {
+            name: 'ヴェルメンティーノ 2023',
+            region: 'イタリア・サルデーニャ',
+            type: '白ワイン',
+            price: 6800,
+            quantity: 6 // 初回推奨数量
+        },
+        {
+            name: 'サンジョヴェーゼ 2021',
+            region: 'イタリア・トスカーナ',
+            type: '赤ワイン',
+            price: 5200,
+            quantity: 6
+        },
+        {
+            name: 'アルバリーニョ 2023',
+            region: 'スペイン・リアス・バイシャス',
+            type: '白ワイン',
+            price: 7500,
+            quantity: 4
+        }
+    ];
     
-    // 実際の実装では、ここでAPIコールを行う
-    console.log('最適化プラン実行:', {
-        type: executionType,
-        autoOrder: orderType,
-        removeWines: ['シラーズ 2021', 'リースリング 2022'],
-        addWines: ['ヴェルメンティーノ 2023', 'サンジョヴェーゼ 2021', 'アルバリーニョ 2023']
-    });
-    
-    // 成功メッセージの表示
-    showSuccessMessage('最適化プランの実行を開始しました！', 
-        '進捗状況はダッシュボードで確認できます。実行完了まで1-2週間程度お待ちください。');
-    
-    // 少し遅延してからダッシュボードに戻る
-    setTimeout(() => {
-        window.location.href = 'dashboard.html?optimization_started=true';
-    }, 3000);
+    // ローカルストレージにカート情報を保存（実際の実装ではサーバーへAPIコール）
+    try {
+        let cart = JSON.parse(localStorage.getItem('wineCart') || '[]');
+        
+        recommendedWines.forEach(wine => {
+            // 既存のアイテムかどうかチェック
+            const existingIndex = cart.findIndex(item => item.name === wine.name);
+            
+            if (existingIndex >= 0) {
+                // 既存の場合は数量を更新
+                cart[existingIndex].quantity += wine.quantity;
+            } else {
+                // 新規追加
+                cart.push({
+                    ...wine,
+                    id: Date.now() + Math.random(), // 簡易ID
+                    addedFromOptimization: true // 最適化からの追加フラグ
+                });
+            }
+        });
+        
+        localStorage.setItem('wineCart', JSON.stringify(cart));
+        
+        console.log('推奨銘柄をカートに追加しました:', recommendedWines);
+        
+        // 成功メッセージを表示
+        showSuccessMessage('推奨銘柄をカートに追加しました！', 
+            '発注管理画面で一括発注できます。');
+        
+    } catch (error) {
+        console.error('カート追加エラー:', error);
+        showErrorMessage('カートへの追加に失敗しました', 'しばらくしてから再度お試しください。');
+    }
 }
 
 /**
@@ -237,18 +200,7 @@ function saveAnalysisResults() {
         'いつでもマイページから分析結果を確認できます。');
 }
 
-/**
- * 最適化のスキップ
- */
-function skipOptimization() {
-    if (confirm('今回の最適化提案をスキップしますか？\n次回は1ヶ月後に再提案いたします。')) {
-        // 実際の実装では、ここでスキップ情報をAPIに送信
-        console.log('最適化提案をスキップしました');
-        
-        // ダッシュボードに戻る
-        window.location.href = 'dashboard.html?optimization_skipped=true';
-    }
-}
+
 
 /**
  * 成功メッセージの表示
@@ -286,6 +238,40 @@ function showSuccessMessage(title, message) {
 }
 
 /**
+ * エラーメッセージの表示
+ */
+function showErrorMessage(title, message) {
+    // 簡易的なエラーメッセージ表示
+    const messageHtml = `
+        <div class="error-message" style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f44336, #e57373);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 300px;
+        ">
+            <div style="font-weight: bold; margin-bottom: 0.5rem;">${title}</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">${message}</div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', messageHtml);
+    
+    // 5秒後に自動削除
+    setTimeout(() => {
+        const messageEl = document.querySelector('.error-message');
+        if (messageEl) {
+            messageEl.remove();
+        }
+    }, 5000);
+}
+
+/**
  * AIシミュレーター用のセリフ定義を追加
  */
 if (typeof aiDialogue !== 'undefined') {
@@ -294,6 +280,6 @@ if (typeof aiDialogue !== 'undefined') {
         
         recommendation: () => `3ヶ月のデータ分析から、2銘柄の削除と3銘柄の追加をお勧めします。この変更で約15%の売上向上が期待できますよ。`,
         
-        execution: () => `段階的な実行がお勧めです。まず1-2銘柄から始めて、お客様の反応を見ながら調整していきましょう。私がしっかりサポートします！`
+        cartAdd: () => `追加推奨銘柄をカートに追加しました！発注管理画面で一括発注できます。最初は少なめの数量から始めて、お客様の反応を見ながら調整していきましょう！`
     };
 }

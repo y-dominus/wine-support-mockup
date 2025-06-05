@@ -1,3 +1,140 @@
+.form-option-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-option-title {
+    margin: 0 0 1rem 0;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.form-option-divider {
+    text-align: center;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.form-option-divider::before,
+.form-option-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.form-option-divider::before {
+    left: 0;
+}
+
+.form-option-divider::after {
+    right: 0;
+}
+
+/* 方法選択ボタン */
+.method-selection-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.method-btn {
+    flex: 1;
+    padding: 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.method-btn:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(255, 77, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.method-btn.active {
+    border-color: var(--primary-color);
+    background: rgba(255, 77, 0, 0.05);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.method-btn.active::before {
+    content: '✓';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 24px;
+    height: 24px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.method-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.method-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.method-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* メソッドコンテンツ */
+.method-content {
+    display: none;
+    margin-top: 1.5rem;
+}
+
+.method-content.active {
+    display: block;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .method-selection-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .method-btn {
+        padding: 1rem;
+    }
+    
+    .method-icon {
+        font-size: 1.5rem;
+    }
+    
+    .method-title {
+        font-size: 1rem;
+    }
+}
+
 /* ログインリンクコンテナ */
 .login-link-container {
     margin-top: var(--spacing-md);
@@ -744,11 +881,114 @@
     background: #e2e8f0;
 }
 
-.element-tag input:checked + span {
-    background: var(--primary-color);
-    color: white;
-}
+
 
 .element-tag input {
     margin: 0;
+}
+
+/* 料理要素タグの選択状態スタイル */
+.element-tag input[type="checkbox"]:checked {
+    accent-color: var(--primary-color);
+}
+
+.element-tag:has(input[type="checkbox"]:checked) {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.element-tag:has(input[type="checkbox"]:checked):hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+/* 改善された構造用のスタイル - 既存デザインと統一 */
+.add-dish-container {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.dish-basic-info {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.dish-elements-section {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md);
+}
+
+.elements-section-title {
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--secondary-color);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.dish-input-group {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--primary-color);
+}
+
+.dish-input-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.dish-input-header h4 {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+/* 任意項目のスタイル */
+.form-hint-inline {
+    color: var(--gray-500);
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    margin-left: var(--spacing-xs);
+}
+
+/* メニューがない場合のガイダンス */
+.no-dishes-guidance {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--gray-50);
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--border-radius-md);
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-md);
+}
+
+.no-dishes-guidance .guidance-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-400);
+}
+
+.no-dishes-guidance .guidance-text {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.no-dishes-guidance .guidance-subtext {
+    font-size: var(--font-size-sm);
+    color: var(--gray-500);
 }

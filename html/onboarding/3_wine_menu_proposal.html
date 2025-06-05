@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワインメニュー提案 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/buttons.css">
+    <link rel="stylesheet" href="../../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../../css/components/cards.css">
+    <link rel="stylesheet" href="../../css/pages/onboarding.css">
+    <link rel="stylesheet" href="../../css/pages/wine_menu.css">
+    <script defer src="../../js/main.js"></script>
+    <script defer src="../../js/common_parts.js"></script>
+    <script defer src="../../js/ai_simulator.js"></script>
+    <script defer src="../../js/utils.js"></script>
+    <script defer src="../../js/page_specific/wine_menu_proposal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <div class="container">
+            <div class="onboarding-container">
+                <div class="onboarding-progress">
+                    <div class="progress-step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">ようこそ</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-label">店舗情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-label">ワイン要望</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">4</div>
+                        <div class="step-label">料理情報</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step completed">
+                        <div class="step-number">5</div>
+                        <div class="step-label">看板メニュー</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step active">
+                        <div class="step-number">6</div>
+                        <div class="step-label">ワイン提案</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">7</div>
+                        <div class="step-label">アカウント登録</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">8</div>
+                        <div class="step-label">完了</div>
+                    </div>
+                </div>
+                
+                <div class="onboarding-content">
+                    <div class="ai-message-container">
+                        <div id="ai-message-area" class="ai-page-message">
+                            <div class="ai-avatar-container">
+                                <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar">
+                                <span class="ai-name">Sommia</span>
+                            </div>
+                            <span class="ai-text">お疲れさまでした！お店の情報を詳しく分析し、最適なワインセレクションを作成いたしました。選定理由、料理との相性、そして実際のメニューまで、総合的な提案をご覧ください。</span>
+                        </div>
+                    </div>
+                    
+                    <!-- ワインセクションタブ -->
+                    <div class="wine-section-tabs">
+                        <button class="tab-button active" data-section="menu">
+                            <div class="tab-title">ワインメニュー</div>
+                            <div class="tab-subtitle">提案メニューのプレビュー</div>
+                        </button>
+                        <button class="tab-button" data-section="report">
+                            <div class="tab-title">選定レポート</div>
+                            <div class="tab-subtitle">分析結果と提案理由</div>
+                        </button>
+                        <button class="tab-button" data-section="pairing">
+                            <div class="tab-title">ペアリング提案</div>
+                            <div class="tab-subtitle">料理との相性</div>
+                        </button>
+                        <button class="tab-button" data-section="proposal">
+                            <div class="tab-title">注文確定</div>
+                            <div class="tab-subtitle">ワイン提案書</div>
+                        </button>
+                    </div>
+
+                    <!-- ワインメニューセクション -->
+                    <div class="wine-section-content" id="menu-section">
+                        <!-- プレビューコントロール -->
+                        <div class="wine-menu-preview-container">
+                            <div class="preview-controls">
+                                <div class="control-group">
+                                    <label for="restaurant-name-input">店舗名:</label>
+                                    <input type="text" id="restaurant-name-input" value="Restaurant Wine Berry" placeholder="店舗名を入力">
+                                </div>
+                                <div class="control-group">
+                                    <button class="btn btn-sm btn-outline-secondary" id="customize-btn">デザイン調整</button>
+                                    <button class="btn btn-sm btn-outline-primary" id="preview-btn">印刷プレビュー</button>
+                                    <button class="btn btn-sm btn-primary" id="download-pdf-btn">PDFダウンロード</button>
+                                </div>
+                            </div>
+                            
+                            <!-- メニュープレビュー -->
+                            <div class="wine-menu-preview" id="wine-menu-preview">
+                                <!-- 動的に生成されるワインメニュー -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 選定レポートセクション -->
+                    <div class="wine-section-content" id="report-section" style="display: none;">
+                        <div class="report-container">
+                            <div class="report-cards">
+                                <!-- 売上構成比レポート -->
+                                <div class="report-card">
+                                    <div class="card-header">
+                                        <h3>売上構成比予測</h3>
+                                        <p>選定したワインの売上構成を予測しました</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="salesChart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <!-- ワインタイプ別本数 -->
+                                <div class="report-card">
+                                    <div class="card-header">
+                                        <h3>ワインタイプ別構成</h3>
+                                        <p>バランスの取れたセレクション</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="typeChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 選定理由詳細 -->
+                            <div class="report-card selection-reasons">
+                                <div class="card-header">
+                                    <h3>選定理由と戦略</h3>
+                                    <button class="expand-toggle" id="reasonsToggle">
+                                        <span>詳細を表示</span>
+                                        <svg class="expand-icon" width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="m4.427 9.573 3.396-3.396a.25.25 0 0 1 .354 0l3.396 3.396a.25.25 0 0 1-.177.427H4.604a.25.25 0 0 1-.177-.427Z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="selection-content" id="selectionContent">
+                                    <div class="reason-section">
+                                        <h4>🎯 戦略的アプローチ</h4>
+                                        <p>お店の料理スタイルと価格帯を考慮し、お客様に最適なワイン体験を提供できるよう選定いたしました。イタリア料理をメインとしたお食事に合わせ、親しみやすい品種から個性的なワインまでバランス良く構成しています。</p>
+                                    </div>
+                                    
+                                    <div class="reason-section">
+                                        <h4>💰 価格戦略</h4>
+                                        <p>低価格帯（3,000-5,000円）から中価格帯（5,000-8,000円）を中心に、特別な日のための高価格帯ワインも少数配置。グラス販売での収益性も考慮し、適切な原価率を維持できる構成にしています。</p>
+                                    </div>
+                                    
+                                    <div class="reason-section">
+                                        <h4>🍷 品種バランス</h4>
+                                        <p>赤ワイン40%、白ワイン45%、スパークリング15%の構成で、お食事の流れに合わせたオーダーパターンを想定。特にイタリアワインを中心とし、お料理との相性を最優先に選定しています。</p>
+                                    </div>
+                                    
+                                    <div class="reason-section">
+                                        <h4>📈 売上予測</h4>
+                                        <p>選定したワインリストにより、月間売上の20-30%向上が期待できます。特にグラスワインの充実により、カジュアルなお客様の利用も促進できる構成となっています。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ペアリング提案セクション -->
+                    <div class="wine-section-content" id="pairing-section" style="display: none;">
+                        <div class="pairing-container">
+                            <div class="pairing-grid" id="pairingGrid">
+                                <!-- ペアリング提案が動的に生成される -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 提案書（注文確定）セクション -->
+                    <div class="wine-section-content" id="proposal-section" style="display: none;">
+                        <div class="proposal-container">
+                            <div class="proposal-header">
+                                <h3>ワイン提案書</h3>
+                                <p>以下のワインをご提案いたします。数量を調整してご注文ください。</p>
+                            </div>
+                            
+                            <div class="proposal-table-container">
+                                <table class="proposal-table" id="proposalTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>ワイン名</th>
+                                            <th>仕入価格</th>
+                                            <th>メニュー価格</th>
+                                            <th>グラス価格</th>
+                                            <th>産地・品種</th>
+                                            <th>数量</th>
+                                            <th>小計</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="proposalTableBody">
+                                        <!-- 提案ワインが動的に生成される -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="proposal-summary">
+                                <div class="summary-details">
+                                    <div class="summary-row">
+                                        <span>総本数：</span>
+                                        <span id="totalQuantity">0</span>本
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>仕入金額：</span>
+                                        <span id="totalCost">¥0</span>
+                                    </div>
+                                    <div class="summary-row total-row">
+                                        <span>合計金額：</span>
+                                        <span id="totalAmount">¥0</span>
+                                    </div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="btn btn-outline-primary" id="saveProposalBtn">提案書を保存</button>
+                                    <button class="btn btn-primary btn-lg" id="confirmOrderBtn">この内容で注文確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-prompt-box">
+                        <div class="ai-prompt-title">
+                            <img src="../../sommia.png" alt="Sommia" class="ai-avatar-inline">
+                            Sommiaからのアドバイス
+                        </div>
+                        <div class="ai-prompt-content">
+                            このワインセレクションは、お店の特色と料理に最適化されています。メニューは印刷してすぐにご利用いただけます。選定レポートで詳細な理由をご確認いただき、ペアリング提案でお料理との相性をお楽しみください。
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a href="2_5_menu_selection.html" class="btn btn-outline-primary">戻る</a>
+                        <a href="4_signup_form.html" class="btn btn-primary btn-lg" id="accept-proposal-btn">このワインで登録する</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <!-- カスタマイズモーダル -->
+    <div class="modal" id="customize-modal" style="display: none !important; z-index: 2147483647 !important;">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>デザインカスタマイズ</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="customize-options">
+                    <div class="option-group">
+                        <h4>テンプレート</h4>
+                        <div class="template-options">
+                            <label class="template-option">
+                                <input type="radio" name="template" value="classic" checked>
+                                <div class="template-preview">
+                                    <div class="template-icon">🏛️</div>
+                                    <span>クラシック</span>
+                                    <small>伝統的で上品なデザイン</small>
+                                </div>
+                            </label>
+                            <label class="template-option">
+                                <input type="radio" name="template" value="modern">
+                                <div class="template-preview">
+                                    <div class="template-icon">🎨</div>
+                                    <span>モダン</span>
+                                    <small>シンプルで洗練されたデザイン</small>
+                                </div>
+                            </label>
+                            <label class="template-option">
+                                <input type="radio" name="template" value="elegant">
+                                <div class="template-preview">
+                                    <div class="template-icon">✨</div>
+                                    <span>エレガント</span>
+                                    <small>高級感あふれる美しいデザイン</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h4>メニュー情報</h4>
+                        <div class="form-group">
+                            <label>メニュータイトル</label>
+                            <input type="text" id="menu-title" value="WINE LIST" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>説明文</label>
+                            <textarea id="menu-description" class="form-textarea" rows="3" placeholder="ワインセレクションの説明を入力してください"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>企業情報</label>
+                            <input type="text" id="restaurant-address" class="form-input" placeholder="住所・電話番号など">
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h4>表示オプション</h4>
+                        <div class="display-options">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-vintage" checked>
+                                <span>ヴィンテージを表示</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-description" checked>
+                                <span>ワイン説明を表示</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-tasting-notes" checked>
+                                <span>テイスティングノートを表示</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-pairing">
+                                <span>ペアリング情報を表示</span>
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="show-glass-price" checked>
+                                <span>グラス価格を表示</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">キャンセル</button>
+                <button class="btn btn-primary" id="apply-customization">適用</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 注文確認モーダル -->
+    <div class="modal" id="order-confirm-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>注文内容確認</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderSummary">
+                    <!-- 注文内容が動的に表示される -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light modal-close">キャンセル</button>
+                <button class="btn btn-primary" id="finalConfirmBtn">確定する</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

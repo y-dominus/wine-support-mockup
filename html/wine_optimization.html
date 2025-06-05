@@ -297,83 +297,16 @@
                 </div>
             </div>
             
-            <!-- 実行プラン -->
-            <div class="action-plan-section">
-                <h2 class="section-title">🎯 実行プラン</h2>
-                <div class="action-plan-card">
-                    <div class="plan-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">今週</div>
-                            <div class="timeline-content">
-                                <h4>準備フェーズ</h4>
-                                <ul>
-                                    <li>推奨銘柄の詳細情報確認</li>
-                                    <li>仕入れ先への在庫確認</li>
-                                    <li>スタッフへの新銘柄説明資料作成</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">来週</div>
-                            <div class="timeline-content">
-                                <h4>発注・削除フェーズ</h4>
-                                <ul>
-                                    <li>新銘柄の発注（初回少量仕入れ）</li>
-                                    <li>削除対象銘柄の在庫処分開始</li>
-                                    <li>メニュー更新の準備</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">6月初旬</div>
-                            <div class="timeline-content">
-                                <h4>実装フェーズ</h4>
-                                <ul>
-                                    <li>新ワインリストの正式導入</li>
-                                    <li>スタッフトレーニング実施</li>
-                                    <li>顧客への新銘柄紹介開始</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="expected-results">
-                        <h3>期待される効果</h3>
-                        <div class="results-grid">
-                            <div class="result-item">
-                                <div class="result-icon">💰</div>
-                                <div class="result-content">
-                                    <div class="result-title">売上向上</div>
-                                    <div class="result-value">+15% (¥36,750/月)</div>
-                                </div>
-                            </div>
-                            <div class="result-item">
-                                <div class="result-icon">📈</div>
-                                <div class="result-content">
-                                    <div class="result-title">回転率改善</div>
-                                    <div class="result-value">平均1.8 → 2.3回/月</div>
-                                </div>
-                            </div>
-                            <div class="result-item">
-                                <div class="result-icon">😊</div>
-                                <div class="result-content">
-                                    <div class="result-title">顧客満足度</div>
-                                    <div class="result-value">新しい味わいの発見</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             
             <!-- アクションボタン -->
             <div class="final-actions">
                 <div class="action-buttons">
                     <button class="btn btn-outline-secondary" id="save-analysis">分析結果を保存</button>
-                    <button class="btn btn-primary" id="execute-plan">推奨プランを実行</button>
+                    <a href="cart.html?optimization=true" class="btn btn-primary" id="add-to-cart">追加推奨銘柄をカートイン</a>
                 </div>
                 <div class="action-note">
-                    <p>💡 <strong>Sommiaのアドバイス:</strong> 段階的な実行をお勧めします。まずは1-2銘柄から始めて、お客様の反応を見ながら調整していきましょう。</p>
+                    <p>💡 <strong>Sommiaのアドバイス:</strong> 追加推奨銘柄を発注カートに追加して、発注管理画面で一括発注してください。</p>
                 </div>
             </div>
         </div>
@@ -381,44 +314,7 @@
     
     <div id="footer-placeholder"></div>
     
-    <!-- 実行確認モーダル -->
-    <div class="modal" id="execution-modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>推奨プランの実行確認</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="execution-summary">
-                    <h4>実行内容</h4>
-                    <div class="execution-item">
-                        <strong>削除:</strong> シラーズ 2021、リースリング 2022
-                    </div>
-                    <div class="execution-item">
-                        <strong>追加:</strong> ヴェルメンティーノ 2023、サンジョヴェーゼ 2021、アルバリーニョ 2023
-                    </div>
-                    <div class="execution-item">
-                        <strong>予想効果:</strong> 月売上 +¥36,750 (15%向上)
-                    </div>
-                </div>
-                <div class="execution-options">
-                    <label class="form-checkbox">
-                        <input type="checkbox" id="gradual-execution" checked>
-                        <span>段階的実行（推奨）</span>
-                    </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox" id="auto-order">
-                        <span>自動発注も実行</span>
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-light modal-close">キャンセル</button>
-                <button class="btn btn-primary" id="confirm-execution">実行開始</button>
-            </div>
-        </div>
-    </div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>

@@ -1,127 +1,262 @@
-/* モーダルスタイル */
+/* モーダルスタイル - 完全修正版 */
 
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important; /* 最大値 */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(2px);
+    pointer-events: none;
 }
 
-/* レスポンシブデザイン */
+/* レスポンシブデザイン - モーダル改善版 */
 @media (max-width: 768px) {
     .modal-container {
-        width: 95%;
+        width: 95% !important;
+        max-height: 95vh !important;
+        margin: 0 !important;
+        transform: translate(-50%, -50%) !important;
+    }
+    
+    .modal-header {
+        padding: var(--spacing-md) var(--spacing-lg);
+        flex-direction: row;
+    }
+    
+    .modal-header h3 {
+        font-size: var(--font-size-lg);
+        margin-right: var(--spacing-md);
+    }
+    
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.5rem;
+    }
+    
+    .modal-body {
+        padding: var(--spacing-lg);
+        max-height: calc(95vh - 120px);
     }
     
     .modal-footer {
-        flex-direction: column-reverse;
+        padding: var(--spacing-md) var(--spacing-lg);
+        flex-direction: row;
+        justify-content: space-between;
     }
     
     .modal-footer .btn {
-        width: 100%;
+        flex: 1;
+        margin-left: var(--spacing-sm);
     }
     
-    .modal-tabs {
-        flex-direction: column;
+    .modal-footer .btn:first-child {
+        margin-left: 0;
     }
     
-    .modal-tab {
-        border-bottom: none;
-        border-left: 2px solid transparent;
+    .template-options {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
     }
     
-    .modal-tab.active {
-        border-bottom-color: transparent;
-        border-left-color: var(--primary-color);
+    .template-preview {
+        min-height: 80px;
+        padding: var(--spacing-md);
     }
     
-    .execution-summary {
-        padding: var(--spacing-sm);
+    .template-icon {
+        font-size: 2rem;
     }
     
-    .form-checkbox {
-        font-size: var(--font-size-sm);
+    .display-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .option-group {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .option-group h4 {
+        font-size: var(--font-size-md);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .form-input,
+    .form-textarea {
+        font-size: var(--font-size-md);
+        padding: var(--spacing-md);
     }
 }
 
 .modal.active {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* モーダル表示時のbody固定 */
+body.modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* すべての要素よりも前面に表示するための追加ルール */
+.modal.active {
+    position: fixed !important;
+    z-index: 2147483647 !important;
 }
 
 .modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(2px);
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: transparent !important;
+    z-index: 1 !important;
 }
 
 .modal-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--white);
-    border-radius: var(--border-radius-lg);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background-color: var(--white) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    width: 90% !important;
+    max-width: 600px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
 }
 
 .modal:not(.active) .modal-container {
-    transform: translate(-50%, -45%);
-    opacity: 0;
+    transform: translate(-50%, -45%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 他の要素の上に確実に表示するための追加ルール */
+html .modal.active,
+body .modal.active,
+* .modal.active {
+    z-index: 2147483647 !important;
+    position: fixed !important;
+}
+
+html .modal.active .modal-container,
+body .modal.active .modal-container,
+* .modal.active .modal-container {
+    z-index: 2147483647 !important;
+    position: fixed !important;
 }
 
 .modal-header {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--medium-gray);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--gray-200);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: linear-gradient(135deg, var(--gray-50), var(--white));
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
 }
 
 .modal-header h3 {
     margin: 0;
-    color: var(--dark-gray);
+    color: var(--gray-800);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .modal-close {
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #6c757d;
+    font-size: 1.75rem;
+    color: var(--gray-500);
     cursor: pointer;
-    transition: color var(--transition-fast);
+    transition: all var(--transition-fast);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
 }
 
 .modal-close:hover {
-    color: var(--dark-gray);
+    color: var(--error-color);
+    background-color: var(--gray-100);
+    transform: scale(1.1);
 }
 
 .modal-body {
-    padding: var(--spacing-md);
+    padding: var(--spacing-xl);
+    max-height: calc(90vh - 140px);
+    overflow-y: auto;
+    background: var(--white);
 }
 
 .modal-footer {
-    padding: var(--spacing-md);
-    border-top: 1px solid var(--medium-gray);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 1px solid var(--gray-200);
     display: flex;
     justify-content: flex-end;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
+    background: var(--gray-50);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.modal-footer .btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    min-width: 100px;
+}
+
+.modal-footer .btn-light {
+    background: var(--white);
+    border: 2px solid var(--gray-300);
+    color: var(--gray-700);
+}
+
+.modal-footer .btn-light:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+    transform: translateY(-1px);
+}
+
+.modal-footer .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: 2px solid var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.2);
+}
+
+.modal-footer .btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
 }
 
 /* モーダルサイズバリエーション */

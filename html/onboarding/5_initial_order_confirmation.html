@@ -46,12 +46,12 @@
                     <div class="progress-line"></div>
                     <div class="progress-step completed">
                         <div class="step-number">5</div>
-                        <div class="step-label">ワイン提案</div>
+                        <div class="step-label">看板メニュー</div>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step completed">
                         <div class="step-number">6</div>
-                        <div class="step-label">レポート確認</div>
+                        <div class="step-label">ワイン提案</div>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step completed">
@@ -59,7 +59,7 @@
                         <div class="step-label">アカウント登録</div>
                     </div>
                     <div class="progress-line"></div>
-                    <div class="progress-step active">
+                    <div class="progress-step completed">
                         <div class="step-number">8</div>
                         <div class="step-label">完了</div>
                     </div>
@@ -69,78 +69,126 @@
                     <div class="ai-welcome-container">
                         <img src="../../sommia.png" alt="Sommia - ソムリエAI" class="ai-avatar-large">
                         <div class="ai-welcome-message">
-                            <h1>ご登録ありがとうございます！</h1>
+                            <h1>🎉 ワイサポへようこそ！</h1>
                             <div id="ai-message-area" class="ai-message-large">
-                                <!-- AIメッセージがここに表示されます -->
-                                <span class="ai-text">ご登録ありがとうございます！ゲストさん。選んでいただいたワインで、お店に美味しい魔法をかけましょう！Sommiaが全力でサポートします。さあ、ダッシュボードへどうぞ！</span>
+                                <span class="ai-text">ご登録ありがとうございます！<span id="user-name">ゲスト</span>さん。あなたのお店に最適なワインセレクションをご提案させていただきました。選んでいただいたワインで、お店に美味しい魔法をかけましょう！Sommiaが全力でサポートします。</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="completion-container">
-                        <div class="completion-icon">🎉</div>
-                        <h2 class="completion-title">登録が完了しました</h2>
-                        <p class="completion-message">選択されたワインリストの発注準備を行っています。納品情報はメールでお知らせします。</p>
+                        <div class="completion-icon">🍷</div>
+                        <h2 class="completion-title">セットアップが完了しました</h2>
+                        <p class="completion-message">あなたのお店専用のワイン管理システムが準備できました。選定されたワインの発注準備を行っています。</p>
                         
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">初回注文確認</h3>
+                                <h3 class="card-title">🍇 ワインセレクション確認</h3>
                             </div>
                             <div class="card-body">
                                 <div class="order-summary">
                                     <div class="order-item">
-                                        <span class="order-label">プラン：</span>
-                                        <span class="order-value" id="plan-name">スタンダードプラン</span>
+                                        <span class="order-label">選定ワイン：</span>
+                                        <span class="order-value" id="wine-count">6種類</span>
                                     </div>
                                     <div class="order-item">
-                                        <span class="order-label">ワイン数：</span>
-                                        <span class="order-value">5種類</span>
+                                        <span class="order-label">総数量：</span>
+                                        <span class="order-value" id="total-quantity">16本</span>
                                     </div>
                                     <div class="order-item">
-                                        <span class="order-label">初期仕入れ予算：</span>
-                                        <span class="order-value" id="plan-price">¥75,000</span>
+                                        <span class="order-label">初期仕入れ金額：</span>
+                                        <span class="order-value" id="total-cost">¥41,600</span>
                                     </div>
                                     <div class="order-item">
                                         <span class="order-label">納品予定日：</span>
-                                        <span class="order-value">2025年5月30日頃</span>
+                                        <span class="order-value" id="delivery-date">2025年6月12日頃</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="wine-highlights">
+                                    <h4>📋 セレクションハイライト</h4>
+                                    <div class="highlight-grid">
+                                        <div class="highlight-item">
+                                            <span class="highlight-icon">🍷</span>
+                                            <span class="highlight-text">赤ワイン 40%</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="highlight-icon">🥂</span>
+                                            <span class="highlight-text">白ワイン 45%</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="highlight-icon">✨</span>
+                                            <span class="highlight-text">スパークリング 15%</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="highlight-icon">🍽️</span>
+                                            <span class="highlight-text">ペアリング提案 4組</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <span class="order-status">発注手続き中</span>
+                                <span class="order-status">✅ 発注準備完了</span>
                                 <a href="../orders/order_history.html" class="btn btn-outline-primary btn-sm">詳細を確認</a>
                             </div>
                         </div>
                         
                         <div class="next-steps">
-                            <h3>次のステップ</h3>
+                            <h3>🚀 次のステップ</h3>
                             <div class="steps-list">
                                 <div class="step-item">
-                                    <div class="step-icon">📋</div>
+                                    <div class="step-icon">📊</div>
                                     <div class="step-content">
-                                        <h4>ダッシュボードをチェック</h4>
-                                        <p>あなたのワイン管理の中心となるダッシュボードをご確認ください。</p>
+                                        <h4>ダッシュボードで状況確認</h4>
+                                        <p>ワインの在庫状況、売上分析、AIからの提案を一目で確認できます。</p>
                                     </div>
                                 </div>
                                 <div class="step-item">
-                                    <div class="step-icon">🔍</div>
-                                    <div class="step-content">
-                                        <h4>商品一覧を探索</h4>
-                                        <p>Sommiaが厳選したワインラインナップをご覧ください。</p>
-                                    </div>
-                                </div>
-                                <div class="step-item">
-                                    <div class="step-icon">🍷</div>
+                                    <div class="step-icon">🍾</div>
                                     <div class="step-content">
                                         <h4>マイセラーで在庫管理</h4>
-                                        <p>納品されたワインの在庫を簡単に管理できます。</p>
+                                        <p>納品されたワインの在庫管理とメニュー生成が簡単に行えます。</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-icon">🎯</div>
+                                    <div class="step-content">
+                                        <h4>AIレコメンデーション</h4>
+                                        <p>売上データを基に、Sommiaが次回の仕入れを最適化して提案します。</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
+                        <div class="welcome-benefits">
+                            <h3>🌟 ワイサポでできること</h3>
+                            <div class="benefits-grid">
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">📈</div>
+                                    <h4>売上分析</h4>
+                                    <p>ワイン売上の詳細分析とトレンド把握</p>
+                                </div>
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">🤖</div>
+                                    <h4>AI提案</h4>
+                                    <p>データに基づく最適なワイン仕入れ提案</p>
+                                </div>
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">📋</div>
+                                    <h4>メニュー生成</h4>
+                                    <p>プロ品質のワインメニューを自動生成</p>
+                                </div>
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">🍽️</div>
+                                    <h4>ペアリング</h4>
+                                    <p>料理とワインの最適な組み合わせ提案</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="completion-actions">
-                            <a href="../dashboard.html" class="btn btn-primary btn-lg">ダッシュボードへ</a>
+                            <a href="../dashboard.html" class="btn btn-primary btn-lg">🏠 ダッシュボードを開く</a>
+                            <a href="../my_cellar/my_cellar.html" class="btn btn-outline-primary btn-lg">🍷 マイセラーを見る</a>
                         </div>
                     </div>
                 </div>
@@ -150,32 +198,210 @@
     
     <div id="footer-placeholder"></div>
     
-    <script>
-        // 選択されたプランの情報を表示
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedProposal = localStorage.getItem('selectedProposal');
-            const planNameElement = document.getElementById('plan-name');
-            const planPriceElement = document.getElementById('plan-price');
+    <style>
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: var(--orange-50);
+            border-radius: var(--border-radius-md);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .highlight-icon {
+            font-size: var(--font-size-lg);
+        }
+        
+        .highlight-text {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .wine-highlights {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .wine-highlights h4 {
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-lg);
+        }
+        
+        .welcome-benefits {
+            background: linear-gradient(135deg, var(--orange-50), var(--yellow-50));
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+            margin: var(--spacing-xl) 0;
+            border: 2px solid var(--orange-200);
+        }
+        
+        .welcome-benefits h3 {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            color: var(--gray-800);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .benefit-card {
+            background: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all var(--transition-normal);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(255, 77, 0, 0.15);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+        }
+        
+        .benefit-card h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .benefit-card p {
+            color: var(--gray-600);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .completion-actions {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: var(--spacing-xl);
+        }
+        
+        @media (max-width: 768px) {
+            .completion-actions {
+                flex-direction: column;
+                align-items: center;
+            }
             
-            if (savedProposal) {
-                let planName = 'スタンダードプラン';
-                let planPrice = '¥75,000';
+            .completion-actions .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+    
+    <script>
+        // オンボーディングで設定された情報を表示
+        document.addEventListener('DOMContentLoaded', function() {
+            // ユーザー名を表示
+            const signupData = localStorage.getItem('signupData');
+            if (signupData) {
+                const userData = JSON.parse(signupData);
+                const userNameElement = document.getElementById('user-name');
+                if (userData.name && userNameElement) {
+                    userNameElement.textContent = userData.name;
+                }
+            }
+            
+            // ワイン提案データを表示
+            const finalProposal = localStorage.getItem('finalWineProposal');
+            if (finalProposal) {
+                const proposalData = JSON.parse(finalProposal);
                 
-                switch (savedProposal) {
-                    case '2':
-                        planName = 'プレミアムプラン';
-                        planPrice = '¥120,000';
-                        break;
-                    case '3':
-                        planName = 'セレクトプラン';
-                        planPrice = '¥95,000';
-                        break;
+                // ワイン数量データを更新
+                const wineCountElement = document.getElementById('wine-count');
+                const totalQuantityElement = document.getElementById('total-quantity');
+                const totalCostElement = document.getElementById('total-cost');
+                
+                if (proposalData.wines && wineCountElement) {
+                    wineCountElement.textContent = `${proposalData.wines.length}種類`;
                 }
                 
-                planNameElement.textContent = planName;
-                planPriceElement.textContent = planPrice;
+                if (proposalData.reportData && totalQuantityElement) {
+                    totalQuantityElement.textContent = `${proposalData.reportData.totalQuantity}本`;
+                }
+                
+                // 仕入れ金額を計算
+                if (proposalData.wines && totalCostElement) {
+                    const totalCost = proposalData.wines.reduce((sum, wine) => {
+                        return sum + (wine.costPrice * wine.quantity);
+                    }, 0);
+                    totalCostElement.textContent = `¥${totalCost.toLocaleString()}`;
+                }
             }
+            
+            // 納品予定日を設定（現在日付から1週間後）
+            const deliveryDateElement = document.getElementById('delivery-date');
+            if (deliveryDateElement) {
+                const deliveryDate = new Date();
+                deliveryDate.setDate(deliveryDate.getDate() + 7);
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    weekday: 'short'
+                };
+                deliveryDateElement.textContent = deliveryDate.toLocaleDateString('ja-JP', options) + '頃';
+            }
+            
+            // 完了アニメーション（オプション）
+            setTimeout(() => {
+                const completionIcon = document.querySelector('.completion-icon');
+                if (completionIcon) {
+                    completionIcon.style.animation = 'bounce 1s ease-in-out';
+                }
+            }, 500);
         });
+        
+        // バウンスアニメーション
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 53%, 80%, 100% {
+                    transform: translate3d(0,0,0);
+                }
+                40%, 43% {
+                    transform: translate3d(0,-30px,0);
+                }
+                70% {
+                    transform: translate3d(0,-15px,0);
+                }
+                90% {
+                    transform: translate3d(0,-4px,0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
