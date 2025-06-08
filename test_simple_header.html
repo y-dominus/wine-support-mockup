@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダッシュボード | ワイサポ</title>
+    
+    <!-- ヘッダー用のインラインCSS -->
+    <style>
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .main-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+            height: 64px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-section img {
+            height: 36px;
+            width: auto;
+        }
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #884591;
+            text-decoration: none;
+        }
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .nav-item.active {
+            background-color: #f3f0f5;
+            color: #884591;
+            font-weight: 600;
+        }
+        .nav-item:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .action-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: #6b7280;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+        }
+        .action-btn:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .has-notification::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+        }
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #dc2626;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーを直接HTML内に記述 -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-section">
+                    <img src="assets/images/winesupport_logo.png" alt="ワイサポ" onerror="this.style.display='none'">
+                    <a href="html/dashboard.html" class="logo-text">ワイサポ</a>
+                </div>
+                <nav class="main-nav">
+                    <a href="html/dashboard.html" class="nav-item active">
+                        <span>🏠</span>
+                        <span>トップ</span>
+                    </a>
+                    <a href="html/my_cellar/my_cellar.html" class="nav-item">
+                        <span>🍷</span>
+                        <span>マイセラー</span>
+                    </a>
+                    <a href="html/products/product_list.html" class="nav-item">
+                        <span>📋</span>
+                        <span>商品リスト</span>
+                    </a>
+                    <a href="html/orders/order_history.html" class="nav-item">
+                        <span>📦</span>
+                        <span>注文履歴</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="action-icons">
+                    <button class="action-btn" onclick="window.location.href='html/products/product_list.html'" title="商品検索">
+                        🔍
+                    </button>
+                    <button class="action-btn has-notification" onclick="window.location.href='html/notifications.html'" title="通知">
+                        🔔
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='html/cart.html'" title="カート">
+                        🛒
+                    </button>
+                </div>
+                <button class="logout-btn" onclick="if(confirm('ログアウトしますか？')) alert('ログアウト機能はモックアップ版のため実装されていません')">
+                    ログアウト
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <main style="padding: 2rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h1 style="color: #884591; margin-bottom: 2rem;">🏠 ダッシュボード</h1>
+            
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img src="sommia.png" alt="Sommia" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #884591;" onerror="this.style.display='none'">
+                    <div>
+                        <div style="font-weight: 700; color: #884591; margin-bottom: 0.5rem;">Sommia より</div>
+                        <div style="color: #4b5563;">ダッシュボードへようこそ！ヘッダーが正常に表示されていることを確認してください。</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                    <div style="font-weight: 600; color: #1f2937;">今月の売上</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #884591;">¥245,000</div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🍷</div>
+                    <div style="font-weight: 600; color: #1f2937;">売れたボトル数</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #884591;">43本</div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
+                    <div style="font-weight: 600; color: #1f2937;">在庫アラート</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">3件</div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔄</div>
+                    <div style="font-weight: 600; color: #1f2937;">回転率</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #884591;">1.8</div>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h2 style="color: #1f2937; margin-bottom: 1rem;">✅ ヘッダーテスト成功</h2>
+                <p style="color: #4b5563; margin-bottom: 1rem;">
+                    このページでヘッダーが正常に表示されていれば、実装は成功しています！
+                </p>
+                <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                    <strong style="color: #065f46;">テスト項目:</strong>
+                    <ul style="color: #047857; margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>ヘッダーがページ上部に表示される</li>
+                        <li>ロゴと「ワイサポ」のテキストが表示される</li>
+                        <li>ナビゲーション（トップ、マイセラー、商品リスト、注文履歴）が表示される</li>
+                        <li>右側にアクションボタン（🔍🔔🛒）とログアウトボタンが表示される</li>
+                        <li>現在のページ（トップ）がハイライトされている</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        console.log('🎉 シンプルヘッダーテストページが読み込まれました');
+        console.log('ヘッダーが表示されている場合、実装は成功です！');
+        
+        // ナビゲーションテスト
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.nav-item')) {
+                console.log('ナビゲーションクリック:', e.target.closest('.nav-item').textContent.trim());
+            }
+            if (e.target.closest('.action-btn')) {
+                console.log('アクションボタンクリック');
+            }
+        });
+    </script>
+</body>
+</html>

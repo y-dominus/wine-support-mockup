@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヘッダー動作テスト</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components/header.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-info { background: #f0f0f0; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>ヘッダー動作テスト</h2>
+        <div id="test-results"></div>
+    </div>
+    
+    <!-- ヘッダーはここに挿入されるはず -->
+    
+    <main>
+        <div class="container">
+            <h1>テストコンテンツ</h1>
+            <p>ヘッダーが上に表示されていれば成功です。</p>
+        </div>
+    </main>
+
+    <script>
+        console.log('=== ヘッダー動作テスト開始 ===');
+        
+        const testResults = document.getElementById('test-results');
+        
+        function addTestResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = message;
+            testResults.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        // テスト1: common_parts.jsファイルの存在確認
+        addTestResult('テスト1: common_parts.js読み込み開始');
+        
+        const script = document.createElement('script');
+        script.src = 'js/common_parts.js?test=' + Date.now();
+        
+        script.onload = function() {
+            addTestResult('✅ common_parts.js読み込み成功', 'success');
+            
+            // テスト2: 関数の存在確認
+            if (typeof window.CommonParts !== 'undefined') {
+                addTestResult('✅ CommonPartsクラス確認', 'success');
+            } else {
+                addTestResult('❌ CommonPartsクラスが見つかりません', 'error');
+            }
+            
+            if (typeof window.initializeCommonParts !== 'undefined') {
+                addTestResult('✅ initializeCommonParts関数確認', 'success');
+                
+                // テスト3: ヘッダー初期化実行
+                addTestResult('テスト3: ヘッダー初期化実行');
+                try {
+                    const result = window.initializeCommonParts();
+                    if (result) {
+                        addTestResult('✅ ヘッダー初期化成功', 'success');
+                    } else {
+                        addTestResult('❌ ヘッダー初期化失敗', 'error');
+                    }
+                } catch (error) {
+                    addTestResult('❌ ヘッダー初期化エラー: ' + error.message, 'error');
+                }
+                
+                // テスト4: ヘッダー要素の存在確認
+                setTimeout(() => {
+                    const header = document.querySelector('header, .main-header');
+                    if (header) {
+                        addTestResult('✅ ヘッダー要素が見つかりました', 'success');
+                        addTestResult('ヘッダー内容: ' + header.innerHTML.substring(0, 100) + '...', 'info');
+                    } else {
+                        addTestResult('❌ ヘッダー要素が見つかりません', 'error');
+                    }
+                }, 500);
+                
+            } else {
+                addTestResult('❌ initializeCommonParts関数が見つかりません', 'error');
+            }
+        };
+        
+        script.onerror = function() {
+            addTestResult('❌ common_parts.js読み込みエラー', 'error');
+        };
+        
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

@@ -11,15 +11,21 @@
     <link rel="stylesheet" href="../css/components/ai_chat.css">
     <link rel="stylesheet" href="../css/components/cards.css">
     <link rel="stylesheet" href="../css/components/tables.css">
-    <script defer src="../js/main.js"></script>
-    <script defer src="../js/common_parts.js"></script>
-    <script defer src="../js/ai_simulator.js"></script>
-    <script defer src="../js/utils.js"></script>
-    <script defer src="../js/components/notifications.js"></script>
+    <!-- 統一されたJavaScript読み込み -->
+    <script src="../js/unified_loader.js"></script>
+    <script>
+        console.log('📄 通知ページ読み込み開始');
+        
+        const additionalScripts = [
+            'js/components/notifications.js'
+        ];
+        
+        initializeWineSupportPage('..', additionalScripts);
+    </script>
     <link rel="stylesheet" href="../css/components/notifications.css">
 </head>
 <body>
-    <div id="header-placeholder"></div>
+
     
     <main>
         <div class="container">
@@ -141,7 +147,7 @@
         </div>
     </main>
     
-    <div id="footer-placeholder"></div>
+
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {

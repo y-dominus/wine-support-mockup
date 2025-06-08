@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- キャッシュ無効化 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>商品一覧 | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
     <link rel="icon" href="../../assets/images/favicon.ico">
+
+</head>
+<body>
+    <!-- CSSを静的に読み込み -->
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components/header.css">
     <link rel="stylesheet" href="../../css/components/buttons.css">
     <link rel="stylesheet" href="../../css/components/ai_chat.css">
     <link rel="stylesheet" href="../../css/components/cards.css">
@@ -16,14 +25,8 @@
     <link rel="stylesheet" href="../../css/pages/my_cellar.css">
     <link rel="stylesheet" href="../../css/pages/product_list.css">
     <link rel="stylesheet" href="../../css/pages/product_list_enhanced.css">
-    <script defer src="../../js/main.js"></script>
-    <script defer src="../../js/common_parts.js"></script>
-    <script defer src="../../js/ai_simulator.js"></script>
-    <script defer src="../../js/utils.js"></script>
-    <script defer src="../../js/components/wine-detail-modal.js"></script>
-</head>
-<body>
-    <div id="header-placeholder"></div>
+    
+    <!-- ヘッダーは common_parts.js で動的生成 -->
     
     <main>
         <div class="container">
@@ -565,7 +568,7 @@
         </div>
     </div>
     
-    <div id="footer-placeholder"></div>
+
     
     <script>
         // ワインデータ
@@ -920,7 +923,24 @@
                     toggleSmartCart();
                 }
             });
+            
+            // モック警告の表示
+            console.log('🍷 ワイサポ 商品一覧 - GitHub Pages モックアップ版');
+            console.log('🚧 これはデモ版です。実際の機能は実装されていません。');
         });
+    </script>
+    
+    <!-- 統一されたJavaScript読み込み -->
+    <script src="../../js/unified_loader.js"></script>
+    <script>
+        console.log('📄 商品リストページ読み込み開始');
+        
+        // 統一されたページ初期化（追加スクリプト付き）
+        const additionalScripts = [
+            'js/components/wine-detail-modal.js'
+        ];
+        
+        initializeWineSupportPage('../..', additionalScripts);
     </script>
 </body>
 </html>

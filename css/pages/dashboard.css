@@ -152,6 +152,28 @@
     font-size: var(--font-size-sm);
 }
 
+/* チャート横並びレイアウト */
+.dashboard-charts-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.chart-half {
+    flex: 1;
+}
+
+/* チャート切り替えボタン */
+.chart-toggle-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.chart-toggle-buttons .btn {
+    min-width: 50px;
+    font-size: var(--font-size-sm);
+}
+
 /* カスタム凡例 */
 .chart-legend-custom {
     display: flex;

@@ -322,32 +322,13 @@
             text-decoration: underline;
         }
 
-        /* 公開情報バナー */
-        .demo-banner {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: var(--spacing-md);
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            font-size: var(--font-size-sm);
-            box-shadow: var(--shadow-md);
-        }
-
-        .demo-banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .redirect-page {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: var(--spacing-md);
-        }
-
-        .redirect-page {
-            padding-top: calc(var(--spacing-xl) + 60px); /* バナー分の余白 */
+            padding: var(--spacing-xl);
         }
 
         /* モバイル最適化 */
@@ -373,13 +354,7 @@
     </style>
 </head>
 <body>
-    <!-- デモ版バナー -->
-    <div class="demo-banner">
-        <div class="demo-banner-content">
-            <span>🚧 これはモックアップ版です - GitHub Pages で公開中</span>
-            <a href="https://github.com/your-username/wine-support-mockup" target="_blank" style="color: white; text-decoration: underline;">GitHubリポジトリ</a>
-        </div>
-    </div>
+
 
     <main class="redirect-page">
         <div class="container">

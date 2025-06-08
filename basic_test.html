@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本テスト | ワイサポ</title>
+    <style>
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            background: #f0f0f0;
+        }
+        .test-header {
+            background: red;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .debug-info {
+            background: white;
+            padding: 2rem;
+            margin: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .debug-item {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 最もシンプルなヘッダーテスト -->
+    <div class="test-header">
+        🚨 これが表示されていればHTMLは正常に読み込まれています
+    </div>
+
+    <div class="debug-info">
+        <h1>🔧 基本デバッグ情報</h1>
+        
+        <div class="debug-item">
+            <strong>現在時刻:</strong> <span id="current-time"></span>
+        </div>
+        
+        <div class="debug-item">
+            <strong>ページURL:</strong> <span id="page-url"></span>
+        </div>
+        
+        <div class="debug-item">
+            <strong>ファイルプロトコル:</strong> <span id="file-protocol"></span>
+        </div>
+        
+        <div class="debug-item">
+            <strong>ブラウザ:</strong> <span id="browser-info"></span>
+        </div>
+        
+        <div class="debug-item">
+            <strong>JavaScript動作:</strong> <span id="js-working">JavaScript無効</span>
+        </div>
+        
+        <div class="debug-item">
+            <strong>ファイル存在確認:</strong>
+            <div id="file-check-results"></div>
+        </div>
+    </div>
+
+    <div class="debug-info">
+        <h2>📁 ファイル構造確認</h2>
+        <p>以下のファイルが存在するか確認中...</p>
+        <div id="file-structure"></div>
+    </div>
+
+    <script>
+        // JavaScript動作確認
+        document.getElementById('js-working').textContent = 'JavaScript正常動作';
+        document.getElementById('js-working').style.color = 'green';
+        
+        // 基本情報表示
+        document.getElementById('current-time').textContent = new Date().toLocaleString();
+        document.getElementById('page-url').textContent = window.location.href;
+        document.getElementById('file-protocol').textContent = window.location.protocol;
+        document.getElementById('browser-info').textContent = navigator.userAgent.split(' ')[0];
+        
+        // ファイル存在確認
+        const filesToCheck = [
+            '../assets/images/winesupport_logo.png',
+            '../sommia.png',
+            '../js/common_parts.js',
+            '../css/style.css',
+            'assets/images/winesupport_logo.png',
+            'sommia.png',
+            'js/common_parts.js',
+            'css/style.css'
+        ];
+        
+        const fileCheckResults = document.getElementById('file-check-results');
+        
+        function checkFileExists(url) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const xhr = new XMLHttpRequest();
+                
+                if (url.includes('.png') || url.includes('.jpg')) {
+                    // 画像ファイルのチェック
+                    img.onload = () => resolve(true);
+                    img.onerror = () => resolve(false);
+                    img.src = url;
+                } else {
+                    // その他のファイルのチェック
+                    xhr.open('HEAD', url, true);
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState === 4) {
+                            resolve(xhr.status === 200);
+                        }
+                    };
+                    xhr.onerror = () => resolve(false);
+                    try {
+                        xhr.send();
+                    } catch (e) {
+                        resolve(false);
+                    }
+                }
+            });
+        }
+        
+        // ファイル存在確認を実行
+        async function checkAllFiles() {
+            fileCheckResults.innerHTML = '<p>ファイル確認中...</p>';
+            const results = [];
+            
+            for (const file of filesToCheck) {
+                try {
+                    const exists = await checkFileExists(file);
+                    results.push(`${exists ? '✅' : '❌'} ${file}`);
+                } catch (e) {
+                    results.push(`❌ ${file} (エラー: ${e.message})`);
+                }
+            }
+            
+            fileCheckResults.innerHTML = results.map(result => 
+                `<div style="margin: 0.5rem 0; font-family: monospace;">${result}</div>`
+            ).join('');
+        }
+        
+        // ファイル構造表示
+        const fileStructure = document.getElementById('file-structure');
+        const expectedStructure = `
+期待されるファイル構造:
+📁 250522_wine-support_mockup/
+├── 📄 test_simple_header.html (このファイル)
+├── 📁 assets/
+│   └── 📁 images/
+│       └── 🖼️ winesupport_logo.png
+├── 📁 js/
+│   └── 📄 common_parts.js
+├── 📁 css/
+│   └── 📄 style.css
+└── 🖼️ sommia.png
+        `;
+        
+        fileStructure.innerHTML = `<pre style="background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto;">${expectedStructure}</pre>`;
+        
+        // ページ読み込み完了後にファイルチェック実行
+        setTimeout(() => {
+            checkAllFiles();
+        }, 1000);
+        
+        // コンソールログ
+        console.log('🚨 基本テストページが読み込まれました');
+        console.log('📍 現在のURL:', window.location.href);
+        console.log('📁 プロトコル:', window.location.protocol);
+        console.log('🌐 ホスト:', window.location.hostname);
+        console.log('📄 パス:', window.location.pathname);
+    </script>
+</body>
+</html>

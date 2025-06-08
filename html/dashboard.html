@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- キャッシュ無効化 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ダッシュボード | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
     <link rel="icon" href="../assets/images/favicon.ico">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components/header.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/ai_chat.css">
     <link rel="stylesheet" href="../css/components/cards.css">
@@ -15,26 +22,12 @@
     <link rel="stylesheet" href="../css/components/wine-detail-modal.css">
     <link rel="stylesheet" href="../css/components/dashboard-alerts.css">
     <link rel="stylesheet" href="../css/pages/dashboard.css">
-    <script defer src="../js/main.js"></script>
-    <script defer src="../js/common_parts.js"></script>
-    <script defer src="../js/ai_simulator.js"></script>
-    <script defer src="../js/utils.js"></script>
-    <script defer src="../js/components/wine-detail-modal.js"></script>
-    <script defer src="../js/page_specific/dashboard_actions.js"></script>
-    <script defer src="../js/page_specific/auto_order_recommendation.js"></script>
-    <script defer src="../js/components/notifications.js"></script>
-    <!-- GitHub Pages 公開用の追加設定 -->
-    <meta name="description" content="ワイサポのダッシュボード - Sommia AIがサポートするワイン管理システム">
-    <meta property="og:title" content="ワイサポ ダッシュボード">
-    <meta property="og:description" content="ワイン畑の妖精Sommiaがサポートするワインマネジメントシステム">
-    <meta property="og:type" content="website">
 </head>
 <body>
-    <div id="header-placeholder"></div>
+    <!-- ヘッダーは common_parts.js で動的生成 -->
     
     <main>
         <div class="container">
-
             <!-- Sommiaからの在庫アラート -->
             <div class="sommia-alert-section" id="sommia-alert-section" style="display: none;">
                 <div class="sommia-alert-content">
@@ -65,12 +58,21 @@
                 </div>
             </div>
 
+            <!-- Sommiaからのウェルカムメッセージ -->
+            <div style="margin: 2rem 0; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 1rem;">
+                <img src="../sommia.png" alt="Sommia" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #884591;" onerror="this.style.display='none'">
+                <div>
+                    <div style="font-weight: 700; color: #884591; margin-bottom: 0.5rem;">Sommia より</div>
+                    <div style="color: #4b5563;">ダッシュボードへようこそ！今日の売上と在庫状況をチェックして、最適なワイン管理を始めましょう。</div>
+                </div>
+            </div>
+
             <div class="dashboard-stats">
                 <div class="stats-card">
                     <div class="stats-icon">📊</div>
                     <div class="stats-content">
                         <div class="stats-title">今月の売上</div>
-                        <div class="stats-value" data-target="245000" data-prefix="¥">¥0</div>
+                        <div class="stats-value" data-target="245000" data-prefix="¥">¥245,000</div>
                         <div class="stats-trend positive">+12.5% 先月比</div>
                     </div>
                 </div>
@@ -79,7 +81,7 @@
                     <div class="stats-icon">🍷</div>
                     <div class="stats-content">
                         <div class="stats-title">売れたボトル数</div>
-                        <div class="stats-value" data-target="43">0</div>
+                        <div class="stats-value" data-target="43">43</div>
                         <div class="stats-trend positive">+8本 先月比</div>
                     </div>
                 </div>
@@ -88,7 +90,7 @@
                     <div class="stats-icon">⚠️</div>
                     <div class="stats-content">
                         <div class="stats-title">在庫アラート</div>
-                        <div class="stats-value" data-target="3">0</div>
+                        <div class="stats-value" data-target="3">3</div>
                         <div class="stats-trend negative">補充が必要</div>
                     </div>
                 </div>
@@ -97,7 +99,7 @@
                     <div class="stats-icon">🔄</div>
                     <div class="stats-content">
                         <div class="stats-title">回転率</div>
-                        <div class="stats-value" data-target="1.8">0</div>
+                        <div class="stats-value" data-target="1.8">1.8</div>
                         <div class="stats-trend neutral">標準的</div>
                     </div>
                 </div>
@@ -139,7 +141,7 @@
                     <!-- 人気ワインランキングと在庫アラート -->
                     <div class="dashboard-charts-row">
                         <div class="dashboard-section chart-half">
-                            <h2 class="section-title">人気ワインランキング</h2>
+                            <h2 class="section-title">🏆 人気ワインランキング</h2>
                             <div class="dashboard-card">
                                 <div class="ranking-list">
                                     <div class="ranking-item">
@@ -187,15 +189,11 @@
                                         <div class="ranking-value">¥35,000</div>
                                     </div>
                                 </div>
-                                
-                                <div class="see-more-link">
-                                    <a href="reports/sales_history.html">売上履歴を見る →</a>
-                                </div>
                             </div>
                         </div>
                         
                         <div class="dashboard-section chart-half">
-                            <h2 class="section-title">在庫アラート</h2>
+                            <h2 class="section-title">⚠️ 在庫アラート</h2>
                             <div class="dashboard-card">
                                 <div class="alert-list">
                                     <div class="alert-item">
@@ -205,7 +203,7 @@
                                             <div class="alert-description">残り2本 - 売れ筋商品</div>
                                         </div>
                                         <div class="alert-action">
-                                            <button class="btn btn-sm btn-outline-primary">補充</button>
+                                            <a href="orders/replenish_order.html" class="btn btn-sm btn-outline-primary">補充</a>
                                         </div>
                                     </div>
                                     
@@ -216,7 +214,7 @@
                                             <div class="alert-description">残り1本 - 早急な補充が必要</div>
                                         </div>
                                         <div class="alert-action">
-                                            <button class="btn btn-sm btn-outline-primary">補充</button>
+                                            <a href="orders/replenish_order.html" class="btn btn-sm btn-outline-primary">補充</a>
                                         </div>
                                     </div>
                                     
@@ -227,91 +225,64 @@
                                             <div class="alert-description">残り3本 - もうすぐ補充が必要</div>
                                         </div>
                                         <div class="alert-action">
-                                            <button class="btn btn-sm btn-outline-primary">補充</button>
+                                            <a href="orders/replenish_order.html" class="btn btn-sm btn-outline-primary">補充</a>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="see-more-link">
-                                    <a href="orders/replenish_order.html">補充発注へ →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 最下部フルワイドセクション: Sommiaからのワインリスト最適化提案 -->
+                <!-- Sommiaからのワインリスト最適化提案 -->
                 <div class="dashboard-full-width-section">
-                    <!-- ワインリスト最適化提案セクション -->
                     <div class="dashboard-section">
-                        <h2 class="section-title">🍷 Sommiaからのワインリスト最適化提案</h2>
-                        <div class="wine-optimization-card">
-                            <div class="optimization-header">
-                                <img src="../sommia.png" alt="Sommia" class="ai-avatar-inline">
-                                <div class="optimization-message">
-                                    <div class="optimization-title">ワインリストの最適化で売上アップのチャンスです！</div>
-                                    <div class="optimization-summary">売上データを分析した結果、<strong>3銘柄の入替え</strong>で<strong class="highlight-number">約15%の売上向上</strong>が期待できます。</div>
+                        <h2 class="section-title">🤖 Sommiaからのワインリスト最適化提案</h2>
+                        <div class="wine-optimization-card" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div class="optimization-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <img src="../sommia.png" alt="Sommia" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #884591;" onerror="this.style.display='none'">
+                                <div>
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">ワインリストの最適化で売上アップのチャンスです！</div>
+                                    <div style="color: #4b5563;">売上データを分析した結果、<strong>3銘柄の入替え</strong>で<strong style="color: #10b981;">約15%の売上向上</strong>が期待できます。</div>
                                 </div>
                             </div>
-                            <div class="optimization-preview">
-                                <div class="optimization-stats">
-                                    <div class="stat-item">
-                                        <div class="stat-icon remove">↓</div>
-                                        <div class="stat-content">
-                                            <div class="stat-number">2</div>
-                                            <div class="stat-label">削除推奨</div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                                <div>
+                                    <h4 style="color: #dc2626; margin-bottom: 1rem;">🔴 削除推奨</h4>
+                                    <div style="space-y: 0.5rem;">
+                                        <div style="padding: 0.75rem; background: #fef2f2; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">シラーズ 2021</div>
+                                            <div style="color: #7f1d1d; font-size: 0.9rem;">3ヶ月間売上なし</div>
                                         </div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-icon add">↑</div>
-                                        <div class="stat-content">
-                                            <div class="stat-number">3</div>
-                                            <div class="stat-label">追加推奨</div>
-                                        </div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-icon profit">💰</div>
-                                        <div class="stat-content">
-                                            <div class="stat-number">+15%</div>
-                                            <div class="stat-label">売上向上予測</div>
+                                        <div style="padding: 0.75rem; background: #fef2f2; border-radius: 8px;">
+                                            <div style="font-weight: 600;">リースリング 2022</div>
+                                            <div style="color: #7f1d1d; font-size: 0.9rem;">回転率0.3回/月</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="optimization-preview-wines">
-                                    <div class="preview-section">
-                                        <h4>🔴 削除推奨</h4>
-                                        <div class="wine-preview-list">
-                                            <div class="wine-preview-item low-performance">
-                                                <span class="wine-name">シラーズ 2021</span>
-                                                <span class="wine-reason">3ヶ月間売上なし</span>
-                                            </div>
-                                            <div class="wine-preview-item low-performance">
-                                                <span class="wine-name">リースリング 2022</span>
-                                                <span class="wine-reason">回転率0.3回/月</span>
-                                            </div>
+                                
+                                <div>
+                                    <h4 style="color: #059669; margin-bottom: 1rem;">🟢 追加推奨</h4>
+                                    <div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">ヴェルメンティーノ 2023</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">夏季需要↑予測</div>
                                         </div>
-                                    </div>
-                                    <div class="preview-section">
-                                        <h4>🟢 追加推奨</h4>
-                                        <div class="wine-preview-list">
-                                            <div class="wine-preview-item high-potential">
-                                                <span class="wine-name">ヴェルメンティーノ 2023</span>
-                                                <span class="wine-reason">夏季需要↑予測</span>
-                                            </div>
-                                            <div class="wine-preview-item high-potential">
-                                                <span class="wine-name">サンジョヴェーゼ 2021</span>
-                                                <span class="wine-reason">他店で人気上昇</span>
-                                            </div>
-                                            <div class="wine-preview-item high-potential">
-                                                <span class="wine-name">アルバリーニョ 2023</span>
-                                                <span class="wine-reason">コスパ優秀</span>
-                                            </div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">サンジョヴェーゼ 2021</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">他店で人気上昇</div>
+                                        </div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px;">
+                                            <div style="font-weight: 600;">アルバリーニョ 2023</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">コスパ優秀</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="optimization-actions">
-                                <button class="btn btn-outline-secondary" id="skip-optimization">今回はスキップ</button>
+                            
+                            <div style="text-align: center;">
+                                <button class="btn btn-outline-secondary" style="margin-right: 1rem;">今回はスキップ</button>
                                 <a href="wine_optimization.html" class="btn btn-primary">詳細分析を見る</a>
                             </div>
                         </div>
@@ -321,79 +292,14 @@
         </div>
     </main>
     
-    <!-- フローティングチャットボタン -->
-    <div class="floating-chat-button" id="floating-chat-btn">
-        <img src="../sommia.png" alt="Sommia" class="chat-avatar">
-        <div class="notification-badge" id="chat-notification-badge">3</div>
-    </div>
-    
-    <!-- チャットウィンドウ -->
-    <div class="floating-chat-window" id="floating-chat-window">
-        <div class="chat-header">
-            <img src="../sommia.png" alt="Sommia" class="chat-avatar-small">
-            <span class="chat-title">Sommia - ソムリエAI</span>
-            <button class="chat-close-btn" id="chat-close-btn">×</button>
-        </div>
-        <div class="chat-body" id="chat-body">
-            <div class="ai-message">
-                <img src="../sommia.png" alt="Sommia" class="chat-avatar-message">
-                <div class="message-content">
-                    こんにちは！今日は3つの重要な提案があります。
-                </div>
-            </div>
-            
-            <!-- Sommiaからの提案一覧 -->
-            <div class="suggestions-list" id="suggestions-list">
-                <div class="suggestion-card" data-url="wine_optimization.html">
-                    <div class="suggestion-icon">🍷</div>
-                    <div class="suggestion-content">
-                        <div class="suggestion-title">ワインリスト最適化</div>
-                        <div class="suggestion-description">3銘柄の入替えで約15%の売上向上が期待</div>
-                    </div>
-                    <div class="suggestion-action">詳細</div>
-                </div>
-                
-                <div class="suggestion-card" data-url="orders/replenish_order.html">
-                    <div class="suggestion-icon">⚠️</div>
-                    <div class="suggestion-content">
-                        <div class="suggestion-title">在庫アラート</div>
-                        <div class="suggestion-description">キャンティなど3銘柄が補充必要</div>
-                    </div>
-                    <div class="suggestion-action">確認</div>
-                </div>
-                
-                <div class="suggestion-card" data-url="products/product_list.html">
-                    <div class="suggestion-icon">🌞</div>
-                    <div class="suggestion-content">
-                        <div class="suggestion-title">季節のおすすめ</div>
-                        <div class="suggestion-description">初夏向け軽やかな白ワイン・ロゼ</div>
-                    </div>
-                    <div class="suggestion-action">見る</div>
-                </div>
-            </div>
-            
-            <div class="chat-actions" id="chat-actions">
-                <button class="action-btn-square" data-action="sales">
-                    <div class="action-icon">📊</div>
-                    <div class="action-label">売上チェック</div>
-                </button>
-                <button class="action-btn-square" data-action="inventory">
-                    <div class="action-icon">🍷</div>
-                    <div class="action-label">在庫管理</div>
-                </button>
-                <button class="action-btn-square" data-action="order">
-                    <div class="action-icon">📦</div>
-                    <div class="action-label">発注</div>
-                </button>
-                <button class="action-btn-square" data-action="help">
-                    <div class="action-icon">❓</div>
-                    <div class="action-label">ヘルプ</div>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="footer-placeholder"></div>
+    <!-- 統一されたJavaScript読み込み -->
+    <script src="../js/unified_loader.js"></script>
+    <script>
+        console.log('📄 ダッシュボードページ読み込み開始');
+        
+        // 統一されたページ初期化
+        initializeWineSupportPage('..');
+    </script>
     
     <!-- Chart.jsの読み込み -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -495,471 +401,172 @@
             // 価格帯別ワイン構成比チャートの初期化
             initializeWineCompositionChart();
             
-            // AIチャットの提案チップクリック処理
-            const suggestionChips = document.querySelectorAll('.ai-suggestion-chip');
-            suggestionChips.forEach(chip => {
-                chip.addEventListener('click', function() {
-                    const text = this.textContent;
-                    
-                    // ユーザーメッセージを表示
-                    addChatMessage(null, null, text, '.ai-chat-body', true);
-                    
-                    // AIの「考え中」表示を追加
-                    const thinkingId = addAiThinking();
-                    
-                    // 遅延してAIの応答を表示
-                    setTimeout(() => {
-                        // 「考え中」表示を削除
-                        removeAiThinking(thinkingId);
-                        
-                        // AIの応答を表示
-                        if (text.includes('在庫を確認')) {
-                            addChatMessage('myCellar', 'overview');
-                            setTimeout(() => {
-                                window.location.href = 'my_cellar/my_cellar.html';
-                            }, 1500);
-                        } else if (text.includes('補充発注')) {
-                            addChatMessage('orders', 'replenishOrder');
-                            setTimeout(() => {
-                                window.location.href = 'orders/replenish_order.html';
-                            }, 1500);
-                        }
-                    }, 1000);
-                });
-            });
-            
-            // KPIカウントアップアニメーション
-            initializeKPICountUp();
-            
             // チャート切り替えボタンの初期化
             initializeChartToggle();
             
-            // フローティングチャットの初期化
-            initializeFloatingChat();
-            
-            // 補充ボタンのイベント処理
-            const replenishButtons = document.querySelectorAll('.alert-action .btn');
-            replenishButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                window.location.href = 'orders/replenish_order.html';
-        });
-        });
-    });
-    
-    // KPIカウントアップアニメーションの初期化
-    function initializeKPICountUp() {
-    const kpiCards = document.querySelectorAll('.stats-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-    if (entry.isIntersecting) {
-    const valueElement = entry.target.querySelector('.stats-value');
-    const targetValue = parseFloat(valueElement.dataset.target);
-    const prefix = valueElement.dataset.prefix || '';
-    const suffix = valueElement.dataset.suffix || '';
-    
-    if (targetValue) {
-    // カウントアップ実行
-    countUpAnimation(valueElement, 0, targetValue, prefix, suffix, 2000);
-    
-    // 一度アニメーションしたら監視を停止
-    observer.unobserve(entry.target);
-    }
-    }
-    });
-    }, {
-    threshold: 0.3 // 30%表示されたらアニメーション開始
-    });
-    
-    kpiCards.forEach(card => {
-    observer.observe(card);
-    });
-    }
-    
-    // カウントアップアニメーション関数
-    function countUpAnimation(element, start, end, prefix = '', suffix = '', duration = 2000) {
-        const startTime = performance.now();
-        const difference = end - start;
-        
-        // カウント中クラスを追加
-        element.classList.add('counting');
-        
-        function animate(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // easeOutCubic イージング関数
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            
-            const currentValue = start + (difference * easeProgress);
-            
-            // 数値のフォーマット
-            let displayValue;
-            if (end >= 1000) {
-                // 1000以上は3桁区切り
-                displayValue = Math.floor(currentValue).toLocaleString();
-            } else if (end % 1 !== 0) {
-                // 小数点あり
-                displayValue = currentValue.toFixed(1);
-            } else {
-                // 整数
-                displayValue = Math.floor(currentValue).toString();
-            }
-            
-            element.textContent = prefix + displayValue + suffix;
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                // 最終値を正確に設定
-                let finalValue;
-                if (end >= 1000) {
-                    finalValue = end.toLocaleString();
-                } else if (end % 1 !== 0) {
-                    finalValue = end.toString();
-                } else {
-                    finalValue = end.toString();
-                }
-                element.textContent = prefix + finalValue + suffix;
-                
-                // カウント中クラスを削除
+            // 統計カードのアニメーション
+            const statsCards = document.querySelectorAll('.stats-card');
+            statsCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
                 setTimeout(() => {
-                    element.classList.remove('counting');
-                }, 200);
-            }
-        }
-        
-        requestAnimationFrame(animate);
-    }
-            
-            // フローティングチャットの初期化関数
-            function initializeFloatingChat() {
-        const chatButton = document.getElementById('floating-chat-btn');
-        const chatWindow = document.getElementById('floating-chat-window');
-        const chatCloseBtn = document.getElementById('chat-close-btn');
-        const actionButtons = document.querySelectorAll('.action-btn-square');
-        const notificationBadge = document.getElementById('chat-notification-badge');
-        
-        // チャットボタンクリック時
-        chatButton.addEventListener('click', function() {
-            chatWindow.classList.toggle('show');
-            // 通知バッジを非表示
-            notificationBadge.style.display = 'none';
-        });
-        
-        // チャット閉じるボタン
-        chatCloseBtn.addEventListener('click', function() {
-            chatWindow.classList.remove('show');
-        });
-        
-        // アクションボタンの処理
-        actionButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const action = this.dataset.action;
-                handleChatAction(action);
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
             });
-        });
-        
-        // 提案カードのクリック処理
-        const suggestionCards = document.querySelectorAll('.suggestion-card');
-        suggestionCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const url = this.dataset.url;
-                window.location.href = url;
-            });
-        });
-        
-        // チャットウィンドウ外をクリックで閉じる
-        document.addEventListener('click', function(event) {
-            if (!chatWindow.contains(event.target) && !chatButton.contains(event.target)) {
-                chatWindow.classList.remove('show');
-            }
-        });
-    }
-    
-    // チャットアクションの処理
-    function handleChatAction(action) {
-        const chatBody = document.getElementById('chat-body');
-        const chatActions = document.getElementById('chat-actions');
-        
-        // ユーザー選択を表示
-        const userChoice = document.createElement('div');
-        userChoice.className = 'user-message';
-        userChoice.innerHTML = `
-            <div class="message-content user">
-                ${getActionText(action)}
-            </div>
-        `;
-        userChoice.style.textAlign = 'right';
-        userChoice.style.marginBottom = 'var(--spacing-sm)';
-        
-        chatBody.insertBefore(userChoice, chatActions);
-        
-        // AI応答を表示
-        setTimeout(() => {
-            const aiResponse = document.createElement('div');
-            aiResponse.className = 'ai-message';
-            aiResponse.innerHTML = `
-                <img src="../sommia.png" alt="Sommia" class="chat-avatar-message">
-                <div class="message-content">
-                    ${getAIResponse(action)}
-                </div>
-            `;
-            chatBody.insertBefore(aiResponse, chatActions);
             
-            // サブアクションを表示
-            setTimeout(() => {
-                showSubActions(action, chatBody, chatActions);
-            }, 500);
-            
-            // スクロールを下に
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }, 800);
-    }
-    
-    // アクションテキストを取得
-    function getActionText(action) {
-        const texts = {
-            sales: '📊 売上チェック',
-            inventory: '🍷 在庫管理',
-            order: '📦 発注',
-            help: '❓ ヘルプ'
-        };
-        return texts[action] || action;
-    }
-    
-    // AI応答を取得
-    function getAIResponse(action) {
-        const responses = {
-            sales: '売上チェックですね！ダッシュボードで最新の売上情報を確認できます。',
-            inventory: '在庫管理のお手伝いをします！マイセラーで在庫状況や売上入力ができます。',
-            order: '発注関連のサポートをいたします！補充発注や履歴確認ができます。',
-            help: 'ワイサポの使い方でお困りですか？どんなことでもお気軽にお問い合わせください。'
-        };
-        return responses[action] || 'お手伝いします！';
-    }
-    
-    // サブアクションを表示
-    function showSubActions(action, chatBody, chatActions) {
-        const subActions = document.createElement('div');
-        subActions.className = 'sub-actions';
-        
-        const actionMappings = {
-            sales: [
-                { text: 'ダッシュボードを開く', url: 'dashboard.html' },
-                { text: '売上履歴を見る', url: 'reports/sales_history.html' }
-            ],
-            inventory: [
-                { text: 'マイセラーを開く', url: 'my_cellar/my_cellar.html' },
-                { text: '売上入力をする', url: 'my_cellar/sales_input.html' }
-            ],
-            order: [
-                { text: '補充発注をする', url: 'orders/replenish_order.html' },
-                { text: '発注履歴を見る', url: 'orders/order_history.html' }
-            ],
-            help: [
-                { text: 'ユーザーガイドを見る', url: '#' },
-                { text: 'お問い合わせ', url: '#' }
-            ]
-        };
-        
-        const actions = actionMappings[action] || [];
-        
-        actions.forEach(actionItem => {
-            const btn = document.createElement('button');
-            btn.className = 'sub-action-btn';
-            
-            // 提案アクションの場合は詳細説明を追加
-            if (action === 'suggestions' && actionItem.description) {
-                btn.innerHTML = `
-                    <div class="suggestion-item">
-                        <div class="suggestion-title">${actionItem.text}</div>
-                        <div class="suggestion-description">${actionItem.description}</div>
-                    </div>
-                `;
-                btn.classList.add('suggestion-btn');
-            } else {
-                btn.textContent = actionItem.text;
-            }
-            
-            btn.addEventListener('click', function() {
-                window.location.href = actionItem.url;
-            });
-            subActions.appendChild(btn);
+            // モック警告の表示
+            console.log('🍷 ワイサポ ダッシュボード - GitHub Pages モックアップ版');
+            console.log('🚧 これはデモ版です。実際の機能は実装されていません。');
         });
         
-        // メニューに戻るボタン
-        const backBtn = document.createElement('button');
-        backBtn.className = 'sub-action-btn back-btn';
-        backBtn.textContent = '← メニューに戻る';
-        backBtn.addEventListener('click', function() {
-            resetChatToMain();
-        });
-        subActions.appendChild(backBtn);
-        
-        chatBody.insertBefore(subActions, chatActions);
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-    
-    // チャートをメインメニューにリセット
-    function resetChatToMain() {
-        const chatBody = document.getElementById('chat-body');
-        const chatActions = document.getElementById('chat-actions');
-        
-        // 既存のメッシージをクリア
-        const messages = chatBody.querySelectorAll('.ai-message:not(:first-child), .user-message, .sub-actions');
-        messages.forEach(msg => msg.remove());
-        
-        // メインアクションボタンを再表示
-        chatActions.style.display = 'flex';
-    }
-    
-    // 価格帯別ワイン構成比チャートの初期化
-    function initializeWineCompositionChart() {
-        const ctx = document.getElementById('wine-composition-chart').getContext('2d');
-        
-        // データ定義
-        const wineData = {
-            volume: {
-                // 価格帯別の本数データ
-                priceRanges: {
-                    '~3,000円': { red: 8, white: 12, rose: 3, sparkling: 4 },
-                    '3,001~5,000円': { red: 15, white: 10, rose: 2, sparkling: 6 },
-                    '5,001~8,000円': { red: 12, white: 8, rose: 1, sparkling: 3 },
-                    '8,001円~': { red: 6, white: 4, rose: 1, sparkling: 2 }
+        // 価格帯別ワイン構成比チャートの初期化
+        function initializeWineCompositionChart() {
+            const ctx = document.getElementById('wine-composition-chart').getContext('2d');
+            
+            // データ定義
+            const wineData = {
+                volume: {
+                    // 価格帯別の本数データ
+                    priceRanges: {
+                        '~3,000円': { red: 8, white: 12, rose: 3, sparkling: 4 },
+                        '3,001~5,000円': { red: 15, white: 10, rose: 2, sparkling: 6 },
+                        '5,001~8,000円': { red: 12, white: 8, rose: 1, sparkling: 3 },
+                        '8,001円~': { red: 6, white: 4, rose: 1, sparkling: 2 }
+                    }
+                },
+                sales: {
+                    // 価格帯別の売上データ（千円単位）
+                    priceRanges: {
+                        '~3,000円': { red: 16, white: 24, rose: 6, sparkling: 8 },
+                        '3,001~5,000円': { red: 60, white: 40, rose: 8, sparkling: 24 },
+                        '5,001~8,000円': { red: 72, white: 48, rose: 6, sparkling: 18 },
+                        '8,001円~': { red: 54, white: 36, rose: 9, sparkling: 18 }
+                    }
                 }
-            },
-            sales: {
-                // 価格帯別の売上データ（千円単位）
-                priceRanges: {
-                    '~3,000円': { red: 16, white: 24, rose: 6, sparkling: 8 },
-                    '3,001~5,000円': { red: 60, white: 40, rose: 8, sparkling: 24 },
-                    '5,001~8,000円': { red: 72, white: 48, rose: 6, sparkling: 18 },
-                    '8,001円~': { red: 54, white: 36, rose: 9, sparkling: 18 }
-                }
-            }
-        };
-        
-        // 初期表示は売上
-        let currentMode = 'sales';
-        
-        // チャートデータを生成する関数
-        function generateChartData(mode) {
-            const data = wineData[mode];
-            const wineTypes = ['red', 'white', 'rose', 'sparkling'];
-            const wineTypeLabels = ['赤ワイン', '白ワイン', 'ロゼ', 'スパークリング'];
-            const priceRanges = Object.keys(data.priceRanges);
-            
-            return {
-                labels: wineTypeLabels, // Y軸のラベル（ワインタイプ）
-                datasets: priceRanges.map((priceRange, index) => {
-                    const colors = [
-                        '#FF6B6B', // ~3,000円 - 薄い赤
-                        '#4ECDC4', // 3,001~5,000円 - ティール
-                        '#45B7D1', // 5,001~8,000円 - 青
-                        '#96CEB4'  // 8,001円~ - 薄い緑
-                    ];
-                    
-                    return {
-                        label: priceRange,
-                        data: wineTypes.map(type => data.priceRanges[priceRange][type]),
-                        backgroundColor: colors[index],
-                        borderColor: colors[index],
-                        borderWidth: 1
-                    };
-                })
             };
-        }
-        
-        // チャート作成
-        window.wineCompositionChart = new Chart(ctx, {
-            type: 'bar',
-            data: generateChartData(currentMode),
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y', // 横向き棒グラフ
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
+            
+            // 初期表示は売上
+            let currentMode = 'sales';
+            
+            // チャートデータを生成する関数
+            function generateChartData(mode) {
+                const data = wineData[mode];
+                const wineTypes = ['red', 'white', 'rose', 'sparkling'];
+                const wineTypeLabels = ['赤ワイン', '白ワイン', 'ロゼ', 'スパークリング'];
+                const priceRanges = Object.keys(data.priceRanges);
+                
+                return {
+                    labels: wineTypeLabels, // Y軸のラベル（ワインタイプ）
+                    datasets: priceRanges.map((priceRange, index) => {
+                        const colors = [
+                            '#FF6B6B', // ~3,000円 - 薄い赤
+                            '#4ECDC4', // 3,001~5,000円 - ティール
+                            '#45B7D1', // 5,001~8,000円 - 青
+                            '#96CEB4'  // 8,001円~ - 薄い緑
+                        ];
+                        
+                        return {
+                            label: priceRange,
+                            data: wineTypes.map(type => data.priceRanges[priceRange][type]),
+                            backgroundColor: colors[index],
+                            borderColor: colors[index],
+                            borderWidth: 1
+                        };
+                    })
+                };
+            }
+            
+            // チャート作成
+            window.wineCompositionChart = new Chart(ctx, {
+                type: 'bar',
+                data: generateChartData(currentMode),
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // 横向き棒グラフ
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.parsed.x;
+                                    const unit = currentMode === 'volume' ? '本' : '千円';
+                                    return `${label}: ${value}${unit}`;
+                                }
+                            }
+                        }
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const label = context.dataset.label || '';
-                                const value = context.parsed.x;
-                                const unit = currentMode === 'volume' ? '本' : '千円';
-                                return `${label}: ${value}${unit}`;
+                    scales: {
+                        x: {
+                            stacked: true,
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: currentMode === 'volume' ? 'ボトル数' : '売上（千円）'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'ワイン種類'
                             }
                         }
                     }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: currentMode === 'volume' ? 'ボトル数' : '売上（千円）'
-                        }
-                    },
-                    y: {
-                        stacked: true,
-                        title: {
-                            display: true,
-                            text: 'ワイン種類'
-                        }
-                    }
                 }
-            }
-        });
+            });
+            
+            // チャートデータを更新する関数
+            window.updateWineCompositionChart = function(mode) {
+                currentMode = mode;
+                const newData = generateChartData(mode);
+                
+                // データを更新
+                window.wineCompositionChart.data = newData;
+                
+                // X軸のタイトルを更新
+                window.wineCompositionChart.options.scales.x.title.text = 
+                    mode === 'volume' ? 'ボトル数' : '売上（千円）';
+                
+                // チャートを再描画
+                window.wineCompositionChart.update('active');
+            };
+        }
         
-        // チャートデータを更新する関数
-        window.updateWineCompositionChart = function(mode) {
-            currentMode = mode;
-            const newData = generateChartData(mode);
+        // チャート切り替えボタンの初期化
+        function initializeChartToggle() {
+            const volumeToggle = document.getElementById('volume-toggle');
+            const salesToggle = document.getElementById('sales-toggle');
             
-            // データを更新
-            window.wineCompositionChart.data = newData;
+            // ボタンクリックイベント
+            volumeToggle.addEventListener('click', function() {
+                // ボタンの状態を切り替え
+                volumeToggle.classList.remove('btn-outline-secondary');
+                volumeToggle.classList.add('btn-primary');
+                salesToggle.classList.remove('btn-primary');
+                salesToggle.classList.add('btn-outline-secondary');
+                
+                // チャートを更新
+                window.updateWineCompositionChart('volume');
+            });
             
-            // X軸のタイトルを更新
-            window.wineCompositionChart.options.scales.x.title.text = 
-                mode === 'volume' ? 'ボトル数' : '売上（千円）';
-            
-            // チャートを再描画
-            window.wineCompositionChart.update('active');
-        };
-    }
-    
-    // チャート切り替えボタンの初期化
-    function initializeChartToggle() {
-        const volumeToggle = document.getElementById('volume-toggle');
-        const salesToggle = document.getElementById('sales-toggle');
-        
-        // ボタンクリックイベント
-        volumeToggle.addEventListener('click', function() {
-            // ボタンの状態を切り替え
-            volumeToggle.classList.remove('btn-outline-secondary');
-            volumeToggle.classList.add('btn-primary');
-            salesToggle.classList.remove('btn-primary');
-            salesToggle.classList.add('btn-outline-secondary');
-            
-            // チャートを更新
-            window.updateWineCompositionChart('volume');
-        });
-        
-        salesToggle.addEventListener('click', function() {
-            // ボタンの状態を切り替え
-            salesToggle.classList.remove('btn-outline-secondary');
-            salesToggle.classList.add('btn-primary');
-            volumeToggle.classList.remove('btn-primary');
-            volumeToggle.classList.add('btn-outline-secondary');
-            
-            // チャートを更新
-            window.updateWineCompositionChart('sales');
-        });
-    }
+            salesToggle.addEventListener('click', function() {
+                // ボタンの状態を切り替え
+                salesToggle.classList.remove('btn-outline-secondary');
+                salesToggle.classList.add('btn-primary');
+                volumeToggle.classList.remove('btn-primary');
+                volumeToggle.classList.add('btn-outline-secondary');
+                
+                // チャートを更新
+                window.updateWineCompositionChart('sales');
+            });
+        }
     </script>
 </body>
 </html>

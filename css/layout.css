@@ -1,47 +1,22 @@
-/* 従来のnav-linkスタイル（互換性のため残す） */
-.nav-link {
-    padding: var(--spacing-sm) var(--spacing-xs);
-    color: var(--dark-gray);
-    font-weight: 500;
-    transition: all 0.25s ease;
+/* ヘッダー基本レイアウト */
+header.main-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.nav-link:hover {
-    color: var(--primary-color);
+/* メインコンテンツのマージン調整 */
+main {
+    padding-top: 0; /* ヘッダーがstickyなので上部パディング不要 */
 }
 
-.nav-link.active {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-    transform: scaleX(0.8);
-    left: 10%;
-}/* レイアウト定義 */
+/* レイアウト定義 */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-header {
-    background-color: var(--white);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* シャドウを微調整 */
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 64px; /* 高さを少し調整 */
-    display: flex;
-    align-items: center;
 }
 
 main {
@@ -54,234 +29,6 @@ footer {
     color: var(--white);
     padding: var(--spacing-lg) 0;
     margin-top: auto;
-}
-
-/* ヘッダーレイアウト */
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 var(--spacing-md);
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    height: 48px; /* ロゴのサイズを調整 */
-    margin-right: 0;
-    object-fit: contain;
-}
-
-.logo-text {
-    font-size: var(--font-size-lg);
-    font-weight: 600; /* 少し太く */
-    color: var(--primary-color);
-    letter-spacing: 0.5px; /* 文字間隔を少し広く */
-}
-
-/* ナビゲーション */
-.main-nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 800px; /* 最大幅を設定 */
-}
-
-.main-nav,
-.icon-nav {
-    display: flex;
-    list-style: none; /* リストマーカーを非表示 */
-    padding: 0; /* リストのデフォルトパディングを削除 */
-    margin: 0; /* リストのデフォルトマージンを削除 */
-    align-items: center;
-}
-
-.main-nav {
-    gap: var(--spacing-sm); /* 間隔を調整してボタンが密集しないように */
-}
-
-.nav-item,
-.icon-nav-item {
-    position: relative;
-    list-style-type: none; /* 追加の安全策 */
-}
-
-/* 区切り線 */
-.nav-divider {
-    width: 1px;
-    height: 20px;
-    background-color: var(--gray-300);
-    margin: 0 var(--spacing-sm);
-}
-
-/* ナビゲーションボタンの基本スタイル */
-.nav-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    color: var(--gray-700);
-    font-weight: 500;
-    font-size: var(--font-size-sm);
-    border-radius: var(--border-radius-md);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: transparent;
-    border: 1px solid transparent;
-}
-
-.nav-button:hover {
-    color: var(--primary-color);
-    background-color: var(--gray-50);
-    border-color: var(--gray-200);
-    transform: translateY(-1px);
-}
-
-.nav-button.active {
-    color: var(--primary-color);
-    background-color: var(--primary-light);
-    border-color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* ログアウトボタンの特別スタイル */
-.logout-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 20px;
-    color: var(--white);
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    background: linear-gradient(135deg, var(--error-color, #ef4444), #dc2626);
-    border-radius: var(--border-radius-md);
-    border: none;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
-}
-
-.logout-button:hover {
-    background: linear-gradient(135deg, #dc2626, var(--error-color, #ef4444));
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
-    color: var(--white);
-}
-
-/* トーストメッセージのスタイル */
-.logout-toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    z-index: 10000;
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logout-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.logout-toast.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(50px);
-}
-
-.toast-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 24px;
-    background: var(--gray-900);
-    color: var(--white);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-xl);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    min-width: 200px;
-    backdrop-filter: blur(10px);
-}
-
-.toast-content svg {
-    flex-shrink: 0;
-    color: var(--success-color);
-}
-
-/* アイコンナビゲーション */
-.icon-nav {
-    gap: var(--spacing-md); /* 間隔を調整 */
-    margin-left: var(--spacing-xl);
-}
-
-.icon-nav-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px; /* サイズを調整 */
-    height: 38px;
-    color: var(--dark-gray);
-    border-radius: 50%;
-    transition: all 0.25s ease; /* トランジションをスムーズに */
-}
-
-.icon-nav-link:hover {
-    background-color: rgba(245, 245, 245, 0.8); /* 半透明に */
-    color: var(--primary-color);
-    transform: translateY(-1px); /* ホバー時に少し浮かせる */
-}
-
-.icon-nav-link svg {
-    width: 22px; /* アイコンサイズを少し小さく */
-    height: 22px;
-    stroke-width: 2px; /* 線の太さ */
-}
-
-.icon-badge {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: var(--primary-color);
-    color: var(--white);
-    font-size: 10px;
-    font-weight: bold;
-    width: 16px; /* サイズを少し小さく */
-    height: 16px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* 微妙なシャドウ */
-}
-
-/* フッターレイアウト */
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-links {
-    display: flex;
-    gap: var(--spacing-lg);
-}
-
-.footer-link {
-    color: var(--white);
-    opacity: 0.8;
-    transition: opacity var(--transition-fast);
-}
-
-.footer-link:hover {
-    opacity: 1;
-    color: var(--white);
-}
-
-.copyright {
-    opacity: 0.7;
-    font-size: var(--font-size-sm);
 }
 
 /* メインコンテンツエリア */
@@ -348,99 +95,38 @@ footer {
     line-height: 1.5;
 }
 
-/* ログインリンクのスタイル */
-.login-link {
-    color: var(--primary-color);
-    font-weight: 600;
-    border: 1px solid var(--primary-color);
-    border-radius: var(--border-radius-md);
-    padding: 0.35rem 1rem !important;
-    transition: all 0.25s ease;
+/* フッターレイアウト */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.login-link:hover {
-    background-color: var(--primary-color);
+.footer-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.footer-link {
+    color: var(--white);
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+
+.footer-link:hover {
+    opacity: 1;
     color: var(--white);
 }
 
-/* レスポンシブデザイン */
-@media (max-width: 992px) {
-    /* タブレットサイズでの調整 */
-    .main-nav {
-        gap: var(--spacing-md); /* 間隔を少し狭く */
-    }
-    
-    .icon-nav {
-        margin-left: var(--spacing-md); /* 左マージンを縮小 */
-    }
+.copyright {
+    opacity: 0.7;
+    font-size: var(--font-size-sm);
 }
 
+/* レスポンシブデザイン */
 @media (max-width: 768px) {
-    /* モバイルサイズでの調整 */
-    header {
-        height: auto;
-        padding: var(--spacing-sm) 0;
-    }
-    
     .page-container {
         flex-direction: column;
-    }
-    
-    .header-container {
-        flex-direction: column;
-        padding: var(--spacing-xs) var(--spacing-sm);
-        gap: var(--spacing-md);
-        text-align: center;
-    }
-    
-    .logo-container {
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    .main-nav-container {
-        flex-direction: column;
-        width: 100%;
-        gap: var(--spacing-md);
-    }
-    
-    .main-nav {
-        justify-content: center;
-        width: 100%;
-        flex-wrap: wrap;
-        gap: var(--spacing-xs);
-        margin: 0;
-    }
-    
-    .nav-divider {
-        display: none; /* モバイルでは区切り線を非表示 */
-    }
-    
-    .nav-button {
-        padding: 6px 12px;
-        font-size: var(--font-size-xs);
-        min-width: auto;
-    }
-    
-    .logout-button {
-        padding: 8px 16px;
-        font-size: var(--font-size-xs);
-    }
-    
-    .icon-nav {
-        margin-left: 0;
-        margin-top: var(--spacing-xs);
-        justify-content: center;
-        padding: 0;
-    }
-    
-    .icon-nav-link {
-        width: 44px;
-        height: 44px;
-    }
-    
-    .icon-nav-link svg {
-        width: 24px;
-        height: 24px;
     }
     
     .footer-container {

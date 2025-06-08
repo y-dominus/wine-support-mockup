@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統一読み込みテスト | ワイサポ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components/header.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-info { background: #f0f0f0; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>統一読み込み方式テスト</h2>
+        <div id="test-results"></div>
+    </div>
+    
+    <!-- ヘッダーはここに挿入される -->
+    
+    <main>
+        <div class="container">
+            <h1>統一読み込み方式の動作確認</h1>
+            <p>ヘッダーが正常に表示され、ナビゲーションが動作していれば成功です。</p>
+        </div>
+    </main>
+
+    <!-- 統一されたJavaScript読み込み -->
+    <script src="js/unified_loader.js"></script>
+    <script>
+        console.log('📄 統一読み込みテスト開始');
+        
+        const testResults = document.getElementById('test-results');
+        
+        function addTestResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            testResults.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        addTestResult('統一読み込みシステム テスト開始', 'info');
+        
+        // 統一読み込み方式を使用
+        initializeWineSupportPage('.', [], function() {
+            addTestResult('スクリプト読み込み完了コールバック実行', 'success');
+            
+            // ヘッダー確認
+            setTimeout(() => {
+                const header = document.querySelector('header, .main-header');
+                if (header) {
+                    addTestResult('✅ ヘッダー要素が見つかりました', 'success');
+                    addTestResult(`ヘッダーHTML: ${header.outerHTML.substring(0, 200)}...`, 'info');
+                } else {
+                    addTestResult('❌ ヘッダー要素が見つかりません', 'error');
+                }
+                
+                // ナビゲーション確認
+                const navItems = document.querySelectorAll('.nav-item');
+                if (navItems.length > 0) {
+                    addTestResult(`✅ ナビゲーション項目: ${navItems.length}個`, 'success');
+                } else {
+                    addTestResult('❌ ナビゲーション項目が見つかりません', 'error');
+                }
+                
+                addTestResult('テスト完了', 'info');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

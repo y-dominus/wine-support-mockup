@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>緊急ヘッダーテスト | ワイサポ</title>
+    <style>
+        body { 
+            margin: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #f0fdf4;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .error {
+            background: #fef2f2;
+            color: #7f1d1d;
+            border: 1px solid #ef4444;
+        }
+        .loading {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーはここに動的生成される -->
+    
+    <main class="test-container">
+        <h1>🚨 緊急ヘッダーテスト</h1>
+        
+        <div id="status" class="status loading">
+            🔄 ヘッダー読み込み中...
+        </div>
+        
+        <div id="details"></div>
+        
+        <h2>テスト項目</h2>
+        <ul>
+            <li>ヘッダーが表示される</li>
+            <li>ロゴ画像が表示される</li>
+            <li>テキストロゴが削除されている</li>
+            <li>ナビゲーションが動作する</li>
+        </ul>
+        
+        <h2>ページリンク</h2>
+        <p><a href="html/dashboard.html">ダッシュボード</a></p>
+        <p><a href="html/my_cellar/my_cellar.html">マイセラー</a></p>
+        <p><a href="html/products/product_list.html">商品一覧</a></p>
+    </main>
+
+    <script>
+        console.log('🚨 緊急テスト開始');
+        
+        const statusEl = document.getElementById('status');
+        const detailsEl = document.getElementById('details');
+        
+        // ヘッダー読み込みテスト
+        function testHeader() {
+            console.log('🧪 ヘッダーテスト開始');
+            
+            const script = document.createElement('script');
+            script.src = `js/common_parts.js?v=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`; // 強力キャッシュバスター
+            
+            script.onload = function() {
+                console.log('✅ スクリプト読み込み成功');
+                
+                setTimeout(() => {
+                    checkHeader();
+                }, 1000);
+            };
+            
+            script.onerror = function() {
+                console.error('❌ スクリプト読み込み失敗');
+                statusEl.className = 'status error';
+                statusEl.innerHTML = '❌ common_parts.js の読み込みに失敗しました';
+                detailsEl.innerHTML = '<p>パス: js/common_parts.js</p><p>ファイルが存在するか確認してください</p>';
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function checkHeader() {
+            console.log('🔍 ヘッダーチェック');
+            
+            const header = document.querySelector('.main-header');
+            const logo = document.querySelector('.logo-section img');
+            const textLogo = document.querySelector('.logo-text');
+            const nav = document.querySelector('.main-nav');
+            
+            let results = [];
+            let allGood = true;
+            
+            if (header) {
+                results.push('✅ ヘッダー要素が存在');
+            } else {
+                results.push('❌ ヘッダー要素が見つからない');
+                allGood = false;
+            }
+            
+            if (logo) {
+                results.push('✅ ロゴ画像が存在');
+            } else {
+                results.push('❌ ロゴ画像が見つからない');
+                allGood = false;
+            }
+            
+            if (!textLogo) {
+                results.push('✅ テキストロゴが正しく削除済み');
+            } else {
+                results.push('❌ テキストロゴがまだ存在');
+                allGood = false;
+            }
+            
+            if (nav) {
+                results.push('✅ ナビゲーションが存在');
+            } else {
+                results.push('❌ ナビゲーションが見つからない');
+                allGood = false;
+            }
+            
+            if (allGood) {
+                statusEl.className = 'status success';
+                statusEl.innerHTML = '✅ ヘッダーテスト成功！';
+            } else {
+                statusEl.className = 'status error';
+                statusEl.innerHTML = '❌ ヘッダーに問題があります';
+            }
+            
+            detailsEl.innerHTML = '<ul>' + results.map(r => `<li>${r}</li>`).join('') + '</ul>';
+        }
+        
+        // テスト実行
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', testHeader);
+        } else {
+            testHeader();
+        }
+    </script>
+</body>
+</html>

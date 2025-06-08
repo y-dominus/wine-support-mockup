@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統一ヘッダーテスト | ワイサポ</title>
+    
+    <!-- ヘッダー用のインラインCSS -->
+    <style>
+        body { 
+            margin: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+        }
+        .main-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+            height: 64px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+        .logo-section img {
+            height: 36px;
+            width: auto;
+        }
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .nav-item.active {
+            background-color: #f3f0f5;
+            color: #884591;
+            font-weight: 600;
+        }
+        .nav-item:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .action-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: #6b7280;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+        }
+        .action-btn:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .has-notification::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+        }
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #dc2626;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+        .test-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .test-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .success {
+            color: #065f46;
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        .checklist li::before {
+            content: "✅ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+        .page-link {
+            display: inline-block;
+            background: #884591;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 0.25rem;
+            font-size: 0.875rem;
+        }
+        .page-link:hover {
+            background: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーは common_parts.js で動的生成されます -->
+    
+    <main class="test-content">
+        <div class="test-section">
+            <h1 style="color: #884591; margin-bottom: 1rem;">🎯 統一ヘッダーテスト</h1>
+            <p style="color: #4b5563; margin-bottom: 2rem;">
+                ワイサポアプリの全ページで統一されたヘッダーが正しく表示されているかを確認します。
+            </p>
+            
+            <div class="success">
+                <h3>✅ Phase 1完了: テキストロゴ削除</h3>
+                <p>PNGロゴ画像のみが表示され、「ワイサポ」テキストロゴは削除されました。</p>
+            </div>
+            
+            <div class="success">
+                <h3>✅ Phase 2完了: ヘッダー仕様統一</h3>
+                <p>全ページで<code>common_parts.js</code>による動的ヘッダー生成に統一されました。</p>
+            </div>
+            
+            <h2 style="color: #1f2937; margin: 2rem 0 1rem 0;">📋 検証チェックリスト</h2>
+            <ul class="checklist">
+                <li>ヘッダーが正しく表示される</li>
+                <li>PNGロゴ画像のみ表示される（テキストロゴなし）</li>
+                <li>ナビゲーション項目が適切に表示される</li>
+                <li>アクションボタン（🔍🔔🛒）が表示される</li>
+                <li>ログアウトボタンが表示される</li>
+                <li>現在のページがハイライトされる</li>
+                <li>レスポンシブデザインが機能する</li>
+            </ul>
+            
+            <h2 style="color: #1f2937; margin: 2rem 0 1rem 0;">🔗 ページ別確認</h2>
+            <p style="color: #4b5563; margin-bottom: 1rem;">
+                以下のリンクから各ページを確認してください：
+            </p>
+            
+            <div style="margin: 1rem 0;">
+                <a href="html/dashboard.html" class="page-link">📊 ダッシュボード</a>
+                <a href="html/my_cellar/my_cellar.html" class="page-link">🍷 マイセラー</a>
+                <a href="html/products/product_list.html" class="page-link">📋 商品リスト</a>
+                <a href="html/wine_optimization.html" class="page-link">🎯 最適化分析</a>
+            </div>
+            
+            <h2 style="color: #1f2937; margin: 2rem 0 1rem 0;">🔧 技術仕様</h2>
+            <div style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #884591;">
+                <p><strong>バージョン:</strong> v5_unified</p>
+                <p><strong>キャッシュバスター:</strong> 20250608_v5_unified</p>
+                <p><strong>実装方式:</strong> 動的ヘッダー生成（common_parts.js）</p>
+                <p><strong>対応ブラウザ:</strong> モダンブラウザ全般</p>
+            </div>
+            
+            <div style="background: #fef2f2; padding: 1rem; border-radius: 8px; border-left: 4px solid #dc2626; margin-top: 1rem;">
+                <h3 style="color: #dc2626; margin-top: 0;">⚠️ 注意事項</h3>
+                <ul style="color: #7f1d1d; margin: 0;">
+                    <li>ブラウザキャッシュの影響で変更が反映されない場合は、強制リロード（Ctrl+F5）を実行してください</li>
+                    <li>これはモックアップ版のため、一部機能は実装されていません</li>
+                    <li>実際のナビゲーション機能は正常に動作します</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2 style="color: #1f2937; margin-bottom: 1rem;">🎉 実装完了</h2>
+            <p style="color: #4b5563;">
+                統一ヘッダーの実装が完了しました！各ページで一貫したユーザーエクスペリエンスを提供できるようになりました。
+            </p>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="html/dashboard.html" class="page-link" style="background: #10b981; font-size: 1rem; padding: 0.75rem 1.5rem;">
+                    🏠 ダッシュボードに移動
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScriptの動的読み込み -->
+    <script>
+        // キャッシュバスター
+        const cacheBuster = '20250608_v5_unified';
+        
+        // common_parts.jsを読み込み
+        const script = document.createElement('script');
+        script.src = `js/common_parts.js?v=${cacheBuster}`;
+        script.onload = () => {
+            console.log('✅ 統一ヘッダー読み込み完了');
+        };
+        script.onerror = () => {
+            console.error('❌ ヘッダー読み込みエラー');
+        };
+        document.head.appendChild(script);
+        
+        // テスト結果のログ出力
+        console.log('🎯 統一ヘッダーテストページ');
+        console.log('📊 Phase 1: テキストロゴ削除 - 完了');
+        console.log('📊 Phase 2: ヘッダー仕様統一 - 完了');
+        console.log('📊 Phase 3: 検証・テスト - 実行中');
+        
+        // ページロード完了時の確認
+        window.addEventListener('load', () => {
+            const header = document.querySelector('.main-header');
+            if (header) {
+                console.log('✅ ヘッダー正常表示');
+            } else {
+                console.error('❌ ヘッダー表示エラー');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヘッダー完全統一テスト | ワイサポ</title>
+    
+    <style>
+        body { 
+            margin: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+        }
+        .test-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .test-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .success {
+            color: #065f46;
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .error {
+            color: #7f1d1d;
+            background: #fef2f2;
+            border: 1px solid #ef4444;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .page-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .page-link {
+            display: inline-block;
+            background: #884591;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+        .page-link:hover {
+            background: #7c3aed;
+        }
+        .status-ok {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .status-error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .check-result {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+        }
+        .check-result.ok {
+            background: #f0fdf4;
+            color: #065f46;
+        }
+        .check-result.error {
+            background: #fef2f2;
+            color: #7f1d1d;
+        }
+        .auto-test {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーは common_parts.js で動的生成 -->
+    
+    <main class="test-content">
+        <div class="test-section">
+            <h1 style="color: #884591; margin-bottom: 1rem;">🎯 ワイサポ ヘッダー完全統一テスト</h1>
+            <p style="color: #4b5563; margin-bottom: 2rem;">
+                すべてのページで統一されたヘッダーが正しく動作するか確認します。
+            </p>
+            
+            <div id="header-status" class="auto-test">
+                <h3>🔄 自動ヘッダーチェック実行中...</h3>
+                <div id="check-results"></div>
+            </div>
+            
+            <h2 style="color: #1f2937; margin: 2rem 0 1rem 0;">📋 全ページリスト</h2>
+            <p>以下のリンクから各ページを確認し、ヘッダーが統一表示されることを確認してください：</p>
+            
+            <div class="page-grid">
+                <div class="page-card">
+                    <h3>📊 ダッシュボード</h3>
+                    <p>メインダッシュボード画面</p>
+                    <a href="html/dashboard.html" class="page-link">確認する</a>
+                    <div id="status-dashboard" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>🍷 マイセラー</h3>
+                    <p>ワイン在庫管理画面</p>
+                    <a href="html/my_cellar/my_cellar.html" class="page-link">確認する</a>
+                    <div id="status-my_cellar" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>📋 商品一覧</h3>
+                    <p>ワイン商品リスト画面</p>
+                    <a href="html/products/product_list.html" class="page-link">確認する</a>
+                    <div id="status-products" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>🎯 最適化分析</h3>
+                    <p>ワインリスト最適化画面</p>
+                    <a href="html/wine_optimization.html" class="page-link">確認する</a>
+                    <div id="status-optimization" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>📦 注文履歴</h3>
+                    <p>過去の注文履歴画面</p>
+                    <a href="html/orders/order_history.html" class="page-link">確認する</a>
+                    <div id="status-orders" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>📝 発注管理</h3>
+                    <p>ワイン発注・補充画面</p>
+                    <a href="html/orders/replenish_order.html" class="page-link">確認する</a>
+                    <div id="status-replenish" class="status-placeholder">チェック中...</div>
+                </div>
+                
+                <div class="page-card">
+                    <h3>🛒 カート</h3>
+                    <p>ショッピングカート画面</p>
+                    <a href="html/cart.html" class="page-link">確認する</a>
+                    <div id="status-cart" class="status-placeholder">チェック中...</div>
+                </div>
+            </div>
+            
+            <h2 style="color: #1f2937; margin: 2rem 0 1rem 0;">✅ 確認項目</h2>
+            <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; border-left: 4px solid #10b981;">
+                <h4>各ページで以下を確認：</h4>
+                <ul style="margin: 0;">
+                    <li>ヘッダーが表示される</li>
+                    <li>PNGロゴ画像のみ表示（テキストロゴなし）</li>
+                    <li>ナビゲーション（トップ、マイセラー、商品リスト、注文履歴）</li>
+                    <li>アクションボタン（🔍🔔🛒）</li>
+                    <li>ログアウトボタン</li>
+                    <li>現在のページがハイライト</li>
+                </ul>
+            </div>
+            
+            <div style="background: #fef2f2; padding: 1rem; border-radius: 8px; border-left: 4px solid #dc2626; margin-top: 1rem;">
+                <h4>⚠️ 問題が発生した場合：</h4>
+                <ul style="margin: 0;">
+                    <li>ブラウザキャッシュをクリア（Ctrl+F5で強制リロード）</li>
+                    <li>開発者ツール（F12）でJavaScriptエラーを確認</li>
+                    <li>コンソールログでヘッダー読み込み状況を確認</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2 style="color: #1f2937; margin-bottom: 1rem;">🔧 技術仕様</h2>
+            <div style="background: #f9fafb; padding: 1rem; border-radius: 8px;">
+                <p><strong>実装方式:</strong> 動的ヘッダー生成（common_parts.js）</p>
+                <p><strong>バージョン:</strong> v5_unified</p>
+                <p><strong>キャッシュバスター:</strong> 20250608_v5_unified</p>
+                <p><strong>対象ファイル:</strong> 全HTMLページ</p>
+                <p><strong>ロゴ仕様:</strong> PNGロゴ画像のみ（テキストロゴ削除済み）</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // キャッシュバスター
+        const cacheBuster = '20250608_v5_unified';
+        
+        // ヘッダーチェック機能
+        function checkHeader() {
+            const results = document.getElementById('check-results');
+            const status = document.getElementById('header-status');
+            
+            setTimeout(() => {
+                let html = '';
+                let allGood = true;
+                
+                // 1. ヘッダーの存在チェック
+                const header = document.querySelector('.main-header');
+                if (header) {
+                    html += '<div class="check-result ok">✅ ヘッダー要素が存在します</div>';
+                } else {
+                    html += '<div class="check-result error">❌ ヘッダー要素が見つかりません</div>';
+                    allGood = false;
+                }
+                
+                // 2. ロゴ画像チェック
+                const logo = document.querySelector('.logo-section img');
+                if (logo) {
+                    html += '<div class="check-result ok">✅ ロゴ画像が表示されています</div>';
+                } else {
+                    html += '<div class="check-result error">❌ ロゴ画像が見つかりません</div>';
+                    allGood = false;
+                }
+                
+                // 3. テキストロゴが削除されているかチェック
+                const textLogo = document.querySelector('.logo-text');
+                if (!textLogo) {
+                    html += '<div class="check-result ok">✅ テキストロゴが正しく削除されています</div>';
+                } else {
+                    html += '<div class="check-result error">❌ テキストロゴがまだ存在します</div>';
+                    allGood = false;
+                }
+                
+                // 4. ナビゲーションチェック
+                const nav = document.querySelector('.main-nav');
+                if (nav) {
+                    const navItems = nav.querySelectorAll('.nav-item');
+                    if (navItems.length >= 4) {
+                        html += '<div class="check-result ok">✅ ナビゲーション項目が正しく表示されています</div>';
+                    } else {
+                        html += '<div class="check-result error">❌ ナビゲーション項目が不足しています</div>';
+                        allGood = false;
+                    }
+                } else {
+                    html += '<div class="check-result error">❌ ナビゲーションが見つかりません</div>';
+                    allGood = false;
+                }
+                
+                // 5. アクションボタンチェック
+                const actionBtns = document.querySelectorAll('.action-btn');
+                if (actionBtns.length >= 3) {
+                    html += '<div class="check-result ok">✅ アクションボタンが正しく表示されています</div>';
+                } else {
+                    html += '<div class="check-result error">❌ アクションボタンが不足しています</div>';
+                    allGood = false;
+                }
+                
+                // 6. ログアウトボタンチェック
+                const logoutBtn = document.querySelector('.logout-btn');
+                if (logoutBtn) {
+                    html += '<div class="check-result ok">✅ ログアウトボタンが表示されています</div>';
+                } else {
+                    html += '<div class="check-result error">❌ ログアウトボタンが見つかりません</div>';
+                    allGood = false;
+                }
+                
+                results.innerHTML = html;
+                
+                if (allGood) {
+                    status.innerHTML = '<h3 class="status-ok">✅ ヘッダーチェック完了 - すべて正常です！</h3>';
+                    status.className = 'success';
+                } else {
+                    status.innerHTML = '<h3 class="status-error">❌ ヘッダーに問題があります</h3>';
+                    status.className = 'error';
+                }
+            }, 2000); // 2秒後に実行（ヘッダー読み込み完了を待つ）
+        }
+        
+        // common_parts.jsを読み込み
+        const script = document.createElement('script');
+        script.src = `js/common_parts.js?v=${cacheBuster}`;
+        script.onload = () => {
+            console.log('✅ 統一ヘッダー読み込み完了');
+            checkHeader();
+        };
+        script.onerror = () => {
+            console.error('❌ ヘッダー読み込みエラー');
+            document.getElementById('header-status').innerHTML = '<h3 class="status-error">❌ ヘッダー読み込みエラー</h3>';
+            document.getElementById('header-status').className = 'error';
+        };
+        document.head.appendChild(script);
+        
+        // ページロード完了時のログ出力
+        console.log('🎯 ヘッダー完全統一テスト開始');
+        console.log('📊 実装完了項目:');
+        console.log('  ✅ Phase 1: テキストロゴ削除');
+        console.log('  ✅ Phase 2: ヘッダー仕様統一');
+        console.log('  🔄 Phase 3: 検証・テスト実行中');
+    </script>
+</body>
+</html>

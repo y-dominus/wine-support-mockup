@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- キャッシュ無効化 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ダッシュボード（修正版） | ワイサポ - Sommiaがサポートするワインマネジメントシステム</title>
+    <link rel="icon" href="../assets/images/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components/header.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/ai_chat.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/wine-bottles.css">
+    <link rel="stylesheet" href="../css/components/wine-optimization.css">
+    <link rel="stylesheet" href="../css/components/wine-detail-modal.css">
+    <link rel="stylesheet" href="../css/components/dashboard-alerts.css">
+    <link rel="stylesheet" href="../css/pages/dashboard.css">
+</head>
+<body>
+    <!-- ヘッダーは common_parts.js で動的生成 -->
+    
+    <main>
+        <div class="container">
+            <!-- Sommiaからのウェルカムメッセージ -->
+            <div style="margin: 2rem 0; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 1rem;">
+                <img src="../sommia.png" alt="Sommia" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #884591;" onerror="this.style.display='none'">
+                <div>
+                    <div style="font-weight: 700; color: #884591; margin-bottom: 0.5rem;">Sommia より</div>
+                    <div style="color: #4b5563;">ダッシュボードへようこそ！今日の売上と在庫状況をチェックして、最適なワイン管理を始めましょう。</div>
+                </div>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stats-card">
+                    <div class="stats-icon">📊</div>
+                    <div class="stats-content">
+                        <div class="stats-title">今月の売上</div>
+                        <div class="stats-value" data-target="245000" data-prefix="¥">¥245,000</div>
+                        <div class="stats-trend positive">+12.5% 先月比</div>
+                    </div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-icon">🍷</div>
+                    <div class="stats-content">
+                        <div class="stats-title">売れたボトル数</div>
+                        <div class="stats-value" data-target="43">43</div>
+                        <div class="stats-trend positive">+8本 先月比</div>
+                    </div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-icon">⚠️</div>
+                    <div class="stats-content">
+                        <div class="stats-title">在庫アラート</div>
+                        <div class="stats-value" data-target="3">3</div>
+                        <div class="stats-trend negative">補充が必要</div>
+                    </div>
+                </div>
+                
+                <div class="stats-card">
+                    <div class="stats-icon">🔄</div>
+                    <div class="stats-content">
+                        <div class="stats-title">回転率</div>
+                        <div class="stats-value" data-target="1.8">1.8</div>
+                        <div class="stats-trend neutral">標準的</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-main">
+                    <!-- 人気ワインランキングと在庫アラート -->
+                    <div class="dashboard-charts-row">
+                        <div class="dashboard-section chart-half">
+                            <h2 class="section-title">🏆 人気ワインランキング</h2>
+                            <div class="dashboard-card">
+                                <div class="ranking-list">
+                                    <div class="ranking-item">
+                                        <div class="ranking-position">1</div>
+                                        <div class="ranking-wine">
+                                            <div class="wine-name">キャンティ クラシコ リゼルヴァ</div>
+                                            <div class="wine-info">赤 | イタリア | 12本販売</div>
+                                        </div>
+                                        <div class="ranking-value">¥96,000</div>
+                                    </div>
+                                    
+                                    <div class="ranking-item">
+                                        <div class="ranking-position">2</div>
+                                        <div class="ranking-wine">
+                                            <div class="wine-name">ソーヴィニヨン・ブラン</div>
+                                            <div class="wine-info">白 | ニュージーランド | 8本販売</div>
+                                        </div>
+                                        <div class="ranking-value">¥56,000</div>
+                                    </div>
+                                    
+                                    <div class="ranking-item">
+                                        <div class="ranking-position">3</div>
+                                        <div class="ranking-wine">
+                                            <div class="wine-name">プロセッコ</div>
+                                            <div class="wine-info">スパークリング | イタリア | 7本販売</div>
+                                        </div>
+                                        <div class="ranking-value">¥42,000</div>
+                                    </div>
+                                    
+                                    <div class="ranking-item">
+                                        <div class="ranking-position">4</div>
+                                        <div class="ranking-wine">
+                                            <div class="wine-name">メルロー</div>
+                                            <div class="wine-info">赤 | チリ | 6本販売</div>
+                                        </div>
+                                        <div class="ranking-value">¥36,000</div>
+                                    </div>
+                                    
+                                    <div class="ranking-item">
+                                        <div class="ranking-position">5</div>
+                                        <div class="ranking-wine">
+                                            <div class="wine-name">シャルドネ</div>
+                                            <div class="wine-info">白 | カリフォルニア | 5本販売</div>
+                                        </div>
+                                        <div class="ranking-value">¥35,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-section chart-half">
+                            <h2 class="section-title">⚠️ 在庫アラート</h2>
+                            <div class="dashboard-card">
+                                <div class="alert-list">
+                                    <div class="alert-item">
+                                        <div class="alert-icon warning">⚠️</div>
+                                        <div class="alert-content">
+                                            <div class="alert-title">キャンティ クラシコ リゼルヴァ</div>
+                                            <div class="alert-description">残り2本 - 売れ筋商品</div>
+                                        </div>
+                                        <div class="alert-action">
+                                            <button class="btn btn-sm btn-outline-primary" onclick="alert('補充発注機能はモックアップ版のため実装されていません')">補充</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert-item">
+                                        <div class="alert-icon warning">⚠️</div>
+                                        <div class="alert-content">
+                                            <div class="alert-title">ソーヴィニヨン・ブラン</div>
+                                            <div class="alert-description">残り1本 - 早急な補充が必要</div>
+                                        </div>
+                                        <div class="alert-action">
+                                            <button class="btn btn-sm btn-outline-primary" onclick="alert('補充発注機能はモックアップ版のため実装されていません')">補充</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert-item">
+                                        <div class="alert-icon info">ℹ️</div>
+                                        <div class="alert-content">
+                                            <div class="alert-title">メルロー</div>
+                                            <div class="alert-description">残り3本 - もうすぐ補充が必要</div>
+                                        </div>
+                                        <div class="alert-action">
+                                            <button class="btn btn-sm btn-outline-primary" onclick="alert('補充発注機能はモックアップ版のため実装されていません')">補充</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sommiaからのワインリスト最適化提案 -->
+                <div class="dashboard-full-width-section">
+                    <div class="dashboard-section">
+                        <h2 class="section-title">🤖 Sommiaからのワインリスト最適化提案</h2>
+                        <div class="wine-optimization-card" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div class="optimization-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <img src="../sommia.png" alt="Sommia" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #884591;" onerror="this.style.display='none'">
+                                <div>
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">ワインリストの最適化で売上アップのチャンスです！</div>
+                                    <div style="color: #4b5563;">売上データを分析した結果、<strong>3銘柄の入替え</strong>で<strong style="color: #10b981;">約15%の売上向上</strong>が期待できます。</div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                                <div>
+                                    <h4 style="color: #dc2626; margin-bottom: 1rem;">🔴 削除推奨</h4>
+                                    <div style="space-y: 0.5rem;">
+                                        <div style="padding: 0.75rem; background: #fef2f2; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">シラーズ 2021</div>
+                                            <div style="color: #7f1d1d; font-size: 0.9rem;">3ヶ月間売上なし</div>
+                                        </div>
+                                        <div style="padding: 0.75rem; background: #fef2f2; border-radius: 8px;">
+                                            <div style="font-weight: 600;">リースリング 2022</div>
+                                            <div style="color: #7f1d1d; font-size: 0.9rem;">回転率0.3回/月</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 style="color: #059669; margin-bottom: 1rem;">🟢 追加推奨</h4>
+                                    <div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">ヴェルメンティーノ 2023</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">夏季需要↑予測</div>
+                                        </div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px; margin-bottom: 0.5rem;">
+                                            <div style="font-weight: 600;">サンジョヴェーゼ 2021</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">他店で人気上昇</div>
+                                        </div>
+                                        <div style="padding: 0.75rem; background: #f0fdf4; border-radius: 8px;">
+                                            <div style="font-weight: 600;">アルバリーニョ 2023</div>
+                                            <div style="color: #14532d; font-size: 0.9rem;">コスパ優秀</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button class="btn btn-outline-secondary" style="margin-right: 1rem;" onclick="alert('この提案をスキップしました')">今回はスキップ</button>
+                                <button class="btn btn-primary" onclick="alert('詳細分析機能はモックアップ版のため実装されていません')">詳細分析を見る</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 統一されたJavaScript読み込み方法 -->
+    <script>
+        console.log('📄 ダッシュボード（修正版）読み込み開始');
+        
+        // キャッシュバスター生成
+        const cacheBuster = `UNIFIED_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        
+        // 必要なスクリプトを順序どおりに読み込み
+        const scripts = [
+            '../js/common_parts.js',
+            '../js/main.js',
+            '../js/ai_simulator.js',
+            '../js/utils.js'
+        ];
+        
+        // シーケンシャルにスクリプトを読み込む関数
+        function loadScriptsSequential(scriptArray, index = 0) {
+            if (index >= scriptArray.length) {
+                console.log('✅ 全スクリプト読み込み完了');
+                // 全てのスクリプト読み込み完了後にヘッダー初期化
+                initializeHeader();
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = `${scriptArray[index]}?v=${cacheBuster}`;
+            
+            script.onload = () => {
+                console.log(`✅ ${scriptArray[index]} 読み込み完了`);
+                // 次のスクリプトを読み込み
+                loadScriptsSequential(scriptArray, index + 1);
+            };
+            
+            script.onerror = () => {
+                console.error(`❌ ${scriptArray[index]} 読み込みエラー`);
+                // エラーが発生しても次のスクリプトを読み込む
+                loadScriptsSequential(scriptArray, index + 1);
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        // ヘッダー初期化関数
+        function initializeHeader() {
+            console.log('🚀 ヘッダー初期化開始');
+            
+            try {
+                if (typeof window.initializeCommonParts === 'function') {
+                    const result = window.initializeCommonParts();
+                    if (result) {
+                        console.log('✅ ヘッダー初期化成功');
+                    } else {
+                        console.error('❌ ヘッダー初期化失敗');
+                    }
+                } else {
+                    console.error('❌ initializeCommonParts関数が見つかりません');
+                }
+            } catch (error) {
+                console.error('❌ ヘッダー初期化エラー:', error);
+            }
+        }
+        
+        // DOM読み込み完了後にスクリプト読み込み開始
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('📄 DOMContentLoaded - スクリプト読み込み開始');
+                loadScriptsSequential(scripts);
+            });
+        } else {
+            console.log('📄 DOM既に読み込み済み - スクリプト読み込み開始');
+            loadScriptsSequential(scripts);
+        }
+    </script>
+    
+    <script>
+        // アニメーション処理（ヘッダー初期化後に実行）
+        document.addEventListener('DOMContentLoaded', function() {
+            // ヘッダー初期化を待つ
+            setTimeout(() => {
+                // 統計カードのアニメーション
+                const statsCards = document.querySelectorAll('.stats-card');
+                statsCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+                
+                // モック警告の表示
+                console.log('🍷 ワイサポ ダッシュボード（修正版） - GitHub Pages モックアップ版');
+                console.log('🚧 これはデモ版です。実際の機能は実装されていません。');
+            }, 2000); // ヘッダー初期化を待つ
+        });
+    </script>
+</body>
+</html>
